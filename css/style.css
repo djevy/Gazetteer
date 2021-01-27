@@ -2,6 +2,8 @@
     margin:0;
     padding:0;
 }
+
+/* Preloader */
 #preloader {
     position: fixed;
     top: 0;
@@ -45,3 +47,6 @@
         transform: rotate(360deg);
     }
 }
+
+/* Map CSS */
+#map { height: 180px; }
