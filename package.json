@@ -1,0 +1,32 @@
+{
+  "name": "gazetteer",
+  "version": "1.0.0",
+  "description": "IT Career Switch Map Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/djevy/Gazetteer.git"
+  },
+  "keywords": [
+    "javaScript",
+    "PHP",
+    "API",
+    "maps",
+    "scss",
+    "bootstrap"
+  ],
+  "author": "Darren Evans",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/djevy/Gazetteer/issues"
+  },
+  "homepage": "https://github.com/djevy/Gazetteer#readme",
+  "dependencies": {
+    "bootstrap": "^4.6.0",
+    "jquery": "^3.5.1",
+    "popper": "^1.0.1"
+  }
+}
