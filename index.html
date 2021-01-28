@@ -24,24 +24,29 @@
 <body>
     <div>
         <!--Header Secrion-->
-        <div class="container-fluid my-container bg-primary">
-            <div class="row my-row">
-                <div class="col-8 my-col">
-                    <i class="fas fa-map-marked-alt fa-3x my-icon"></i>
-                    <h1 id="title" class="text-white">Gazetteer</h1>
+        <nav class="my-nav navbar navbar-default col-12 col-md-5 col-lg-4 p-2 bg-primary">
+            <div class="my-row row align-items-center container-fluid">
+                <!-- col-md-12 applies to all sizes ≥768px -->
+                <div class="my-col nav-header col-6 col-md-12 my-4 pr-0 row align-items-center">
+                    <i class="fas fa-map-marked-alt fa-3x my-icon d-inline"></i>
+                    <h1 id="title" class="text-white d-inline pl-1">Gazetteer</h1>
                 </div>
-                <div class="col-4 my-col"> 
+                <div class="my-col  col-6 col-md-12 p-0 my-4 mx-auto"> 
                     <select name="country" id="countrySelect"></select>
                 </div>
             </div>
-        </div>
+        </nav>
         <!--Map Section-->
         <div id="map">
 
         </div>
+
+
         <!--Footer Section-->
         <div class="footer">
-            <!--Buttons-->
+
+            <!-- Buttons: Use navbarToggleExternalContent -->
+            <!-- To show an element only on a given interval of screen sizes you can combine one .d-*-none class with a .d-*-* class, for example .d-none .d-md-block .d-xl-none will hide the element for all screen sizes except on medium and large devices. -->
             <div>
                 <button id="infoBtn" class="text-white bg-dark">Info</button>
                 <button id="weatherBtn"class="text-white bg-primary">Weather</button>

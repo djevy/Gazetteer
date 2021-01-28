@@ -10837,13 +10837,6 @@ a.text-dark:hover, a.text-dark:focus {
   }
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
 /* Preloader */
 #preloader {
   position: fixed;
@@ -10894,20 +10887,56 @@ a.text-dark:hover, a.text-dark:focus {
 
 /* Map CSS */
 #map {
-  height: 500px;
+  position: absolute;
+  width: 100%;
+  height: 85vh;
+  top: 15vh;
+  z-index: 0;
 }
 
 #title {
   font-family: 'Oswald', sans-serif;
+  font-size: 1.5em;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+}
+
+#countrySelect {
+  width: 100%;
+  border-radius: 5px;
+  border: solid black;
 }
 
 .my-icon {
   color: white;
 }
 
+.my-nav {
+  height: 15vh;
+  z-index: 2;
+}
+
 @media (min-width: 768px) {
-  .my-container {
+  .my-nav {
     height: 30vh;
+  }
+  #title {
+    font-size: 3em;
+  }
+  .my-icon {
+    -ms-flex-item-align: center;
+        -ms-grid-row-align: center;
+        align-self: center;
+  }
+  #countrySelect {
+    width: 75%;
+  }
+  #map {
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 58.33333333%;
   }
 }
 
