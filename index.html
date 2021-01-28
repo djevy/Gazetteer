@@ -24,16 +24,17 @@
 <body>
     <div>
         <!--Header Secrion-->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-            <div class="container">
-            <div>
-                <h1 id="title" class="text-white">Gazetteer</h1>
+        <div class="container-fluid my-container bg-primary">
+            <div class="row my-row">
+                <div class="col-8 my-col">
+                    <i class="fas fa-map-marked-alt fa-3x my-icon"></i>
+                    <h1 id="title" class="text-white">Gazetteer</h1>
+                </div>
+                <div class="col-4 my-col"> 
+                    <select name="country" id="countrySelect"></select>
+                </div>
             </div>
-            <div>
-                <select name="country" id="countrySelect">Select country</select>
-            </div>
-            </div>
-        </nav>
+        </div>
         <!--Map Section-->
         <div id="map">
 
@@ -74,6 +75,7 @@
     
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/2ee2e70f6f.js" crossorigin="anonymous"></script>
     <!--Leaflet.js javaScript--> <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
     crossorigin=""></script>

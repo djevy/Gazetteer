@@ -10900,4 +10900,20 @@ a.text-dark:hover, a.text-dark:focus {
 #title {
   font-family: 'Oswald', sans-serif;
 }
+
+.my-icon {
+  color: white;
+}
+
+@media (min-width: 768px) {
+  .my-container {
+    height: 30vh;
+  }
+}
+
+@media (min-width: 992px) {
+  #map {
+    width: 66.666666666667% !important;
+  }
+}
 /*# sourceMappingURL=style.css.map */

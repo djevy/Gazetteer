@@ -59,6 +59,40 @@ $theme-colors:(
 /* Map CSS */
 #map { height: 500px; }
 
+
+// Title
 #title{
     font-family: 'Oswald', sans-serif;
 }
+.my-icon{
+    color: white;
+}
+
+
+//Media Queries:
+//576px
+// @include media-breakpoint-up(sm) { ... }
+//768px
+@include media-breakpoint-up(md) { 
+
+    .my-container{
+        height: 30vh;
+    }
+
+    // #map { 
+    //     top:0;
+    //     right: 0;
+    //     height: 100%;
+    //     width: 58.33333333%;
+    // }
+
+ }
+
+
+//992px
+ @include media-breakpoint-up(lg) {
+    #map {
+        width: 66.666666666667% !important;
+    }
+}
+// @include media-breakpoint-up(xl) { ... }
