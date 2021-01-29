@@ -17,7 +17,7 @@ const tileUrl = 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}{r}.
 const tiles = L.tileLayer(tileUrl, { 
     attribution,
     subdomains: 'abcd',
-	minZoom: 0,
+	minZoom: 2,
     maxZoom: 20,
     ext: 'png'
  });
