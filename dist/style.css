@@ -10885,13 +10885,6 @@ a.text-dark:hover, a.text-dark:focus {
   }
 }
 
-button {
-  height: 40px;
-  padding: 0px;
-  margin: 0px;
-  border: none;
-}
-
 #header {
   margin: auto;
 }
@@ -10917,6 +10910,38 @@ button {
 .my-nav {
   height: 15vh;
   z-index: 2;
+  border-bottom: solid black;
+}
+
+button {
+  height: 40px;
+  padding: 0px;
+  margin: 0px;
+  border: none;
+}
+
+.my-button {
+  height: 40px;
+  padding: 0px;
+  margin: 0px;
+  border: none;
+  text-align: center;
+  color: black;
+  background-color: #9effd3;
+}
+
+.my-button:hover {
+  background-color: #5cffb6;
+}
+
+.my-link {
+  color: black;
+  text-decoration: none;
+  text-align: center;
+}
+
+.noMobile {
+  display: none;
 }
 
 #map {
@@ -10936,6 +10961,7 @@ button {
 
 #collapseInfo {
   width: 100%;
+  height: calc(100%-30vh-80px);
 }
 
 @media (min-width: 768px) {
@@ -10952,6 +10978,12 @@ button {
   }
   #countrySelect {
     width: 75%;
+  }
+  .my-button {
+    display: block;
+  }
+  #weatherBtn, #newsBtn, #exchangeBtn {
+    display: block;
   }
   #map {
     top: 0;

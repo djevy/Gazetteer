@@ -45,13 +45,45 @@
         <!--Footer Section-->
         <div id="my-footer" class="col-12 col-md-5 col-lg-4">
 
-            <!-- Buttons: Use navbarToggleExternalContent -->
             <!-- To show an element only on a given interval of screen sizes you can combine one .d-*-none class with a .d-*-* class, for example .d-none .d-md-block .d-xl-none will hide the element for all screen sizes except on medium and large devices. -->
-            <div class="row">
-                <button id="infoBtn" class="text-white bg-dark col-4 col-md-6" type="button" data-toggle="collapse" data-target="#collapseInfo" aria-expanded="false" aria-controls="collapseInfo">Info</button>
-                <button id="weatherBtn"class="text-black bg-primary d-none d-md-block col-md-6">Weather</button>
-                <button id="newsBtn" class="text-black bg-primary d-none d-md-block col-md-6">News</button>
-                <button id="exchangeBtn" class="text-black bg-primary d-none d-md-block col-md-6">Exchange</button>
+                <!-- <button id="infoBtn" class="text-white bg-dark col-4 col-md-6" type="button" data-toggle="collapse" data-target="#collapseInfo" aria-expanded="false" aria-controls="collapseInfo">Info</button> -->
+                <div class="panel-group row" id="accordion">
+                    <div class="panel panel-default col-4 col-md-6 my-button" >
+                        <!-- In js onclick my-button css change darker -->
+                      <div class="panel-heading">
+                        <h4 class="panel-title">
+                          <a class="my-link" id="infoBtn" data-toggle="collapse" data-parent="#accordion" href="#collapseInfo">Info</a>
+                        </h4>
+                      </div>
+                    </div>
+                
+                <!-- <button id="weatherBtn"class="text-black bg-primary d-none d-md-block col-md-6">Weather</button> -->
+                    <div class="panel panel-default col-4 col-md-6 my-button noMobile">
+                        <div class="panel-heading">
+                            <h4 class="panel-title" >
+                            <a class="my-link" id="weatherBtn" data-toggle="collapse" data-parent="#accordion" href="#collapseWeather">Weather</a>
+                            </h4>
+                        </div>
+                    </div>
+
+                    <!-- <button id="newsBtn" class="text-black bg-primary d-none d-md-block col-md-6">News</button> -->
+                    <div class="panel panel-default col-4 col-md-6 my-button noMobile">
+                        <div class="panel-heading">
+                            <h4 class="panel-title" >
+                            <a class="my-link" id="newsBtn" data-toggle="collapse" data-parent="#accordion" href="#collapseNews">News</a>
+                            </h4>
+                        </div>
+                    </div>
+
+                    <!-- <button id="exchangeBtn" class="text-black bg-primary d-none d-md-block col-md-6">Exchange</button> -->
+                    <div class="panel panel-default col-4 col-md-6 my-button noMobile">
+                        <div class="panel-heading">
+                            <h4 class="panel-title" >
+                            <a class="my-link" id="exchangeBtn" data-toggle="collapse" data-parent="#accordion" href="#collapseExchange">Exchange</a>
+                            </h4>
+                        </div>
+                    </div>
+                <!-- More Button needs fixing -->
                 <div id="moreBtn" class="btn-group dropup d-block d-md-none col-4 m-0 p-0">
                     <button type="button" class="btn text-black bg-primary dropdown-toggle col-12 m-0 p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       More
@@ -61,24 +93,45 @@
                       <button class="col-12">News</button>
                       <button class="col-12">Exchange</button>
                     </div>
-                  </div>
+                </div>
             </div>
 
             <!--Information Panels-->
-            <div id="collapseInfo" class="collapse bg-white">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit exercitationem in sapiente itaque, placeat cum commodi soluta odit excepturi hic. Nam necessitatibus non, perspiciatis deserunt fugit velit saepe optio placeat.
-            </div>
-            <div id="weather">
-
-            </div>
-            <div id="news">
-
-            </div>
-            <div id="exchange">
-
-            </div>
-
-        
+            <div class="bg-white">
+                <div id="collapseInfo" class="panel-collapse collapse in row">
+                    <div class="col-6">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit exercitationem in sapiente itaque, placeat cum commodi soluta odit excepturi hic. Nam necessitatibus non, perspiciatis deserunt fugit velit saepe optio placeat.
+                    </div>
+                    <div class="col-6">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit exercitationem in sapiente itaque, placeat cum commodi soluta odit excepturi hic. Nam necessitatibus non, perspiciatis deserunt fugit velit saepe optio placeat.
+                    </div>
+                </div>
+                <div id="collapseWeather" class="panel-collapse collapse row">
+                    <div class="col-6">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit exercitationem in sapiente itaque, placeat cum commodi soluta odit excepturi hic. Nam necessitatibus non, perspiciatis deserunt fugit velit saepe optio placeat.
+                    </div>
+                    <div class="col-6">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit exercitationem in sapiente itaque, placeat cum commodi soluta odit excepturi hic. Nam necessitatibus non, perspiciatis deserunt fugit velit saepe optio placeat.
+                    </div>
+                </div>
+                <div id="collapseNews" class="panel-collapse collapse row">
+                    <div class="col-6">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit exercitationem in sapiente itaque, placeat cum commodi soluta odit excepturi hic. Nam necessitatibus non, perspiciatis deserunt fugit velit saepe optio placeat.
+                    </div>
+                    <div class="col-6">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit exercitationem in sapiente itaque, placeat cum commodi soluta odit excepturi hic. Nam necessitatibus non, perspiciatis deserunt fugit velit saepe optio placeat.
+                    </div>
+                </div>
+                <div id="collapseExchange" class="panel-collapse collapse row">
+                    <div class="col-6">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit exercitationem in sapiente itaque, placeat cum commodi soluta odit excepturi hic. Nam necessitatibus non, perspiciatis deserunt fugit velit saepe optio placeat.
+                    </div>
+                    <div class="col-6">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit exercitationem in sapiente itaque, placeat cum commodi soluta odit excepturi hic. Nam necessitatibus non, perspiciatis deserunt fugit velit saepe optio placeat.
+                    </div>
+                </div>
+                
+            </div>        
         </div>
 
         <!--Preloader, needs work-->

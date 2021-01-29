@@ -51,14 +51,6 @@ $theme-colors:(
     }
 }
 
-//General
-button{
-    height: 40px;
-    padding: 0px;
-    margin: 0px;
-    border: none;
-}
-
 // Header
 #header{
     margin: auto;
@@ -79,6 +71,35 @@ button{
 .my-nav{
     height:15vh;
     z-index: 2;
+    border-bottom: solid black;
+}
+
+//Buttons
+button{
+    height: 40px;
+    padding: 0px;
+    margin: 0px;
+    border: none;
+}
+.my-button{
+    height: 40px;
+    padding: 0px;
+    margin: 0px;
+    border: none;
+    text-align: center;
+    color: black;
+    background-color: #9effd3;
+}
+.my-button:hover{
+    background-color: #5cffb6;
+}
+.my-link{
+    color:black;
+    text-decoration: none;
+    text-align: center;
+}
+.noMobile{
+    display: none;
 }
 
 // Map
@@ -101,6 +122,7 @@ button{
 //Information panels
 #collapseInfo{
     width:100%;
+    height: calc(100%-30vh-80px);
 }
 
 // Media Queries:
@@ -122,7 +144,15 @@ button{
         width:75%;
     }
 
-    //Map
+    //Buttons:
+    .my-button{
+        display: block;
+    }
+    #weatherBtn, #newsBtn, #exchangeBtn{
+        display: block;
+    }
+
+    //Map:
     #map { 
         top:0;
         right: 0;
