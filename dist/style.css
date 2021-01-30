@@ -10959,9 +10959,10 @@ button {
   z-index: 2;
 }
 
-#collapseInfo {
+#infoPanel {
   width: 100%;
-  height: calc(100%-30vh-80px);
+  max-height: 56vh !important;
+  overflow-y: scroll !important;
 }
 
 @media (min-width: 768px) {

@@ -120,9 +120,10 @@ button{
 }
 
 //Information panels
-#collapseInfo{
+#infoPanel{
     width:100%;
-    height: calc(100%-30vh-80px);
+    max-height: 56vh !important;
+    overflow-y: scroll !important;
 }
 
 // Media Queries:
