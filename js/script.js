@@ -32,7 +32,7 @@ for(var i=2; i<=totalNumOfPages; i++){
     $(".pagination").append("<li class='current-page page-item'><a class='page-link'href='javascript:void(0)'>" + i + "</a></li>")
 }
 
-$(".pagination").append("<li class='current-page page-item'> <a class='page-link' href='javascript:void(0)' aria-label='Next'> <span aria-hidden='true'>&raquo;</span> <span class='sr-only'>Next</span></a></li>");
+$(".pagination").append("<li id='next-page' class='page-item'> <a class='page-link' href='javascript:void(0)' aria-label='Next'> <span aria-hidden='true'>&raquo;</span> <span class='sr-only'>Next</span></a></li>");
 
 $(".pagination li.current-page").on("click", function(){
     if($(this).hasClass("active")){
@@ -47,5 +47,42 @@ $(".pagination li.current-page").on("click", function(){
             $("#page" + currentPage + "").show();
         }
     }
-    
 });
+
+//Next Button
+$("#next-page").on("click", function() {
+    var currentPage = $(".pagination li.active").index();
+    if(currentPage === totalNumOfPages){
+        return false;
+    } else {
+        currentPage++;
+        $(".pagination li").removeClass("active");
+        $("#accordion .card").hide();
+        
+        for(var i=1; i<=totalNumOfPages; i++){
+            $("#page" + currentPage).show();
+        }
+        
+        $(".pagination li.current-page:eq(" + (currentPage -1)+")").addClass("active");
+        
+    }
+})
+
+//Previous Button
+$("#previous-page").on("click", function() {
+    var currentPage = $(".pagination li.active").index();
+    if(currentPage === 1){
+        return false;
+    } else {
+        currentPage--;
+        $(".pagination li").removeClass("active");
+        $("#accordion .card").hide();
+        
+        for(var i=1; i<=totalNumOfPages; i++){
+            $("#page" + currentPage).show();
+        }
+        
+        $(".pagination li.current-page:eq(" + (currentPage -1)+")").addClass("active");
+        
+    }
+})
