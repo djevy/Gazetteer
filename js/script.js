@@ -22,3 +22,30 @@ const tiles = L.tileLayer(tileUrl, {
     ext: 'png'
  });
 tiles.addTo(mymap);
+
+//Pagination
+var totalNumOfPages = $('#accordion .card').length;
+
+$(".pagination").append("<li class='current-page page-item active'><a class='page-link'href='javascript:void(0)'>1</a></li>")
+
+for(var i=2; i<=totalNumOfPages; i++){
+    $(".pagination").append("<li class='current-page page-item'><a class='page-link'href='javascript:void(0)'>" + i + "</a></li>")
+}
+
+$(".pagination").append("<li class='current-page page-item'> <a class='page-link' href='javascript:void(0)' aria-label='Next'> <span aria-hidden='true'>&raquo;</span> <span class='sr-only'>Next</span></a></li>");
+
+$(".pagination li.current-page").on("click", function(){
+    if($(this).hasClass("active")){
+        return false;
+    } else {
+        var currentPage = $(this).index();
+        $(".pagination li").removeClass("active");
+        $(this).addClass("active");
+        $("#accordion .card").hide();
+
+        for(var i=1; i<=totalNumOfPages; i++){
+            $("#page" + currentPage + "").show();
+        }
+    }
+    
+});
