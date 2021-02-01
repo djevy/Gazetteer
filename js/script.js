@@ -23,6 +23,9 @@ const tiles = L.tileLayer(tileUrl, {
  });
 tiles.addTo(mymap);
 
+var marker = L.marker([51.6, -0.09]).addTo(mymap);
+
+
 //Pagination
 var totalNumOfPages = $('#accordion .card').length;
 
@@ -86,3 +89,25 @@ $("#previous-page").on("click", function() {
         
     }
 })
+
+
+//AJAX FUNCTIONS:
+
+//Weather
+$('#practice').click(function(){
+    $.ajax({
+        url: "php/openWeather.php",
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            lat: 51.6,
+            lon: -0.09
+        },
+        success: function(result) {
+            console.log(result);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert("There has been an error!")
+        }
+    });
+});
