@@ -36,6 +36,8 @@
                 </div>
             </div>
         </nav>
+    </div>
+
         <!--Map Section-->
         <div id="map">
 
@@ -43,104 +45,122 @@
 
 
         <!--Footer Section-->
-        <div id="my-footer" class="col-12 col-md-5 col-lg-4">
+        <div id="my-footer" class="col-4 col-md-5 col-lg-4">
 
             <!-- To show an element only on a given interval of screen sizes you can combine one .d-*-none class with a .d-*-* class, for example .d-none .d-md-block .d-xl-none will hide the element for all screen sizes except on medium and large devices. -->
-                <!-- <button id="infoBtn" class="text-white bg-dark col-4 col-md-6" type="button" data-toggle="collapse" data-target="#collapseInfo" aria-expanded="false" aria-controls="collapseInfo">Info</button> -->
-                <div class="panel-group row" id="accordion">
-                    <div class="panel panel-default col-4 col-md-6 my-button" >
-                        <!-- In js onclick my-button css change darker -->
-                      <div class="panel-heading">
-                        <h4 class="panel-title">
-                          <a class="my-link" id="infoBtn" data-toggle="collapse" data-parent="#accordion" href="#collapseInfo">Info</a>
-                        </h4>
+
+                <div id="accordion">
+                    <!-- Info -->
+                    <div class="card" id="page1">
+                      <div class="card-header" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <h5 class="mb-0">
+                          <button class="btn btn-link">
+                            Info
+                          </button>
+                        </h5>
+                      </div>
+                      <!-- Information Panel -->
+                      <div id="collapseOne" class="collapse show row infoPanel" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body col-6">
+                          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird
+                          on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table,
+                          raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                        </div>
+                        <div class="card-body col-6">
+                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird
+                            on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table,
+                            raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                        </div>
                       </div>
                     </div>
-                
-                <!-- <button id="weatherBtn"class="text-black bg-primary d-none d-md-block col-md-6">Weather</button> -->
-                    <div class="panel panel-default col-4 col-md-6 my-button noMobile">
-                        <div class="panel-heading">
-                            <h4 class="panel-title" >
-                            <a class="my-link" id="weatherBtn" data-toggle="collapse" data-parent="#accordion" href="#collapseWeather">Weather</a>
-                            </h4>
+                    <!-- Weather -->
+                    <div class="card noMobile" style="display: none;" id="page2">
+                      <div class="card-header collapsed" id="headingTwo" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        <h5 class="mb-0 " >
+                          <button class="btn btn-link">
+                            Weather
+                          </button>
+                        </h5>
+                      </div>
+                      <!-- Information Panel -->
+                      <div id="collapseTwo" class="collapse show row infoPanel" aria-labelledby="headingTwo" data-parent="#accordion">
+                        <div class="card-body col-6">
+                          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird
+                          on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table,
+                          raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
                         </div>
-                    </div>
-
-                    <!-- <button id="newsBtn" class="text-black bg-primary d-none d-md-block col-md-6">News</button> -->
-                    <div class="panel panel-default col-4 col-md-6 my-button noMobile">
-                        <div class="panel-heading">
-                            <h4 class="panel-title" >
-                            <a class="my-link" id="newsBtn" data-toggle="collapse" data-parent="#accordion" href="#collapseNews">News</a>
-                            </h4>
+                        <div class="card-body col-6">
+                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird
+                            on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table,
+                            raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
                         </div>
+                      </div>
                     </div>
-
-                    <!-- <button id="exchangeBtn" class="text-black bg-primary d-none d-md-block col-md-6">Exchange</button> -->
-                    <div class="panel panel-default col-4 col-md-6 my-button noMobile">
-                        <div class="panel-heading">
-                            <h4 class="panel-title" >
-                            <a class="my-link" id="exchangeBtn" data-toggle="collapse" data-parent="#accordion" href="#collapseExchange">Exchange</a>
-                            </h4>
+                    <!-- News -->
+                    <div class="card noMobile" style="display: none;" id="page3">
+                      <div class="card-header collapsed" id="headingThree" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        <h5 class="mb-0">
+                          <button class="btn btn-link">
+                            News
+                          </button>
+                        </h5>
+                      </div>
+                      <!-- Information Panel -->
+                      <div id="collapseThree" class="collapse show row infoPanel" aria-labelledby="headingThree" data-parent="#accordion">
+                        <div class="card-body col-6">
+                          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird
+                          on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table,
+                          raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
                         </div>
+                        <div class="card-body col-6">
+                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird
+                            on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table,
+                            raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                        </div>
+                      </div>
                     </div>
-                <!-- More Button needs fixing -->
-                <div id="moreBtn" class="btn-group dropup d-block d-md-none col-4 m-0 p-0">
-                    <button type="button" class="btn text-black bg-primary dropdown-toggle col-12 m-0 p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      More
-                    </button>
-                    <div class="dropdown-menu row">
-                      <button class="col-12">Weather</button>
-                      <button class="col-12">News</button>
-                      <button class="col-12">Exchange</button>
-                    </div>
-                </div>
-            </div>
+                    <!-- Exchange -->
+                    <div class="card noMobile" style="display: none;" id="page4">
+                        <div class="card-header collapsed" id="headingFour" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                          <h5 class="mb-0">
+                            <button class="btn btn-link">
+                              Exchange
+                            </button>
+                          </h5>
+                        </div>
+                        <!-- Information Panel -->
+                        <div id="collapseFour" class="collapse show row infoPanel" aria-labelledby="headingFour" data-parent="#accordion">
+                          <div class="card-body col-6">
+                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird
+                            on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table,
+                            raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                          </div>
+                          <div class="card-body col-6">
+                              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird
+                              on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table,
+                              raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                          </div>
+                        </div>
+                      </div>
+                  </div>
 
-            <!--Information Panels-->
-            <div id="infoPanel" class="bg-white">
-                <div id="collapseInfo" class="panel-collapse collapse in row">
-                    <div class="col-6">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit exercitationem in sapiente itaque, placeat cum commodi soluta odit excepturi hic. Nam necessitatibus non, perspiciatis deserunt fugit velit saepe optio placeat.
-                    </div>
-                    <div class="col-6">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit exercitationem in sapiente itaque, placeat cum commodi soluta odit excepturi hic. Nam necessitatibus non, perspiciatis deserunt fugit velit saepe optio placeat.
-                    </div>
-                </div>
-                <div id="collapseWeather" class="panel-collapse collapse row">
-                    <div class="col-6">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit exercitationem in sapiente itaque, placeat cum commodi soluta odit excepturi hic. Nam necessitatibus non, perspiciatis deserunt fugit velit saepe optio placeat.
-                    </div>
-                    <div class="col-6">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit exercitationem in sapiente itaque, placeat cum commodi soluta odit excepturi hic. Nam necessitatibus non, perspiciatis deserunt fugit velit saepe optio placeat.
-                    </div>
-                </div>
-                <div id="collapseNews" class="panel-collapse collapse row">
-                    <div class="col-6">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit exercitationem in sapiente itaque, placeat cum commodi soluta odit excepturi hic. Nam necessitatibus non, perspiciatis deserunt fugit velit saepe optio placeat.
-                    </div>
-                    <div class="col-6">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit exercitationem in sapiente itaque, placeat cum commodi soluta odit excepturi hic. Nam necessitatibus non, perspiciatis deserunt fugit velit saepe optio placeat.
-                    </div>
-                </div>
-                <div id="collapseExchange" class="panel-collapse collapse row">
-                    <div class="col-6">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit exercitationem in sapiente itaque, placeat cum commodi soluta odit excepturi hic. Nam necessitatibus non, perspiciatis deserunt fugit velit saepe optio placeat.
-                    </div>
-                    <div class="col-6">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit exercitationem in sapiente itaque, placeat cum commodi soluta odit excepturi hic. Nam necessitatibus non, perspiciatis deserunt fugit velit saepe optio placeat.
-                    </div>
-                </div>
-                
-            </div>        
+                  <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                      <li class="page-item">
+                        <a class="page-link" href="javascript:void(0)" aria-label="Previous">
+                          <span aria-hidden="true">&laquo;</span>
+                          <span class="sr-only">Previous</span>
+                        </a>
+                      </li>
+
+                    </ul>
+                  </nav>
+        
         </div>
 
         <!--Preloader, needs work-->
-        <div id="preloader">
+        <div id="preloader"> </div>
 
-        </div>
-    </div>
-
-    
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/2ee2e70f6f.js" crossorigin="anonymous"></script>

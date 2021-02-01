@@ -10918,6 +10918,7 @@ button {
   padding: 0px;
   margin: 0px;
   border: none;
+  text-align: center;
 }
 
 .my-button {
@@ -10928,10 +10929,6 @@ button {
   text-align: center;
   color: black;
   background-color: #9effd3;
-}
-
-.my-button:hover {
-  background-color: #5cffb6;
 }
 
 .my-link {
@@ -10959,15 +10956,18 @@ button {
   z-index: 2;
 }
 
-#infoPanel {
+.infoPanel {
+  margin: 0;
+  padding: 0;
   width: 100%;
-  max-height: 56vh !important;
+  max-height: 58vh !important;
   overflow-y: scroll !important;
+  text-align: center;
 }
 
 @media (min-width: 768px) {
   .my-nav {
-    height: 30vh;
+    height: 22vh;
   }
   #title {
     font-size: 3em;
@@ -10980,10 +10980,7 @@ button {
   #countrySelect {
     width: 75%;
   }
-  .my-button {
-    display: block;
-  }
-  #weatherBtn, #newsBtn, #exchangeBtn {
+  .noMobile {
     display: block;
   }
   #map {
@@ -10993,7 +10990,7 @@ button {
     width: 58.33333333%;
   }
   #my-footer {
-    top: 30vh;
+    top: 22vh;
   }
 }
 

@@ -80,6 +80,7 @@ button{
     padding: 0px;
     margin: 0px;
     border: none;
+    text-align: center;
 }
 .my-button{
     height: 40px;
@@ -90,9 +91,9 @@ button{
     color: black;
     background-color: #9effd3;
 }
-.my-button:hover{
-    background-color: #5cffb6;
-}
+// .my-button:hover{
+//     background-color: #5cffb6;
+// }
 .my-link{
     color:black;
     text-decoration: none;
@@ -120,10 +121,13 @@ button{
 }
 
 //Information panels
-#infoPanel{
+.infoPanel{
+    margin:0;
+    padding:0;
     width:100%;
-    max-height: 56vh !important;
+    max-height: 58vh !important;
     overflow-y: scroll !important;
+    text-align: center;
 }
 
 // Media Queries:
@@ -133,7 +137,7 @@ button{
 @include media-breakpoint-up(md) { 
     //Header
     .my-nav{
-        height: 30vh;
+        height: 22vh;
     }
     #title{
         font-size: 3em;
@@ -146,10 +150,7 @@ button{
     }
 
     //Buttons:
-    .my-button{
-        display: block;
-    }
-    #weatherBtn, #newsBtn, #exchangeBtn{
+    .noMobile{
         display: block;
     }
 
@@ -163,7 +164,7 @@ button{
 
     //Footer
     #my-footer{
-        top:30vh;
+        top:22vh;
     }
 
  }
