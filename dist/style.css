@@ -10914,26 +10914,10 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 button {
-  height: 40px;
+  height: 30px;
   padding: 0px;
   margin: 0px;
   border: none;
-  text-align: center;
-}
-
-.my-button {
-  height: 40px;
-  padding: 0px;
-  margin: 0px;
-  border: none;
-  text-align: center;
-  color: black;
-  background-color: #9effd3;
-}
-
-.my-link {
-  color: black;
-  text-decoration: none;
   text-align: center;
 }
 
@@ -10949,11 +10933,31 @@ button {
   z-index: 0;
 }
 
-#my-footer {
-  position: absolute;
-  top: calc(100vh-40px);
+.my-footer {
+  top: calc(100vh-20px);
   bottom: 0;
   z-index: 2;
+  margin: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#pageNav {
+  position: absolute;
+  top: calc(90vh);
+  bottom: 0;
+  z-index: 2;
+  margin: auto;
+  padding: 0;
 }
 
 .infoPanel {
@@ -10965,9 +10969,21 @@ button {
   text-align: center;
 }
 
+.card-header.collapsed {
+  background: black;
+  text-decoration: none;
+  text-align: center;
+}
+
+.card-header:not(.collapsed) {
+  background: black;
+  color: white;
+  text-align: center;
+}
+
 @media (min-width: 768px) {
   .my-nav {
-    height: 22vh;
+    height: 25vh;
   }
   #title {
     font-size: 3em;
@@ -10989,8 +11005,20 @@ button {
     height: 100%;
     width: 58.33333333%;
   }
-  #my-footer {
-    top: 22vh;
+  .infoPanel {
+    max-height: 70vh;
+  }
+  .my-footer {
+    top: 25vh;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: start;
+    -webkit-box-align: unset;
+        -ms-flex-align: unset;
+            align-items: unset;
+  }
+  #pageNav {
+    top: 93%;
   }
 }
 
