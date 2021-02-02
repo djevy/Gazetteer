@@ -60,11 +60,12 @@ $theme-colors:(
     font-size: 1.5em;
     align-self: center;
 }
-#countrySelect{
+.selectOption{
     width: 100%;
     border-radius: 5px;
     border: solid black;
-    margin:auto
+    margin:auto;
+    text-align: center;
 }
 .my-icon{
     color: black;
@@ -138,6 +139,9 @@ button{
     background: black;
     color:white;
     text-align: center;
+}
+table{
+    margin: 0;
 }
 
 // Media Queries:

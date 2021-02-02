@@ -4,7 +4,7 @@ $executionStartTime = microtime(true) / 1000;
 
 $apiKey = "e2fb89593390a529838857a3cb40950a";
 
-$url ="https://api.openweathermap.org/data/2.5/onecall?lat=" . $_REQUEST['lat'] . "&lon=" . $_REQUEST['lon'] . "&appid=" . $apiKey;
+$url ="https://api.openweathermap.org/data/2.5/onecall?lat=" . $_REQUEST['lat'] . "&lon=" . $_REQUEST['lon'] . "&units=metric"  . "&appid=" . $apiKey;
 
 //CURL
     //1.Initalise a new cURL resource(ch= curl handle)

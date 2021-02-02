@@ -91,6 +91,21 @@ $("#previous-page").on("click", function() {
 })
 
 
+//API:
+
+$.getJSON("php/data_json.json", function(data){
+    console.log(data);
+});
+
+var chosenCountry = $('countrySelect');
+chosenCountry.empty();
+chosenCountry.append("<option selected='true'>Select a Country</option>");
+chosenCountry.prop('selectedIndex', 0);
+
+
+
+
+
 //AJAX FUNCTIONS:
 
 //Weather
@@ -105,6 +120,15 @@ $('#practice').click(function(){
         },
         success: function(result) {
             console.log(result);
+            if (result.status.name == "ok") {
+                // $('#city').html(result['data']['countryName']);
+                $('#temp').html(result['data']['current']['temp']+" ℃");
+                $('#currentWeather').html(result['data']['current']['weather']['0']['icon']);
+                $('#wind').html(result['data']['current']['wind_speed'] + ' ' + result['data']['current']['wind_deg']);
+                $('#sunrise').html(result['data']['current']['sunrise']);
+                $('#sunset').html(result['data']['current']['sunset']);
+                $('#humidity').html(result['data']['current']['humidity'] + ' %');
+            }
         },
         error: function(jqXHR, textStatus, errorThrown) {
             alert("There has been an error!")

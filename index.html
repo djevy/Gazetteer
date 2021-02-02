@@ -32,7 +32,7 @@
                     <h1 id="title" class="text-black d-inline pl-1">Gazetteer</h1>
                 </div>
                 <div class="my-col  col-6 col-md-12 p-0 my-3 mx-auto"> 
-                    <select name="country" id="countrySelect"></select>
+                    <select name="country" class="selectOption"></select>
                 </div>
             </div>
         </nav>
@@ -62,8 +62,7 @@
                       </div>
                       <!-- Information Panel -->
                       <div id="collapseOne" class="collapse show row infoPanel" aria-labelledby="headingOne" data-parent="#accordion">
-                        <div class="card-body col-6">
-                            <button id='practice'>Practice</button>
+                        <div class="card-body col-6">                            
                           Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird
                           on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table,
                           raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
@@ -86,16 +85,53 @@
                       </div>
                       <!-- Information Panel -->
                       <div id="collapseTwo" class="collapse show row infoPanel" aria-labelledby="headingTwo" data-parent="#accordion">
-                        <div class="card-body col-6">
-                            
-                          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird
-                          on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table,
-                          raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                        </div>
-                        <div class="card-body col-6">
-                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird
-                            on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table,
-                            raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                        <button id='practice'>Practice</button>
+
+                        <div class="card-body col-12">
+                          <table class="table table-dark table-striped">
+                            <thead>
+                              <tr>
+                                <th scope="col">City:</th>
+                                <th id="city" scope="col"></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <th colspan="2">
+                                  <select class="selectOption" name="day" id="day">
+                                    <option value="Today">Today</option>
+                                    <option value="Tomorrow">Tomorrow</option>
+                                    <option value="3rd day"></option>
+                                    <option value="4th day"></option>
+                                  </select>
+                                </th>                                
+                              </tr>
+                              <tr>
+                                <td>Temperature:</td>
+                                <td id="temp"></td>                                      
+                              </tr>
+                              <tr>
+                                <td>Current Weather:</td>
+                                <td id="currentWeather"></td> 
+                              </tr>
+                              <tr>
+                                <td>Wind:</td> 
+                                <td id="wind"></td>
+                              </tr>
+                              <tr>
+                                <td>Sunrise:</td>
+                                <td id="sunrise"></td>
+                              </tr>
+                              <tr>
+                                <td>Sunset:</td>
+                                <td id="sunset"></td>
+                              </tr>
+                              <tr>
+                                <td>Humidity:</td>
+                                <td id="humidity"></td>
+                              </tr>
+                            </tbody>
+                          </table>
                         </div>
                       </div>
                     </div>
