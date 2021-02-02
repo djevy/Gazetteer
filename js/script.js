@@ -108,6 +108,27 @@ chosenCountry.prop('selectedIndex', 0);
 
 //AJAX FUNCTIONS:
 
+//Millseconds to Time
+function msToTime(duration) {
+    var milliseconds = parseInt((duration % 1000) / 100),
+      seconds = Math.floor((duration / 1000) % 60),
+      minutes = Math.floor((duration / (1000 * 60)) % 60),
+      hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+  
+    hours = (hours < 10) ? "0" + hours : hours;
+    minutes = (minutes < 10) ? "0" + minutes : minutes;
+    seconds = (seconds < 10) ? "0" + seconds : seconds;
+  
+    return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
+  }
+
+
+  var currentDate = Date.today();
+  var thirdDay = (2).day().fromNow();  
+  var fourthDay = (3).day().fromNow() ;
+  $("#thirdDay").html(thirdDay);
+  $("#fourthDay").html(fourthDay);
+
 //Weather
 $('#practice').click(function(){
     $.ajax({
@@ -123,10 +144,15 @@ $('#practice').click(function(){
             if (result.status.name == "ok") {
                 // $('#city').html(result['data']['countryName']);
                 $('#temp').html(result['data']['current']['temp']+" ℃");
-                $('#currentWeather').html(result['data']['current']['weather']['0']['icon']);
-                $('#wind').html(result['data']['current']['wind_speed'] + ' ' + result['data']['current']['wind_deg']);
-                $('#sunrise').html(result['data']['current']['sunrise']);
-                $('#sunset').html(result['data']['current']['sunset']);
+                var icon = result['data']['current']['weather']['0']['icon'];
+                $('#currentWeather').html(result['data']['current']['weather']['0']['description']);
+                $('#weatherIcon').attr( "src", "http://openweathermap.org/img/wn/" + icon + "@2x.png");
+                $('#wind').html(result['data']['current']['wind_speed'] + ' meter/sec ' + result['data']['current']['wind_deg']);
+
+
+                var sunrise = result['data']['current']['sunrise'];
+                $('#sunrise').html((result['data']['current']['sunrise']));
+                $('#sunset').html(msToTime(result['data']['current']['sunset']));
                 $('#humidity').html(result['data']['current']['humidity'] + ' %');
             }
         },

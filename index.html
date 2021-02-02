@@ -101,8 +101,8 @@
                                   <select class="selectOption" name="day" id="day">
                                     <option value="Today">Today</option>
                                     <option value="Tomorrow">Tomorrow</option>
-                                    <option value="3rd day"></option>
-                                    <option value="4th day"></option>
+                                    <option id="thirdDay" value="3rd day"></option>
+                                    <option id="fourthDay" value="4th day"></option>
                                   </select>
                                 </th>                                
                               </tr>
@@ -112,7 +112,7 @@
                               </tr>
                               <tr>
                                 <td>Current Weather:</td>
-                                <td id="currentWeather"></td> 
+                                <td id="currentWeather"> <img id="weatherIcon" alt="weather icon"></td> 
                               </tr>
                               <tr>
                                 <td>Wind:</td> 
@@ -202,6 +202,7 @@
         <!--Preloader, needs work-->
         <div id="preloader"> </div>
 
+    <script type="text/javascript" src="js/datetime/date-en-GB.js"></script>
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/2ee2e70f6f.js" crossorigin="anonymous"></script>
