@@ -93,16 +93,20 @@
                                 <th id="city" scope="col"></th>
                               </tr>
                             </thead>
-                            <tbody>
+                            <tbody id=weatherBody>
                               <tr>
-                                <th colspan="2">
-                                  <select class="selectDate" name="day" id="day">
-                                    <option id="today" value="Today">Today</option>
-                                    <option id="tomorrow" value="Tomorrow">Tomorrow</option>
-                                    <option id="thirdDay" value="3rd day"></option>
-                                    <option id="fourthDay" value="4th day"></option>
-                                  </select>
-                                </th>                                
+                                <th>
+                                <nav id="dayNav" class=".justify-content-center">
+                                  <a class="nav-link" id="day1" href="javascript:void(0)">Today</a>
+                                  <a class="nav-link" id="day2" href="javascript:void(0)">Tomorrow</a>
+                                </nav>
+                                </th> 
+                                <th>
+                                <nav>
+                                  <a class="nav-link" id="day3" href="javascript:void(0)"></a>
+                                  <a class="nav-link" id="day4" href="javascript:void(0)"></a>
+                                </nav>
+                                </th>
                               </tr>
                               <tr>
                                 <td>Temperature:</td>
@@ -128,6 +132,24 @@
                                 <td>Humidity:</td>
                                 <td id="humidity"></td>
                               </tr>
+                              <tr class="weatherHide">
+                                <td colspan="2">Every 3 hours:</td>
+                              </tr>
+                              <tr class="weatherHide">
+                                <td id='hour1'></td>
+                                <td id="hourWeather1"> <img id="weatherIcon" alt="weather icon" src=""></td>
+                              </tr>
+                              <tr>
+                                <td id='hour2'></td>
+                                <td id="hourWeather2"> <img id="weatherIcon" alt="weather icon" src=""></td> </tr>
+                              <tr class="weatherHide">
+                                <td id='hour3'></td>
+                                <td id="hourWeather3"> <img id="weatherIcon" alt="weather icon" src=""></td>
+                              </tr>
+                              <tr>
+                                <td id='hour4'></td>
+                                <td id="hourWeather4"> <img id="weatherIcon" alt="weather icon" src=""></td>
+                              </tr>                               
                             </tbody>
                           </table>
                         </div>

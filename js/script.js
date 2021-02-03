@@ -26,7 +26,7 @@ tiles.addTo(mymap);
 var marker = L.marker([51.6, -0.09]).addTo(mymap);
 
 
-//Pagination
+//Page navigation
 var totalNumOfPages = $('#accordion .card').length;
 
 $(".pagination").append("<li class='current-page page-item active'><a class='page-link'href='javascript:void(0)'>1</a></li>")
@@ -130,8 +130,8 @@ function msToTime(duration) {
  //Days
 var thirdDay = moment().add(2, 'days').format('dddd');  
 var fourthDay = moment().add(3, 'days').format('dddd');   ;
-$("#thirdDay").html(thirdDay);
-$("#fourthDay").html(fourthDay);
+$("#day3").html(thirdDay);
+$("#day4").html(fourthDay);
 
   //Direction:
 function direction(i) {
@@ -186,53 +186,118 @@ $(window).on('load',function(){
             if (result.status.name == "ok") {
                 // $('#city').html(result['data']['countryName']);
 
-                let selectedDate = $("select.selectDate").find("option:selected").text();
+                //Onload:
+                $('#temp').html(result['data']['current']['temp']+" ℃");
+                var icon = result['data']['current']['weather']['0']['icon'];
+                $('#currentWeather').append(result['data']['current']['weather']['0']['description']);
+                var weatherUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+                $('#weatherIcon').attr("src", weatherUrl);
+                $('#wind').html(result['data']['current']['wind_speed'] + ' meter/sec ' + direction(result['data']['current']['wind_deg']));
+                var sunrise = moment(result['data']['current']['sunrise']*1000).format("HH:mm");
+                $('#sunrise').html(sunrise);
+                var sunset = moment(result['data']['current']['sunset']*1000).format("HH:mm");
+                $('#sunset').html(sunset);
+                $('#humidity').html(result['data']['current']['humidity'] + ' %');
+                $('#hour1').append(result['data']['hourly']['0']['weather']['0']['description']);
+                $('#hour2').append(result['data']['hourly']['2']['weather']['0']['description']);
+                $('#hour3').append(result['data']['hourly']['5']['weather']['0']['description']);
+                $('#hour4').append(result['data']['hourly']['8']['weather']['0']['description']);
+                var icon1 = result['data']['hourly']['0']['weather']['0']['icon'];
+                var icon2 = result['data']['hourly']['2']['weather']['0']['icon'];
+                var icon3 = result['data']['hourly']['5']['weather']['0']['icon'];
+                var icon4 = result['data']['hourly']['8']['weather']['0']['icon'];
+                var weatherUrl1 = "http://openweathermap.org/img/wn/" + icon1 + "@2x.png";
+                var weatherUrl2 = "http://openweathermap.org/img/wn/" + icon2 + "@2x.png";
+                var weatherUrl3 = "http://openweathermap.org/img/wn/" + icon3 + "@2x.png";
+                var weatherUrl4 = "http://openweathermap.org/img/wn/" + icon4 + "@2x.png";
+                $('#hourWeather1').attr("src", weatherUrl1);
+                $('#hourWeather2').attr("src", weatherUrl2);
+                $('#hourWeather3').attr("src", weatherUrl3);
+                $('#hourWeather4').attr("src", weatherUrl4);
 
-                
-                console.log(selectedDate);
-                    
                 //Today
-                if(selectedDate === 'Today'){
+                $("#day1").on('click', function(){
+                    $('.weatherHide').show();
+                    $("#temp").empty();
+                    $("#currentWeather").empty();
+                    $("#wind").empty();
+                    $("#sunrise").empty();
+                    $("#sunset").empty();
+                    $("#humidity").empty();
+
                     $('#temp').html(result['data']['current']['temp']+" ℃");
                     var icon = result['data']['current']['weather']['0']['icon'];
-                    $('#currentWeather').append(result['data']['current']['weather']['0']['description']);
+                    $('#currentWeather').append("<img id='weatherIcon' alt='weather icon' src=''></img>" + result['data']['current']['weather']['0']['description']);
                     var weatherUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
-                    console.log(weatherUrl);
                     $('#weatherIcon').attr("src", weatherUrl);
                     $('#wind').html(result['data']['current']['wind_speed'] + ' meter/sec ' + direction(result['data']['current']['wind_deg']));
-
                     var sunrise = moment(result['data']['current']['sunrise']*1000).format("HH:mm");
-                    console.log(sunrise);
                     $('#sunrise').html(sunrise);
                     var sunset = moment(result['data']['current']['sunset']*1000).format("HH:mm");
                     $('#sunset').html(sunset);
-
                     $('#humidity').html(result['data']['current']['humidity'] + ' %');
-                };
-             
-               
+                });
+            
+            
                 //Tomorrow
-                if($('#tomorrow')){
-                    $('#temp').html(result['data']['current']['temp']+" ℃");
-                    var icon = result['data']['current']['weather']['0']['icon'];
-                    $('#currentWeather').append(result['data']['current']['weather']['0']['description']);
+                $("#day2").on('click', function(){
+                    $('.weatherHide').hide();
+                    $('#temp').html("Max: " + result['data']['daily'][1]['temp']['max'] +" ℃ \n" + "Min: "  + result['data']['daily'][1]['temp']['min'] + " ℃");
+                    var icon = result['data']['daily'][1]['weather']['0']['icon'];
+                    $('#dailyWeather').append(result['data']['daily'][1]['weather']['0']['description']);
                     var weatherUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
                     console.log(weatherUrl);
                     $('#weatherIcon').attr("src", weatherUrl);
-                    $('#wind').html(result['data']['current']['wind_speed'] + ' meter/sec ' + direction(result['data']['current']['wind_deg']));
+                    $('#wind').html(result['data']['daily'][1]['wind_speed'] + ' meter/sec ' + direction(result['data']['daily'][1]['wind_deg']));
 
-                    var sunrise = moment(result['data']['current']['sunrise']*1000).format("HH:mm");
+                    var sunrise = moment(result['data']['daily'][1]['sunrise']*1000).format("HH:mm");
                     console.log(sunrise);
                     $('#sunrise').html(sunrise);
-                    var sunset = moment(result['data']['current']['sunset']*1000).format("HH:mm");
+                    var sunset = moment(result['data']['daily'][1]['sunset']*1000).format("HH:mm");
                     $('#sunset').html(sunset);
 
-                    $('#humidity').html(result['data']['current']['humidity'] + ' %');
-                };
+                    $('#humidity').html(result['data']['daily'][1]['humidity'] + ' %');
+                });
 
                 //Third Day
+                $("#day3").on('click', function(){
+                    $('.weatherHide').hide();
+                    $('#temp').html("Max: " + result['data']['daily'][2]['temp']['max'] +" ℃ \n" + "Min: "  + result['data']['daily'][2]['temp']['min'] + " ℃");
+                    var icon = result['data']['daily'][2]['weather']['0']['icon'];
+                    $('#dailyWeather').append(result['data']['daily'][2]['weather']['0']['description']);
+                    var weatherUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+                    console.log(weatherUrl);
+                    $('#weatherIcon').attr("src", weatherUrl);
+                    $('#wind').html(result['data']['daily'][2]['wind_speed'] + ' meter/sec ' + direction(result['data']['daily'][2]['wind_deg']));
+
+                    var sunrise = moment(result['data']['daily'][2]['sunrise']*1000).format("HH:mm");
+                    console.log(sunrise);
+                    $('#sunrise').html(sunrise);
+                    var sunset = moment(result['data']['daily'][2]['sunset']*1000).format("HH:mm");
+                    $('#sunset').html(sunset);
+
+                    $('#humidity').html(result['data']['daily'][2]['humidity'] + ' %');
+                });
 
                 //Fourth Day
+                $("#day4").on('click', function(){
+                    $('.weatherHide').hide();
+                    $('#temp').html("Max: " + result['data']['daily'][3]['temp']['max'] +" ℃ \n" + "Min: "  + result['data']['daily'][3]['temp']['min'] + " ℃");
+                    var icon = result['data']['daily'][3]['weather']['0']['icon'];
+                    $('#dailyWeather').append(result['data']['daily'][3]['weather']['0']['description']);
+                    var weatherUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+                    console.log(weatherUrl);
+                    $('#weatherIcon').attr("src", weatherUrl);
+                    $('#wind').html(result['data']['daily'][3]['wind_speed'] + ' meter/sec ' + direction(result['data']['daily'][3]['wind_deg']));
+
+                    var sunrise = moment(result['data']['daily'][3]['sunrise']*1000).format("HH:mm");
+                    console.log(sunrise);
+                    $('#sunrise').html(sunrise);
+                    var sunset = moment(result['data']['daily'][3]['sunset']*1000).format("HH:mm");
+                    $('#sunset').html(sunset);
+
+                    $('#humidity').html(result['data']['daily'][3]['humidity'] + ' %');
+                });                
                 
             }
         },
