@@ -210,10 +210,10 @@ $(window).on('load',function(){
                 var weatherUrl2 = "http://openweathermap.org/img/wn/" + icon2 + "@2x.png";
                 var weatherUrl3 = "http://openweathermap.org/img/wn/" + icon3 + "@2x.png";
                 var weatherUrl4 = "http://openweathermap.org/img/wn/" + icon4 + "@2x.png";
-                $('#hourWeather1').attr("src", weatherUrl1);
-                $('#hourWeather2').attr("src", weatherUrl2);
-                $('#hourWeather3').attr("src", weatherUrl3);
-                $('#hourWeather4').attr("src", weatherUrl4);
+                $('#weatherIcon1').attr("src", weatherUrl1);
+                $('#weatherIcon2').attr("src", weatherUrl2);
+                $('#weatherIcon3').attr("src", weatherUrl3);
+                $('#weatherIcon4').attr("src", weatherUrl4);
 
                 //Today
                 $("#day1").on('click', function(){
