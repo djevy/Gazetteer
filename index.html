@@ -85,8 +85,6 @@
                       </div>
                       <!-- Information Panel -->
                       <div id="collapseTwo" class="collapse show row infoPanel" aria-labelledby="headingTwo" data-parent="#accordion">
-                        <button id='practice'>Practice</button>
-
                         <div class="card-body col-12">
                           <table class="table table-dark table-striped">
                             <thead>
@@ -99,8 +97,8 @@
                               <tr>
                                 <th colspan="2">
                                   <select class="selectOption" name="day" id="day">
-                                    <option value="Today">Today</option>
-                                    <option value="Tomorrow">Tomorrow</option>
+                                    <option id="today" value="Today">Today</option>
+                                    <option id="tomorrow" value="Tomorrow">Tomorrow</option>
                                     <option id="thirdDay" value="3rd day"></option>
                                     <option id="fourthDay" value="4th day"></option>
                                   </select>
@@ -111,11 +109,11 @@
                                 <td id="temp"></td>                                      
                               </tr>
                               <tr>
-                                <td>Current Weather:</td>
-                                <td id="currentWeather"> <img id="weatherIcon" alt="weather icon"></td> 
+                                <td id="weatherCell" class=".align-middle">Current Weather:</td>
+                                <td id="currentWeather"> <img id="weatherIcon" alt="weather icon" src=""></td> 
                               </tr>
                               <tr>
-                                <td>Wind:</td> 
+                                <td>Wind Speed and Direction:</td> 
                                 <td id="wind"></td>
                               </tr>
                               <tr>
@@ -170,6 +168,7 @@
                         <!-- Information Panel -->
                         <div id="collapseFour" class="collapse show row infoPanel" aria-labelledby="headingFour" data-parent="#accordion">
                           <div class="card-body col-6">
+                            <button id='practice'>Practice</button>
                             Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird
                             on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table,
                             raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
@@ -202,7 +201,7 @@
         <!--Preloader, needs work-->
         <div id="preloader"> </div>
 
-    <script type="text/javascript" src="js/datetime/date-en-GB.js"></script>
+    <script src="node_modules/moment/moment.js"></script>
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/2ee2e70f6f.js" crossorigin="anonymous"></script>

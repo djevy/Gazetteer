@@ -120,17 +120,53 @@ function msToTime(duration) {
     seconds = (seconds < 10) ? "0" + seconds : seconds;
   
     return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
-  }
+}
 
+ //Days
+var thirdDay = moment().add(2, 'days').format('dddd');  
+var fourthDay = moment().add(3, 'days').format('dddd');   ;
+$("#thirdDay").html(thirdDay);
+$("#fourthDay").html(fourthDay);
 
-  var currentDate = Date.today();
-  var thirdDay = (2).day().fromNow();  
-  var fourthDay = (3).day().fromNow() ;
-  $("#thirdDay").html(thirdDay);
-  $("#fourthDay").html(fourthDay);
+  //Direction:
+function direction(i) {
+    if(i >= 349 && i <= 11){
+            return +i + "°: N";
+    } else if (i >= 12 && i <= 33) {
+            return +i + "°: NNE";
+    } else if (i >= 34 && i <= 56) {
+            return +i + "°: NE";
+    } else if (i >= 57 && i <= 78) {
+            return +i + "°: ENE";
+    } else if (i >= 79 && i <= 101) {
+            return +i + "°: E";
+    } else if (i >= 102 && i <= 123) {
+            return +i + "°: ESE";
+    } else if (i >= 124 && i <= 146) {
+            return +i + "°: SE";
+    } else if (i >= 147 && i <= 168) {
+            return +i + "°: SSE";
+    } else if (i >= 169 && i <= 191) {
+            return +i + "°: S";
+    } else if (i >= 192 && i <= 213) {
+            return +i + "°: SSW";
+    } else if (i >= 214 && i <= 236) {
+            return +i + "°: SW";
+    } else if (i >= 237 && i <= 258) {
+            return +i + "°: WSW";
+    } else if (i >= 259 && i <= 281) {
+            return +i + "°: W";
+    } else if (i >= 282 && i <= 303) {
+            return +i + "°: WNW";
+    } else if (i >= 304 && i <= 326) {
+            return +i + "°: NW";
+    } else if (i >= 327 && i <= 348) {
+            return +i + "°: NNW";
+    }
+};
 
 //Weather
-$('#practice').click(function(){
+$(window).on('load',function(){
     $.ajax({
         url: "php/openWeather.php",
         type: 'POST',
@@ -143,17 +179,26 @@ $('#practice').click(function(){
             console.log(result);
             if (result.status.name == "ok") {
                 // $('#city').html(result['data']['countryName']);
-                $('#temp').html(result['data']['current']['temp']+" ℃");
-                var icon = result['data']['current']['weather']['0']['icon'];
-                $('#currentWeather').html(result['data']['current']['weather']['0']['description']);
-                $('#weatherIcon').attr( "src", "http://openweathermap.org/img/wn/" + icon + "@2x.png");
-                $('#wind').html(result['data']['current']['wind_speed'] + ' meter/sec ' + result['data']['current']['wind_deg']);
+
+                if($('#today')){
+                    $('#temp').html(result['data']['current']['temp']+" ℃");
+                    var icon = result['data']['current']['weather']['0']['icon'];
+                    $('#currentWeather').append(result['data']['current']['weather']['0']['description']);
+                    var weatherUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+                    console.log(weatherUrl);
+                    $('#weatherIcon').attr("src", weatherUrl);
+                    $('#wind').html(result['data']['current']['wind_speed'] + ' meter/sec ' + direction(result['data']['current']['wind_deg']));
 
 
-                var sunrise = result['data']['current']['sunrise'];
-                $('#sunrise').html((result['data']['current']['sunrise']));
-                $('#sunset').html(msToTime(result['data']['current']['sunset']));
-                $('#humidity').html(result['data']['current']['humidity'] + ' %');
+                    var sunrise = moment(result['data']['current']['sunrise']).format("HH:mm");
+                    console.log(sunrise);
+                    $('#sunrise').html(sunrise);
+                    var sunset = moment(result['data']['current']['sunset']).format("HH:mm");
+                    $('#sunset').html(sunset);
+
+                    $('#humidity').html(result['data']['current']['humidity'] + ' %');
+                };
+                
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
