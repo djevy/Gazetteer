@@ -97,10 +97,15 @@ $.getJSON("php/data_json.json", function(data){
     console.log(data);
 });
 
-var chosenCountry = $('countrySelect');
-chosenCountry.empty();
-chosenCountry.append("<option selected='true'>Select a Country</option>");
-chosenCountry.prop('selectedIndex', 0);
+// var chosenCountry = $('countrySelect');
+// chosenCountry.empty();
+// chosenCountry.append("<option selected='true'>Select a Country</option>");
+// chosenCountry.prop('selectedIndex', 0);
+
+// $("select.country").change(function(){
+//     var selectedCountry = $(this).children("option:selected").val();
+//     alert("You have selected the country - " + selectedCountry);
+// });
 
 
 
@@ -165,8 +170,9 @@ function direction(i) {
     }
 };
 
-//Weather
+
 $(window).on('load',function(){
+    //Weather
     $.ajax({
         url: "php/openWeather.php",
         type: 'POST',
@@ -180,7 +186,13 @@ $(window).on('load',function(){
             if (result.status.name == "ok") {
                 // $('#city').html(result['data']['countryName']);
 
-                if($('#today')){
+                let selectedDate = $("select.selectDate").find("option:selected").text();
+
+                
+                console.log(selectedDate);
+                    
+                //Today
+                if(selectedDate === 'Today'){
                     $('#temp').html(result['data']['current']['temp']+" ℃");
                     var icon = result['data']['current']['weather']['0']['icon'];
                     $('#currentWeather').append(result['data']['current']['weather']['0']['description']);
@@ -189,15 +201,38 @@ $(window).on('load',function(){
                     $('#weatherIcon').attr("src", weatherUrl);
                     $('#wind').html(result['data']['current']['wind_speed'] + ' meter/sec ' + direction(result['data']['current']['wind_deg']));
 
-
-                    var sunrise = moment(result['data']['current']['sunrise']).format("HH:mm");
+                    var sunrise = moment(result['data']['current']['sunrise']*1000).format("HH:mm");
                     console.log(sunrise);
                     $('#sunrise').html(sunrise);
-                    var sunset = moment(result['data']['current']['sunset']).format("HH:mm");
+                    var sunset = moment(result['data']['current']['sunset']*1000).format("HH:mm");
                     $('#sunset').html(sunset);
 
                     $('#humidity').html(result['data']['current']['humidity'] + ' %');
                 };
+             
+               
+                //Tomorrow
+                if($('#tomorrow')){
+                    $('#temp').html(result['data']['current']['temp']+" ℃");
+                    var icon = result['data']['current']['weather']['0']['icon'];
+                    $('#currentWeather').append(result['data']['current']['weather']['0']['description']);
+                    var weatherUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+                    console.log(weatherUrl);
+                    $('#weatherIcon').attr("src", weatherUrl);
+                    $('#wind').html(result['data']['current']['wind_speed'] + ' meter/sec ' + direction(result['data']['current']['wind_deg']));
+
+                    var sunrise = moment(result['data']['current']['sunrise']*1000).format("HH:mm");
+                    console.log(sunrise);
+                    $('#sunrise').html(sunrise);
+                    var sunset = moment(result['data']['current']['sunset']*1000).format("HH:mm");
+                    $('#sunset').html(sunset);
+
+                    $('#humidity').html(result['data']['current']['humidity'] + ' %');
+                };
+
+                //Third Day
+
+                //Fourth Day
                 
             }
         },
