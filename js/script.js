@@ -9,6 +9,8 @@ $(window).on('load', function () {
 
 //Creating a map:
 const mymap = L.map('map').setView([51.505, -0.09],4);
+
+countryname = $(".selectOption option:selected").text();
 applyCountryBorder(mymap, "United Kingdom");
 
 function applyCountryBorder(mymap, countryname) {
