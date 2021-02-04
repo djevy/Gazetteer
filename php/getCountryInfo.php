@@ -1,12 +1,12 @@
 <?php
 
-$executionStartTime = microtime(true) / 1000;
+    $executionStartTime = microtime(true) / 1000;
 
-$username = "djevy";
+    $username = "djevy";
 
-$url ="https://api.geonames.org/countryInfoCSV?&country=" . $_REQUEST['country']  . "&username=" . $username;
-
-//CURL
+    $url ="http://api.geonames.org/countryInfoJSON?formatted=true&lang=en&country=" . $_REQUEST['country']  . "&username=" . $username . "&style=full";
+    
+    //CURL
     //1.Initalise a new cURL resource(ch= curl handle)
     $ch = curl_init();
 
@@ -41,7 +41,7 @@ $url ="https://api.geonames.org/countryInfoCSV?&country=" . $_REQUEST['country']
     //Show excution time:
     $output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
     //store the string of results in 'data':
-    $output['data'] = $decode;
+    $output['data'] = $decode['geonames'];
     
     //Content-type specifies the media type of the underlying data:
     header('Content-Type: application/json; charset=UTF-8');
