@@ -203,7 +203,7 @@ function direction(i) {
     }
 };
 
-
+// $("#goBtn").on('click',function() {  };)
 $(window).on('load',function(){
     
     //Country Info
@@ -220,13 +220,11 @@ $(window).on('load',function(){
             console.log(result);
 
             if (result.status.name == "ok") {
-
-                $('#txtContinent').html(result['data'][0]['continent']);
-                $('#txtCapital').html(result['data'][0]['capital']);
-                $('#txtLanguages').html(result['data'][0]['languages']);
-                $('#txtPopulation').html(result['data'][0]['population']);
-                $('#txtArea').html(result['data'][0]['areaInSqKm']);
-
+                $("#countryName").html(result['data'][0]['countryName']);
+                $('#continent').html(result['data'][0]['continent']);
+                $('#capital').html(result['data'][0]['capital']);
+                $('#area').html(result['data'][0]['areaInSqKm'] + " km<sup>2</sup>");
+                $('#population').html(result['data'][0]['population']);
             }
         
         },

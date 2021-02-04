@@ -32,10 +32,11 @@
                     <h1 id="title" class="text-black d-inline pl-1">Gazetteer</h1>
                 </div>
                 <div class="my-col  col-6 col-md-12 p-0 my-3 mx-auto"> 
-                    <select name="country" class="selectOption">
-                      <option value="United Kingdom">United Kingdom</option>
-                      <option value="France"> France</option>
+                    <select name="country" id="selectOption" class="selectOption">
+                      <option value="UK">United Kingdom</option>
+                      <option value="FR">France</option>
                     </select>
+                    <button type="submit" id="goBtn"  style="width: 40px; border-radius: 5px;">Go</button>
                 </div>
             </div>
         </nav>
@@ -65,16 +66,38 @@
                       </div>
                       <!-- Information Panel -->
                       <div id="collapseOne" class="collapse show row infoPanel" aria-labelledby="headingOne" data-parent="#accordion">
-                        <div class="card-body col-6">                            
-                          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird
-                          on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table,
-                          raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                        <div id="infoArea" class="card-body col-12">                            
+                          <table class="table table-dark table-stripped">
+                            <thead>
+                              <tr>
+                                <th id="countryName"></th>
+                                <th id="flag"></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>Continent:</td>
+                                <td id="continent"></td>
+                              </tr>
+                              <tr>
+                                <td>Capital City:</td>
+                                <td id="capital"></td>
+                              </tr>
+                              <tr>
+                                <td>Area:</td>
+                                <td id="area"></td>
+                              </tr>
+                              <tr>
+                                <td>Population:</td>
+                                <td id="population"></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <div id="wiki">
+
+                          </div>
                         </div>
-                        <div class="card-body col-6">
-                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird
-                            on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table,
-                            raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                        </div>
+                        
                       </div>
                     </div>
                     <!-- Weather -->
