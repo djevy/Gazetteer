@@ -9,7 +9,34 @@ $(window).on('load', function () {
 
 //Creating a map:
 const mymap = L.map('map').setView([51.505, -0.09],4);
+applyCountryBorder(mymap, "United Kingdom");
 
+function applyCountryBorder(mymap, countryname) {
+  jQuery
+    .ajax({
+      type: "GET",
+      dataType: "json",
+      url:
+        "https://nominatim.openstreetmap.org/search?country=" +
+        countryname.trim() +
+        "&polygon_geojson=1&format=json"
+    })
+    .then(function(data) {
+      /*const latLngs = L.GeoJSON.coordsToLatLngs(data[0].geojson.coordinates,2) 
+      L.polyline(latLngs, {
+        color: "green",
+        weight: 14,
+        opacity: 1
+      }).addTo(map);*/
+
+      L.geoJSON(data[0].geojson, {
+        color: "#9effd3",
+        weight: 3,
+        opacity: 0.7,
+        fillOpacity: 0.0 
+      }).addTo(mymap);
+    });
+}
 const attribution = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 
 const tileUrl = 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}{r}.{ext}';
@@ -302,5 +329,10 @@ $(window).on('load',function(){
         error: function(jqXHR, textStatus, errorThrown) {
             alert("There has been an error!")
         }
+    });
+
+    //Exchange
+    $.ajax({
+
     });
 });
