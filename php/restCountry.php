@@ -3,8 +3,8 @@
     $executionStartTime = microtime(true) / 1000;
 
     
-    $url ="https://restcountries.eu/rest/v2/name/" . $_REQUEST['country'] ."?fullText=true"
-    
+    $url = "https://restcountries.eu/rest/v2/alpha/" . $_REQUEST['country'] . "?fullText=true";
+
     //CURL
     //1.Initalise a new cURL resource(ch= curl handle)
     $ch = curl_init();
@@ -40,7 +40,7 @@
     //Show excution time:
     $output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
     //store the string of results in 'data':
-    $output['data'] = $decode[];
+    $output['data'] = $decode;
     
     //Content-type specifies the media type of the underlying data:
     header('Content-Type: application/json; charset=UTF-8');

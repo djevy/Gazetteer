@@ -206,14 +206,15 @@ function direction(i) {
 // $("#goBtn").on('click',function() {  };)
 $(window).on('load',function(){
     
-    //Country Info
+    //Country Info:
+    //getCountryInfo-
     $.ajax({
         url: "php/getCountryInfo.php",
         type: 'POST',
         dataType: 'json',
         data: {
-            // country: $('#selectOption').val(),
-            country: 'fr'
+            country: $('#selectOption').val(),
+            //country: 'fr'
         },
         success: function(result) {
 
@@ -221,7 +222,6 @@ $(window).on('load',function(){
 
             if (result.status.name == "ok") {
                 $("#countryName").html(result['data'][0]['countryName']);
-                $('#continent').html(result['data'][0]['continent']);
                 $('#capital').html(result['data'][0]['capital']);
                 $('#area').html(result['data'][0]['areaInSqKm'] + " km<sup>2</sup>");
                 $('#population').html(result['data'][0]['population']);
@@ -232,6 +232,32 @@ $(window).on('load',function(){
             // your error code
         }
     }); 
+
+    //restCountry-
+    $.ajax({
+        url: "php/restCountry.php",
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            country: $('#selectOption').val(),
+            //country: 'fr'
+        },
+        success: function(result) {
+
+            console.log(result);
+
+            if (result.status.name == "ok") {
+                $("#flag").attr("src", result['data']['flag']);
+                $('#currency').html(result['data']['currencies']['0']['name'] + " - " + result['data']['currencies']['0']['symbol']);
+                $('#continent').html(result['data']['region']);
+            }
+        
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // your error code
+        }
+    }); 
+
     //Weather
     $.ajax({
         url: "php/openWeather.php",

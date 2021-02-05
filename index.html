@@ -33,7 +33,7 @@
                 </div>
                 <div class="my-col  col-6 col-md-12 p-0 my-3 mx-auto"> 
                     <select name="country" id="selectOption" class="selectOption">
-                      <option value="UK">United Kingdom</option>
+                      <option value="GB">United Kingdom</option>
                       <option value="FR">France</option>
                     </select>
                     <button type="submit" id="goBtn"  style="width: 40px; border-radius: 5px;">Go</button>
@@ -71,7 +71,7 @@
                             <thead>
                               <tr>
                                 <th id="countryName"></th>
-                                <th id="flag"></th>
+                                <th><img id="flag" alt="Country flag" style="width: 15vh;"></th>
                               </tr>
                             </thead>
                             <tbody>
@@ -90,6 +90,10 @@
                               <tr>
                                 <td>Population:</td>
                                 <td id="population"></td>
+                              </tr>
+                              <tr>
+                                <td>Currency:</td>
+                                <td id="currency"></td>
                               </tr>
                             </tbody>
                           </table>
