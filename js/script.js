@@ -205,6 +205,30 @@ function direction(i) {
 
 // $("#goBtn").on('click',function() {  };)
 $(window).on('load',function(){
+
+    //GeoDBCities
+    $.ajax({
+        url: "php/GeoDBCities.php",
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            //country: $('#selectOption option:selected').text(),
+        },
+        success: function(result) {
+
+            console.log(result);
+
+            if (result.status.name == "ok") {
+                // const {data:{query:}} = result;
+               // $("#wiki").html(result['data']['query']['pages'][0]['extract']);
+                
+            }
+        
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // your error code
+        }
+    }); 
     
     //Country Info:
     //getCountryInfo-
@@ -214,7 +238,6 @@ $(window).on('load',function(){
         dataType: 'json',
         data: {
             country: $('#selectOption').val(),
-            //country: 'fr'
         },
         success: function(result) {
 
@@ -240,7 +263,6 @@ $(window).on('load',function(){
         dataType: 'json',
         data: {
             country: $('#selectOption').val(),
-            //country: 'fr'
         },
         success: function(result) {
 
@@ -250,6 +272,30 @@ $(window).on('load',function(){
                 $("#flag").attr("src", result['data']['flag']);
                 $('#currency').html(result['data']['currencies']['0']['name'] + " - " + result['data']['currencies']['0']['symbol']);
                 $('#continent').html(result['data']['region']);
+            }
+        
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // your error code
+        }
+    }); 
+
+    //wikiApi-
+    $.ajax({
+        url: "php/wikiApi.php",
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            country: $('#selectOption option:selected').text(),
+        },
+        success: function(result) {            
+            console.log(result);
+
+            if (result.status.name == "ok") {
+                $("#sumTitle").append(result['data']['0']['title']);
+                $("#summary").html(result['data']['0']['summary']);
+                $("#wikipediaUrl").attr('href', result['data']['0']['wikipediaUrl']);
+                $("#wikipediaUrl").html(result['data']['0']['wikipediaUrl']);                
             }
         
         },
@@ -392,6 +438,24 @@ $(window).on('load',function(){
 
     //Exchange
     $.ajax({
+        url: "php/openExchangeRates.php",
+        type: 'POST',
+        dataType: 'json',
+        data: {
+           // country: $('#selectOption option:selected').text()
+        },
+        success: function(result) {
 
+            console.log(result);
+
+            if (result.status.name == "ok") {
+                //$("#wiki").html(result['data']['query']['pages'][0]['extract']);
+                
+            }
+        
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // your error code
+        }
     });
 });
