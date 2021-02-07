@@ -443,6 +443,7 @@ $(window).on('load',function(){
         dataType: 'json',
         data: {
            // country: $('#selectOption option:selected').text()
+           base: 'GBP',
         },
         success: function(result) {
 
