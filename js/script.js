@@ -123,7 +123,14 @@ $("#previous-page").on("click", function() {
     }
 })
 
-
+//Exchange
+var currencies = ["AUD","BGN","BRL","CAD","CHF","CNY","CZK","DKK","EUR","GBP","HRK","HUF","IDR","ILS","INR","ISK","JPY","KRW","MXN","MYR","NOK","NZD","PHP","PLN","RON","RUB","SEK","SGD","THB","TRY","USD","ZAR"];
+//Populate currencies -
+$('#select').empty();
+for (var i = 0; i <= currencies.length; i++) {
+    $('#from').append('<option value="' + currencies[i] + '">' + currencies[i] + '</option>')
+    $('#to').append('<option value="' + currencies[i] + '">' + currencies[i] + '</option>');
+}
 //API:
 
 $.getJSON("php/data_json.json", function(data){
@@ -436,21 +443,24 @@ $(window).on('load',function(){
         }
     });
 
+});
+
+$("#exchangeBtn").on('click', function(){
     //Exchange
     $.ajax({
         url: "php/openExchangeRates.php",
         type: 'POST',
         dataType: 'json',
         data: {
-           // country: $('#selectOption option:selected').text()
-           base: 'GBP',
+           base: $('#from option:selected').text(),
+           //base: 'GBP',
         },
         success: function(result) {
 
             console.log(result);
 
             if (result.status.name == "ok") {
-                //$("#wiki").html(result['data']['query']['pages'][0]['extract']);
+                $("#exchangeResult").html(result['data']['rates'][$('#to option:selected').text()] * $('#value').val());
                 
             }
         

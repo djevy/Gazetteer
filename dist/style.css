@@ -10885,6 +10885,10 @@ a.text-dark:hover, a.text-dark:focus {
   }
 }
 
+body {
+  background-color: black;
+}
+
 #header {
   margin: auto;
 }
@@ -11007,6 +11011,22 @@ table {
 #summary {
   font-size: small;
   padding: 10px;
+}
+
+#value {
+  width: 75%;
+}
+
+#exchangeResult {
+  -webkit-box-flex: row;
+      -ms-flex: row;
+          flex: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 @media (min-width: 768px) {

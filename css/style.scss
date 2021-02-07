@@ -1,5 +1,5 @@
 $theme-colors:(
-    "primary":#9effd3
+    "primary": #004e38
 );
 
 
@@ -51,6 +51,9 @@ $theme-colors:(
     }
 }
 
+body{
+    background-color: black;
+}
 // Header
 #header{
     margin: auto;
@@ -61,11 +64,15 @@ $theme-colors:(
     align-self: center;
 }
 .selectOption{
-    width: 100%;
+    
     border-radius: 5px;
     border: solid black;
     margin:auto;
     text-align: center;
+}
+#goBtn{
+    width: 40px; 
+    border-radius: 5px;
 }
 .my-icon{
     color: black;
@@ -110,6 +117,7 @@ button{
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    background-color: #b5a687;
 }
 #pageNav{
     position: absolute;
@@ -128,6 +136,7 @@ button{
     max-height: 58vh !important;
     overflow-y: scroll !important;
     text-align: center;
+    background-color: #b5a687;
 }
 
 .card-header.collapsed {
@@ -140,6 +149,9 @@ button{
     color:white;
     text-align: center;
 }
+#flag{
+    width: 15vh;
+}
 table{
     margin: 0;
 }
@@ -147,6 +159,22 @@ table{
     padding: 0.75rem;
     vertical-align: middle;
 }
+#summary{
+    font-size:small; 
+    padding:10px;
+} 
+
+//Exchange
+#value{
+    width: 75%;
+}
+#exchangeResult{
+    flex: row;
+    justify-content: center;
+    align-items: center;
+}
+
+
 // Media Queries:
 //576px
 // @include media-breakpoint-up(sm) { ... }
