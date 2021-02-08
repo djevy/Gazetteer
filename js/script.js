@@ -18,7 +18,7 @@ function applyCountryBorder(mymap, countryname) {
         dataType: "json",
         url:
           "https://nominatim.openstreetmap.org/search?country=" +
-          countryname.trim() +
+          countryname +
           "&polygon_geojson=1&format=json"
       })
       .then(function(data) {
@@ -132,34 +132,13 @@ for (var i = 0; i <= currencies.length; i++) {
     $('#to').append('<option value="' + currencies[i] + '">' + currencies[i] + '</option>');
 }
 //API:
-
-// $.getJSON("php/data_json.json", function(data){
-//     console.log(data);
-//     for (var i = 0; i <= data[countries].length; i++) {
-//         console.log(i);
-//         $('#selectOption').append('<option value="' + data[countries][i.toString()]['Code'] + '">' + countries[i.toString()]['Name'] + '</option>');
-//     }
-// });
-
+//Fill countries-
 $.getJSON("php/allCountries.json", function(data) {
     console.log(data);
     for (var i = 0; i <= data.length; i++) {
         $('#selectOption').append("<option value=" + data[i.toString()]['alpha-2'] + ">" + data[i]['name'] + "</option>");
     }
 });
-
-// var chosenCountry = $('countrySelect');
-// chosenCountry.empty();
-// chosenCountry.append("<option selected='true'>Select a Country</option>");
-// chosenCountry.prop('selectedIndex', 0);
-
-// $("select.country").change(function(){
-//     var selectedCountry = $(this).children("option:selected").val();
-//     alert("You have selected the country - " + selectedCountry);
-// });
-
-
-
 
 
 //AJAX FUNCTIONS:
@@ -221,8 +200,13 @@ function direction(i) {
     }
 };
 
-// $("#goBtn").on('click',function() {  };)
+
+//On page load
 $(window).on('load',function(){
+
+    //Apply border
+    countryName = $("#selectOption").val();
+    applyCountryBorder(mymap, countryName);
 
     //GeoDBCities
     $.ajax({
@@ -461,6 +445,301 @@ $(window).on('load',function(){
         dataType: 'json',
         data: {
            country: $('#selectOption option:selected').val(),
+        },
+        success: function(result) {
+
+            console.log(result);
+            
+            if (result.status.name == "ok") {
+                $("#articleTitle").html(result['data']['articles']['0']['title']);
+                $("#articleDescription").html(result['data']['articles']['0']['description']);
+                $("#articleContent").html(result['data']['articles']['0']['content']);
+                $("#articleImg").attr("src", result['data']['articles']['0']['urlToImage']);
+                $("#articleAuthor").html(result['data']['articles']['0']['author']);
+                $("#publishedAt").html(result['data']['articles']['0']['publishedAt']);
+                $("#articleUrl").html(result['data']['articles']['0']['url']);
+                $("#articleUrl").attr("href", result['data']['articles']['0']['url']);
+            }
+            var i = 0;
+            $("#nextArticle").on('click', function() {
+                i++;
+                if (result.status.name == "ok") {
+                    $("#articleTitle").html(result['data']['articles'][i]['title']);
+                    $("#articleDescription").html(result['data']['articles'][i]['description']);
+                    $("#articleContent").html(result['data']['articles'][i]['content']);
+                    $("#articleImg").attr("src", result['data']['articles'][i]['urlToImage']);
+                    $("#articleAuthor").html(result['data']['articles'][i]['author']);
+                    $("#publishedAt").html(result['data']['articles'][i]['publishedAt']);
+                    $("#articleUrl").html(result['data']['articles'][i]['url']);
+                    $("#articleUrl").attr("href", result['data']['articles'][i]['url']);
+                }
+            });
+            $("#previousArticle").on('click', function() {
+                i--;
+                if (result.status.name == "ok") {
+                    $("#articleTitle").html(result['data']['articles'][i]['title']);
+                    $("#articleDescription").html(result['data']['articles'][i]['description']);
+                    $("#articleContent").html(result['data']['articles'][i]['content']);
+                    $("#articleImg").attr("src", result['data']['articles'][i]['urlToImage']);
+                    $("#articleAuthor").html(result['data']['articles'][i]['author']);
+                    $("#publishedAt").html(result['data']['articles'][i]['publishedAt']);
+                    $("#articleUrl").html(result['data']['articles'][i]['url']);
+                    $("#articleUrl").attr("href", result['data']['articles'][i]['url']);
+                }
+            });
+        
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // your error code
+        }
+    });
+});
+
+
+//Select country
+$("#selectOption").change(function(){
+    
+    //Apply border
+    countryName = $("#selectOption").val();
+    applyCountryBorder(mymap, countryName);
+
+    //GeoDBCities
+    $.ajax({
+        url: "php/GeoDBCities.php",
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            //country: $('#selectOption option:selected').text(),
+        },
+        success: function(result) {
+
+            console.log(result);
+
+            if (result.status.name == "ok") {
+                // const {data:{query:}} = result;
+                // $("#wiki").html(result['data']['query']['pages'][0]['extract']);
+                
+            }
+        
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // your error code
+        }
+    }); 
+
+    //Country Info:
+    //getCountryInfo-
+    $.ajax({
+        url: "php/getCountryInfo.php",
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            country: $('#selectOption').val(),
+        },
+        success: function(result) {
+
+            console.log(result);
+
+            if (result.status.name == "ok") {
+                $("#countryName").html(result['data'][0]['countryName']);
+                $('#capital').html(result['data'][0]['capital']);
+                $('#area').html(result['data'][0]['areaInSqKm'] + " km<sup>2</sup>");
+                $('#population').html(result['data'][0]['population']);
+            }
+        
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // your error code
+        }
+    }); 
+
+    //restCountry-
+    $.ajax({
+        url: "php/restCountry.php",
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            country: $('#selectOption').val(),
+        },
+        success: function(result) {
+
+            console.log(result);
+
+            if (result.status.name == "ok") {
+                $("#flag").attr("src", result['data']['flag']);
+                $('#currency').html(result['data']['currencies']['0']['name'] + " - " + result['data']['currencies']['0']['symbol']);
+                $('#continent').html(result['data']['region']);
+            }
+        
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // your error code
+        }
+    }); 
+
+    //wikiApi-
+    $.ajax({
+        url: "php/wikiApi.php",
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            country: $('#selectOption option:selected').text(),
+        },
+        success: function(result) {            
+            console.log(result);
+
+            if (result.status.name == "ok") {
+                $("#sumTitle").append(result['data']['0']['title']);
+                $("#summary").html(result['data']['0']['summary']);
+                $("#wikipediaUrl").attr('href', result['data']['0']['wikipediaUrl']);
+                $("#wikipediaUrl").html(result['data']['0']['wikipediaUrl']);                
+            }
+        
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // your error code
+        }
+    }); 
+
+    //Weather:
+    $.ajax({
+        url: "php/openWeather.php",
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            lat: 51.6,
+            lon: -0.09
+        },
+        success: function(result) {
+            console.log(result);
+            if (result.status.name == "ok") {
+                // $('#city').html(result['data']['countryName']);
+
+                //Onload:
+                $('#temp').html(result['data']['current']['temp']+" ℃");
+                var icon = result['data']['current']['weather']['0']['icon'];
+                $('#currentWeather').append(result['data']['current']['weather']['0']['description']);
+                var weatherUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+                $('#weatherIcon').attr("src", weatherUrl);
+                $('#wind').html(result['data']['current']['wind_speed'] + ' meter/sec ' + direction(result['data']['current']['wind_deg']));
+                var sunrise = moment(result['data']['current']['sunrise']*1000).format("HH:mm");
+                $('#sunrise').html(sunrise);
+                var sunset = moment(result['data']['current']['sunset']*1000).format("HH:mm");
+                $('#sunset').html(sunset);
+                $('#humidity').html(result['data']['current']['humidity'] + ' %');
+                var time1 = moment(result['data']['hourly']['3']['dt']*1000).format("HH:mm");
+                var time2 = moment(result['data']['hourly']['6']['dt']*1000).format("HH:mm");
+                var time3 = moment(result['data']['hourly']['9']['dt']*1000).format("HH:mm");
+                var time4 = moment(result['data']['hourly']['12']['dt']*1000).format("HH:mm");
+                var temp1 = result['data']['hourly']['3']['temp'];
+                var temp2 = result['data']['hourly']['6']['temp'];
+                var temp3 = result['data']['hourly']['9']['temp'];
+                var temp4 = result['data']['hourly']['12']['temp'];
+                $('#hour1').append(result['data']['hourly']['3']['weather']['0']['description'] + " and " + temp1 + " ℃ at " + time1);
+                $('#hour2').append(result['data']['hourly']['6']['weather']['0']['description'] + " and " + temp2 + " ℃ at " + time2);
+                $('#hour3').append(result['data']['hourly']['9']['weather']['0']['description'] + " and " + temp3 + " ℃ at " + time3);
+                $('#hour4').append(result['data']['hourly']['12']['weather']['0']['description'] + " and " + temp4 + " ℃ at " + time4);
+                var icon1 = result['data']['hourly']['3']['weather']['0']['icon'];
+                var icon2 = result['data']['hourly']['6']['weather']['0']['icon'];
+                var icon3 = result['data']['hourly']['9']['weather']['0']['icon'];
+                var icon4 = result['data']['hourly']['12']['weather']['0']['icon'];
+                var weatherUrl1 = "http://openweathermap.org/img/wn/" + icon1 + "@2x.png";
+                var weatherUrl2 = "http://openweathermap.org/img/wn/" + icon2 + "@2x.png";
+                var weatherUrl3 = "http://openweathermap.org/img/wn/" + icon3 + "@2x.png";
+                var weatherUrl4 = "http://openweathermap.org/img/wn/" + icon4 + "@2x.png";
+                $('#weatherIcon1').attr("src", weatherUrl1);
+                $('#weatherIcon2').attr("src", weatherUrl2);
+                $('#weatherIcon3').attr("src", weatherUrl3);
+                $('#weatherIcon4').attr("src", weatherUrl4);
+
+                //Today
+                $("#day1").on('click', function(){
+                    $('.weatherHide').show();
+                    $("#temp").empty();
+                    $("#currentWeather").empty();
+                    $("#wind").empty();
+                    $("#sunrise").empty();
+                    $("#sunset").empty();
+                    $("#humidity").empty();
+                    $('#temp').html(result['data']['current']['temp']+" ℃");
+                    var icon = result['data']['current']['weather']['0']['icon'];
+                    $('#currentWeather').append("<img id='weatherIcon' alt='weather icon' src=''></img>" + result['data']['current']['weather']['0']['description']);
+                    var weatherUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+                    $('#weatherIcon').attr("src", weatherUrl);
+                    $('#wind').html(result['data']['current']['wind_speed'] + ' meter/sec ' + direction(result['data']['current']['wind_deg']));
+                    var sunrise = moment(result['data']['current']['sunrise']*1000).format("HH:mm");
+                    $('#sunrise').html(sunrise);
+                    var sunset = moment(result['data']['current']['sunset']*1000).format("HH:mm");
+                    $('#sunset').html(sunset);
+                    $('#humidity').html(result['data']['current']['humidity'] + ' %');
+                });
+            
+            
+                //Tomorrow
+                $("#day2").on('click', function(){
+                    $("#currentWeather").empty();
+                    $('.weatherHide').hide();
+                    $('#temp').html("Max: " + result['data']['daily'][1]['temp']['max'] +" ℃ \n" + "Min: "  + result['data']['daily'][1]['temp']['min'] + " ℃");
+                    var icon = result['data']['daily'][1]['weather']['0']['icon'];
+                    $('#currentWeather').append("<img id='weatherIcon' alt='weather icon' src=''></img>" + result['data']['daily'][1]['weather']['0']['description']);
+                    var weatherUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+                    $('#weatherIcon').attr("src", weatherUrl);
+                    $('#wind').html(result['data']['daily'][1]['wind_speed'] + ' meter/sec ' + direction(result['data']['daily'][1]['wind_deg']));
+                    var sunrise = moment(result['data']['daily'][1]['sunrise']*1000).format("HH:mm");
+                    $('#sunrise').html(sunrise);
+                    var sunset = moment(result['data']['daily'][1]['sunset']*1000).format("HH:mm");
+                    $('#sunset').html(sunset);
+                    $('#humidity').html(result['data']['daily'][1]['humidity'] + ' %');
+                });
+
+                //Third Day
+                $("#day3").on('click', function(){
+                    $("#currentWeather").empty();
+                    $('.weatherHide').hide();
+                    $('#temp').html("Max: " + result['data']['daily'][2]['temp']['max'] +" ℃ \n" + "Min: "  + result['data']['daily'][2]['temp']['min'] + " ℃");
+                    var icon = result['data']['daily'][2]['weather']['0']['icon'];
+                    $('#currentWeather').append("<img id='weatherIcon' alt='weather icon' src=''></img>" + result['data']['daily'][2]['weather']['0']['description']);
+                    var weatherUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+                    $('#weatherIcon').attr("src", weatherUrl);
+                    $('#wind').html(result['data']['daily'][2]['wind_speed'] + ' meter/sec ' + direction(result['data']['daily'][2]['wind_deg']));
+                    var sunrise = moment(result['data']['daily'][2]['sunrise']*1000).format("HH:mm");
+                    $('#sunrise').html(sunrise);
+                    var sunset = moment(result['data']['daily'][2]['sunset']*1000).format("HH:mm");
+                    $('#sunset').html(sunset);
+                    $('#humidity').html(result['data']['daily'][2]['humidity'] + ' %');
+                });
+
+                //Fourth Day
+                $("#day4").on('click', function(){
+                    $("#currentWeather").empty();
+                    $('.weatherHide').hide();
+                    $('#temp').html("Max: " + result['data']['daily'][3]['temp']['max'] +" ℃ \n" + "Min: "  + result['data']['daily'][3]['temp']['min'] + " ℃");
+                    var icon = result['data']['daily'][3]['weather']['0']['icon'];
+                    $('#currentWeather').append("<img id='weatherIcon' alt='weather icon' src=''></img>" + result['data']['daily'][3]['weather']['0']['description']);
+                    var weatherUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+                    $('#weatherIcon').attr("src", weatherUrl);
+                    $('#wind').html(result['data']['daily'][3]['wind_speed'] + ' meter/sec ' + direction(result['data']['daily'][3]['wind_deg']));
+                    var sunrise = moment(result['data']['daily'][3]['sunrise']*1000).format("HH:mm");
+                    $('#sunrise').html(sunrise);
+                    var sunset = moment(result['data']['daily'][3]['sunset']*1000).format("HH:mm");
+                    $('#sunset').html(sunset);
+                    $('#humidity').html(result['data']['daily'][3]['humidity'] + ' %');
+                });                
+                
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert("There has been an error!")
+        }
+    });
+
+    //News:
+    $.ajax({
+        url: "php/newsApi.php",
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            country: $('#selectOption option:selected').val(),
         },
         success: function(result) {
 
