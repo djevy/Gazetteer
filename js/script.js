@@ -128,13 +128,24 @@ var currencies = ["AUD","BGN","BRL","CAD","CHF","CNY","CZK","DKK","EUR","GBP","H
 //Populate currencies -
 $('#select').empty();
 for (var i = 0; i <= currencies.length; i++) {
-    $('#from').append('<option value="' + currencies[i] + '">' + currencies[i] + '</option>')
+    $('#from').append('<option value="' + currencies[i] + '">' + currencies[i] + '</option>');
     $('#to').append('<option value="' + currencies[i] + '">' + currencies[i] + '</option>');
 }
 //API:
 
-$.getJSON("php/data_json.json", function(data){
+// $.getJSON("php/data_json.json", function(data){
+//     console.log(data);
+//     for (var i = 0; i <= data[countries].length; i++) {
+//         console.log(i);
+//         $('#selectOption').append('<option value="' + data[countries][i.toString()]['Code'] + '">' + countries[i.toString()]['Name'] + '</option>');
+//     }
+// });
+
+$.getJSON("php/allCountries.json", function(data) {
     console.log(data);
+    for (var i = 0; i <= data.length; i++) {
+        $('#selectOption').append("<option value=" + data[i.toString()]['alpha-2'] + ">" + data[i]['name'] + "</option>");
+    }
 });
 
 // var chosenCountry = $('countrySelect');
@@ -450,7 +461,6 @@ $(window).on('load',function(){
         dataType: 'json',
         data: {
            country: $('#selectOption option:selected').val(),
-           //base: 'GBP',
         },
         success: function(result) {
 
