@@ -152,8 +152,11 @@ button{
 #flag{
     width: 15vh;
 }
-table{
+table 
+{
     margin: 0;
+    table-layout:fixed;
+    width:100%;
 }
 #weatherCell{
     padding: 0.75rem;
@@ -163,6 +166,16 @@ table{
     font-size:small; 
     padding:10px;
 } 
+
+//News 
+#articleImg{
+    float: right; 
+    width:150px;
+}
+.articleBtn{
+    display: inline-block;
+    width: 50%;
+}
 
 //Exchange
 #value{

@@ -11001,6 +11001,8 @@ button {
 
 table {
   margin: 0;
+  table-layout: fixed;
+  width: 100%;
 }
 
 #weatherCell {
@@ -11011,6 +11013,16 @@ table {
 #summary {
   font-size: small;
   padding: 10px;
+}
+
+#articleImg {
+  float: right;
+  width: 150px;
+}
+
+.articleBtn {
+  display: inline-block;
+  width: 50%;
 }
 
 #value {

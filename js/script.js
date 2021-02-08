@@ -311,7 +311,7 @@ $(window).on('load',function(){
         }
     }); 
 
-    //Weather
+    //Weather:
     $.ajax({
         url: "php/openWeather.php",
         type: 'POST',
@@ -443,6 +443,62 @@ $(window).on('load',function(){
         }
     });
 
+    //News:
+    $.ajax({
+        url: "php/newsApi.php",
+        type: 'POST',
+        dataType: 'json',
+        data: {
+           country: $('#selectOption option:selected').val(),
+           //base: 'GBP',
+        },
+        success: function(result) {
+
+            console.log(result);
+            
+            if (result.status.name == "ok") {
+                $("#articleTitle").html(result['data']['articles']['0']['title']);
+                $("#articleDescription").html(result['data']['articles']['0']['description']);
+                $("#articleContent").html(result['data']['articles']['0']['content']);
+                $("#articleImg").attr("src", result['data']['articles']['0']['urlToImage']);
+                $("#articleAuthor").html(result['data']['articles']['0']['author']);
+                $("#publishedAt").html(result['data']['articles']['0']['publishedAt']);
+                $("#articleUrl").html(result['data']['articles']['0']['url']);
+                $("#articleUrl").attr("href", result['data']['articles']['0']['url']);
+            }
+            var i = 0;
+            $("#nextArticle").on('click', function() {
+                i++;
+                if (result.status.name == "ok") {
+                    $("#articleTitle").html(result['data']['articles'][i]['title']);
+                    $("#articleDescription").html(result['data']['articles'][i]['description']);
+                    $("#articleContent").html(result['data']['articles'][i]['content']);
+                    $("#articleImg").attr("src", result['data']['articles'][i]['urlToImage']);
+                    $("#articleAuthor").html(result['data']['articles'][i]['author']);
+                    $("#publishedAt").html(result['data']['articles'][i]['publishedAt']);
+                    $("#articleUrl").html(result['data']['articles'][i]['url']);
+                    $("#articleUrl").attr("href", result['data']['articles'][i]['url']);
+                }
+            });
+            $("#previousArticle").on('click', function() {
+                i--;
+                if (result.status.name == "ok") {
+                    $("#articleTitle").html(result['data']['articles'][i]['title']);
+                    $("#articleDescription").html(result['data']['articles'][i]['description']);
+                    $("#articleContent").html(result['data']['articles'][i]['content']);
+                    $("#articleImg").attr("src", result['data']['articles'][i]['urlToImage']);
+                    $("#articleAuthor").html(result['data']['articles'][i]['author']);
+                    $("#publishedAt").html(result['data']['articles'][i]['publishedAt']);
+                    $("#articleUrl").html(result['data']['articles'][i]['url']);
+                    $("#articleUrl").attr("href", result['data']['articles'][i]['url']);
+                }
+            });
+        
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // your error code
+        }
+    });
 });
 
 $("#exchangeBtn").on('click', function(){
@@ -461,7 +517,7 @@ $("#exchangeBtn").on('click', function(){
 
             if (result.status.name == "ok") {
                 $("#exchangeResult").html(result['data']['rates'][$('#to option:selected').text()] * $('#value').val());
-                
+                $("#exchangeDate").html(result['data']['date']);
             }
         
         },
