@@ -87,11 +87,9 @@ function applyCountryBorder(mymap, countryname) {
 var totalNumOfPages = $('#accordion .card').length;
 
 $(".pagination").append("<li class='current-page page-item active'><a class='page-link'href='javascript:void(0)'>1</a></li>")
-
 for(var i=2; i<=totalNumOfPages; i++){
     $(".pagination").append("<li class='current-page page-item'><a class='page-link'href='javascript:void(0)'>" + i + "</a></li>")
 }
-
 $(".pagination").append("<li id='next-page' class='page-item'> <a class='page-link' href='javascript:void(0)' aria-label='Next'> <span aria-hidden='true'>&raquo;</span> <span class='sr-only'>Next</span></a></li>");
 
 $(".pagination li.current-page").on("click", function(){
@@ -624,9 +622,9 @@ $("#selectOption").change(function(){
                 $('#continent').html(result['data']['region']);
                 
                 //update map view:
-                var latlng = [result['data']['latlng']['0'], result['data']['latlng']['1']];
+                latlng = [result['data']['latlng']['0'], result['data']['latlng']['1']];
                 console.log(latlng);
-                mymap.setView(latlng, 5);
+                mymap.flyTo(latlng, 5);
             }
         
         },
@@ -666,8 +664,8 @@ $("#selectOption").change(function(){
         type: 'POST',
         dataType: 'json',
         data: {
-            lat: 51.6,
-            lon: -0.09
+            lat: window.latlng[0],
+            lon: window.latlng[1]
         },
         success: function(result) {
             console.log(result);
