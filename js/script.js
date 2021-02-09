@@ -8,20 +8,21 @@ $(window).on('load', function () {
 });
 
 //Creating a map:
+var London = [52, -0.09];
+var mymap = L.map('map');
+var tileUrl = 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}{r}.{ext}';
+var tiles = L.tileLayer(tileUrl, { 
+    attribution:'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    subdomains: 'abcd',
+    minZoom: 2,
+    maxZoom: 20,
+    ext: 'png'
+ });
+ mymap.addLayer(tiles);
+ mymap.setView(London, 4);
+
 var loadMap = function(id) {
-    var London = [52, -0.09];
-    var mymap = L.map('map');
-    var tileUrl = 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}{r}.{ext}';
-    var tiles = L.tileLayer(tileUrl, { 
-        attribution:'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        subdomains: 'abcd',
-        minZoom: 2,
-        maxZoom: 20,
-        ext: 'png'
-     });
-     mymap.addLayer(tiles);
-     mymap.setView(London, 4);
-     
+
      //Get location
      mymap.locate({setView: true}).on('locationfound', function(e){
          var locationMarker = L.marker([e.latitude, e.longitude]).bindPopup('You are here!');
@@ -45,6 +46,7 @@ var loadMap = function(id) {
      });
 
      $("#selectOption").change(function(){
+        //mymap.removeLayer(borderLayer);
         countryName = $("#selectOption").val();
         applyCountryBorder(mymap, countryName);
      });
@@ -71,13 +73,13 @@ function applyCountryBorder(mymap, countryname) {
           opacity: 1
         }).addTo(map);*/
   
-        var layer = L.geoJSON(data[0].geojson, {
+        var borderLayer = L.geoJSON(data[0].geojson, {
           color: "#9effd3",
           weight: 3,
           opacity: 0.7,
           fillOpacity: 0.0 
         }).addTo(mymap);
-        layer.addTo(mymap);
+        borderLayer.addTo(mymap);
       });
 };
 
@@ -549,6 +551,7 @@ $(window).on('load',function(){
     });
 });
 
+// mymap.setView(54, -2, 5);
 
 //Select country
 $("#selectOption").change(function(){
@@ -619,6 +622,11 @@ $("#selectOption").change(function(){
                 $("#flag").attr("src", result['data']['flag']);
                 $('#currency').html(result['data']['currencies']['0']['name'] + " - " + result['data']['currencies']['0']['symbol']);
                 $('#continent').html(result['data']['region']);
+                
+                //update map view:
+                var latlng = [result['data']['latlng']['0'], result['data']['latlng']['1']];
+                console.log(latlng);
+                mymap.setView(latlng, 5);
             }
         
         },
