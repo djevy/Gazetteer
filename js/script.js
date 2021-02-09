@@ -8,8 +8,50 @@ $(window).on('load', function () {
 });
 
 //Creating a map:
-const mymap = L.map('map').setView([51.505, -0.09],4);
-// $('#selectOption').val()
+var loadMap = function(id) {
+    var London = [52, -0.09];
+    var mymap = L.map('map');
+    var tileUrl = 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}{r}.{ext}';
+    var tiles = L.tileLayer(tileUrl, { 
+        attribution:'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        subdomains: 'abcd',
+        minZoom: 2,
+        maxZoom: 20,
+        ext: 'png'
+     });
+     mymap.addLayer(tiles);
+     mymap.setView(London, 4);
+     
+     //Get location
+     mymap.locate({setView: true}).on('locationfound', function(e){
+         var locationMarker = L.marker([e.latitude, e.longitude]).bindPopup('You are here!');
+         var circle =L.circle([e.latitude, e.longitude], e.accuracy/2, {
+             weight: 1,
+             color: 'blue',
+             fillColor: '#cacaca',
+             fillOpacity: 0.2
+         });
+         //var marker = L.marker([51.6, -0.09]).addTo(mymap);
+         mymap.addLayer(locationMarker);
+         mymap.addLayer(circle);
+     }). on('locationerror', function(e) {
+         console.log(e);
+         alert("Location access denied.");
+     });
+     //Apply border:
+     $(window).on('load',function(){
+        countryName = $("#selectOption").val();
+        applyCountryBorder(mymap, countryName);
+     });
+
+     $("#selectOption").change(function(){
+        countryName = $("#selectOption").val();
+        applyCountryBorder(mymap, countryName);
+     });
+};
+
+loadMap('mymap');
+
 
 function applyCountryBorder(mymap, countryname) {
     jQuery
@@ -37,27 +79,7 @@ function applyCountryBorder(mymap, countryname) {
         }).addTo(mymap);
         layer.addTo(mymap);
       });
-  }
-$("#goBtn").on('click', function(){
-    //layer.remove();
-    countryName = $("#selectOption").val();
-    applyCountryBorder(mymap, countryName);
-});
-const attribution = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
-
-const tileUrl = 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}{r}.{ext}';
-
-const tiles = L.tileLayer(tileUrl, { 
-    attribution,
-    subdomains: 'abcd',
-	minZoom: 2,
-    maxZoom: 20,
-    ext: 'png'
- });
-tiles.addTo(mymap);
-
-var marker = L.marker([51.6, -0.09]).addTo(mymap);
-
+};
 
 //Page navigation
 var totalNumOfPages = $('#accordion .card').length;
@@ -204,10 +226,6 @@ function direction(i) {
 //On page load
 $(window).on('load',function(){
 
-    //Apply border
-    countryName = $("#selectOption").val();
-    applyCountryBorder(mymap, countryName);
-
     //GeoDBCities
     $.ajax({
         url: "php/GeoDBCities.php",
@@ -294,6 +312,7 @@ $(window).on('load',function(){
             console.log(result);
 
             if (result.status.name == "ok") {
+                $("#sumTitle").empty();
                 $("#sumTitle").append(result['data']['0']['title']);
                 $("#summary").html(result['data']['0']['summary']);
                 $("#wikipediaUrl").attr('href', result['data']['0']['wikipediaUrl']);
@@ -533,10 +552,6 @@ $(window).on('load',function(){
 
 //Select country
 $("#selectOption").change(function(){
-    
-    //Apply border
-    countryName = $("#selectOption").val();
-    applyCountryBorder(mymap, countryName);
 
     //GeoDBCities
     $.ajax({
@@ -624,6 +639,7 @@ $("#selectOption").change(function(){
             console.log(result);
 
             if (result.status.name == "ok") {
+                $("#sumTitle").empty();
                 $("#sumTitle").append(result['data']['0']['title']);
                 $("#summary").html(result['data']['0']['summary']);
                 $("#wikipediaUrl").attr('href', result['data']['0']['wikipediaUrl']);
@@ -899,8 +915,9 @@ $("#selectOption").change(function(){
     });
 });
 
+
+//Exchange
 $("#exchangeBtn").on('click', function(){
-    //Exchange
     $.ajax({
         url: "php/openExchangeRates.php",
         type: 'POST',
