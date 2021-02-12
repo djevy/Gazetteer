@@ -10901,8 +10901,8 @@ body {
       align-self: center;
 }
 
-#selectOption {
-  max-width: 150px;
+.selectOption {
+  max-width: 100%;
   border-radius: 5px;
   border: solid black;
   margin: auto;
