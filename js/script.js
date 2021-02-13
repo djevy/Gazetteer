@@ -46,11 +46,27 @@ var loadMap = function(id) {
      });
 
      $("#selectOption").change(function(){
-        //mymap.removeLayer(borderLayer);
         countryName = $("#selectOption").val();
         applyCountryBorder(mymap, countryName);
      });
 };
+
+// $.getJSON('https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_populated_places_simple.geojson', function(data) {
+//   L.geoJson(data).addTo(mymap);
+// });
+
+
+
+
+
+
+
+var miniMap = new L.Control.GlobeMiniMap({     
+    land:'#0b9e00',
+    water:'#0195d0',
+    marker:'#000',
+    topojsonSrc: '../data/world.json'
+  }).addTo(mymap);
 
 loadMap('mymap');
 
@@ -72,7 +88,7 @@ function applyCountryBorder(mymap, countryname) {
           weight: 14,
           opacity: 1
         }).addTo(map);*/
-  
+        
         var borderLayer = L.geoJSON(data[0].geojson, {
           color: "#9effd3",
           weight: 3,
@@ -82,6 +98,33 @@ function applyCountryBorder(mymap, countryname) {
         borderLayer.addTo(mymap);
       });
 };
+
+
+// var markerGroup = L.layerGroup([
+//       L.marker([37.8, -91]), L.marker([38.8, -86]), L.marker([47.8, -106]),
+//       L.marker([31.8, -90]), L.marker([39.8, -96]), L.marker([33.8, -100]) ]);
+
+// var toggle = L.easyButton({
+//   states: [{
+//     stateName: 'add-markers',
+//     icon: 'fa-map-marker',
+//     title: 'add random markers',
+//     onClick: function(control) {
+//       mymap.addLayer(markerGroup);
+//       control.state('remove-markers');
+//     }
+//   }, {
+//     icon: 'fa-undo',
+//     stateName: 'remove-markers',
+//     onClick: function(control) {
+//       mymap.removeLayer(markerGroup);
+//       control.state('add-markers');
+//     },
+//     title: 'remove markers'
+//   }]
+// });
+// toggle.addTo(mymap);
+
 
 //Page navigation
 var totalNumOfPages = $('#accordion .card').length;
@@ -158,7 +201,9 @@ for (var i = 0; i <= currencies.length; i++) {
 $.getJSON("php/allCountries.json", function(data) {
     console.log(data);
     for (var i = 0; i <= data.length; i++) {
-        $('#selectOption').append("<option value=" + data[i.toString()]['alpha-2'] + ">" + data[i]['name'] + "</option>");
+        if(data[i]['alpha-2'] != 'undefined'){
+            $('#selectOption').append("<option value=" + data[i]['alpha-2'] + ">" + data[i]['name'] + "</option>");
+        }
     }
 });
 
@@ -224,32 +269,34 @@ function direction(i) {
 
 
 //On page load
-$(window).on('load',function(){
+$(window).on('load', function(){
 
-    //GeoDBCities
-    $.ajax({
-        url: "php/GeoDBCities.php",
-        type: 'POST',
-        dataType: 'json',
-        data: {
-            //country: $('#selectOption option:selected').text(),
-        },
-        success: function(result) {
+    // $.ajax({
+    //     url: "php/GeoDBCities.php",
+    //     type: 'POST',
+    //     dataType: 'json',
+    //     data: {
+    //         countryId: 'GB',
+    //     },
+    //     success: function(result) {
 
-            console.log(result);
+    //         console.log(result);
 
-            if (result.status.name == "ok") {
-                // const {data:{query:}} = result;
-               // $("#wiki").html(result['data']['query']['pages'][0]['extract']);
+    //         if (result.status.name == "ok") {
+    //             // const {data:{query:}} = result;
+    //             // $("#wiki").html(result['data']['query']['pages'][0]['extract']);
+    //             // for (var i = 0; i <= data.length; i++) {
+    //             //     $('#selectOption').append("<option value=" + data[i.toString()]['alpha-2'] + ">" + data[i]['name'] + "</option>");
+    //             // }
                 
-            }
+    //         }
         
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            // your error code
-        }
-    }); 
-    
+    //     },
+    //     error: function(jqXHR, textStatus, errorThrown) {
+    //         alert("There has been an error: "+ jqXHR+  textStatus);
+    //     }
+    // }); 
+
     //Country Info:
     //getCountryInfo-
     $.ajax({
@@ -342,7 +389,7 @@ $(window).on('load',function(){
                 //Onload:
                 $('#temp').html(result['data']['current']['temp']+" ℃");
                 var icon = result['data']['current']['weather']['0']['icon'];
-                $('#currentWeather').append("<img id='weatherIcon' alt='weather icon' src=''></img>" + result['data']['current']['weather']['0']['description']);
+                //$('#currentWeather').append("<img id='weatherIcon' alt='weather icon' src=''></img>" + result['data']['current']['weather']['0']['description']);
                 var weatherUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
                 $('#weatherIcon').attr("src", weatherUrl);
                 $('#wind').html(result['data']['current']['wind_speed'] + ' meter/sec ' + direction(result['data']['current']['wind_deg']));
@@ -549,34 +596,24 @@ $(window).on('load',function(){
     });
 });
 
-// mymap.setView(54, -2, 5);
 
 //Select country
 $("#selectOption").change(function(){
 
-    //GeoDBCities
-    $.ajax({
-        url: "php/GeoDBCities.php",
-        type: 'POST',
-        dataType: 'json',
-        data: {
-            //country: $('#selectOption option:selected').text(),
-        },
-        success: function(result) {
-
-            console.log(result);
-
-            if (result.status.name == "ok") {
-                // const {data:{query:}} = result;
-                // $("#wiki").html(result['data']['query']['pages'][0]['extract']);
-                
-            }
+    //Country Cites-
+    $.getJSON('php/worldCities.json', function(data) {
+        console.log(data['features']['0']);
         
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            // your error code
+
+        var cities = data.features.filter(function(value){
+            return value.properties.isoa2 == $('#selectOption').val();
+        });
+        for(var i = 0; i<=cities.length; i++){
+                L.geoJson(cities[i]['geometry']).addTo(mymap);
         }
-    }); 
+        console.log(data['features']['0']['properties']['isoa2'])
+        
+    });
 
     //Country Info:
     //getCountryInfo-
@@ -629,7 +666,7 @@ $("#selectOption").change(function(){
         
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            // your error code
+            alert("There has been an error!")
         }
     }); 
 
@@ -921,6 +958,198 @@ $("#selectOption").change(function(){
     });
 });
 
+
+//Search Place
+$("#searchPlace").on('keypress', function() {
+    $.ajax({
+        url: "php/accuweather.php",
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            location: 'Herne Bay',
+            // $('#searchPlace').text(),
+        },
+        success: function(location) {
+
+            console.log(location);
+
+            if (location.status.name == "ok") {
+                $.ajax({
+                    url: "php/openWeather.php",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        lat: location['data']['0']['GeoPosition']['Latitude'],
+                        lon: location['data']['0']['GeoPosition']['Longitude']
+                    },
+                    //Add marker to map with location name
+                    //Change set view of map
+                    success: function(result) {
+                        console.log(result);
+                        if (result.status.name == "ok") {
+                            // $('#city').html(result['data']['countryName']);
+                            
+            
+                            //Onload:
+                            $('#temp').html(result['data']['current']['temp']+" ℃");
+                            var icon = result['data']['current']['weather']['0']['icon'];
+                            $('#currentWeather').append("<img id='weatherIcon' alt='weather icon' src=''></img>" + result['data']['current']['weather']['0']['description']);
+                            var weatherUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+                            $('#weatherIcon').attr("src", weatherUrl);
+                            $('#wind').html(result['data']['current']['wind_speed'] + ' meter/sec ' + direction(result['data']['current']['wind_deg']));
+                            var sunrise = moment(result['data']['current']['sunrise']*1000).format("HH:mm");
+                            $('#sunrise').html(sunrise);
+                            var sunset = moment(result['data']['current']['sunset']*1000).format("HH:mm");
+                            $('#sunset').html(sunset);
+                            $('#humidity').html(result['data']['current']['humidity'] + ' %');
+                            
+                            var time1 = moment(result['data']['hourly']['3']['dt']*1000).format("HH:mm");
+                            var time2 = moment(result['data']['hourly']['6']['dt']*1000).format("HH:mm");
+                            var time3 = moment(result['data']['hourly']['9']['dt']*1000).format("HH:mm");
+                            var time4 = moment(result['data']['hourly']['12']['dt']*1000).format("HH:mm");
+                            var temp1 = result['data']['hourly']['3']['temp'];
+                            var temp2 = result['data']['hourly']['6']['temp'];
+                            var temp3 = result['data']['hourly']['9']['temp'];
+                            var temp4 = result['data']['hourly']['12']['temp'];
+                            $('#hour1').append(result['data']['hourly']['3']['weather']['0']['description'] + " and " + temp1 + " ℃ at " + time1);
+                            $('#hour2').append(result['data']['hourly']['6']['weather']['0']['description'] + " and " + temp2 + " ℃ at " + time2);
+                            $('#hour3').append(result['data']['hourly']['9']['weather']['0']['description'] + " and " + temp3 + " ℃ at " + time3);
+                            $('#hour4').append(result['data']['hourly']['12']['weather']['0']['description'] + " and " + temp4 + " ℃ at " + time4);
+                            var icon1 = result['data']['hourly']['3']['weather']['0']['icon'];
+                            var icon2 = result['data']['hourly']['6']['weather']['0']['icon'];
+                            var icon3 = result['data']['hourly']['9']['weather']['0']['icon'];
+                            var icon4 = result['data']['hourly']['12']['weather']['0']['icon'];
+                            var weatherUrl1 = "http://openweathermap.org/img/wn/" + icon1 + "@2x.png";
+                            var weatherUrl2 = "http://openweathermap.org/img/wn/" + icon2 + "@2x.png";
+                            var weatherUrl3 = "http://openweathermap.org/img/wn/" + icon3 + "@2x.png";
+                            var weatherUrl4 = "http://openweathermap.org/img/wn/" + icon4 + "@2x.png";
+                            $('#weatherIcon1').attr("src", weatherUrl1);
+                            $('#weatherIcon2').attr("src", weatherUrl2);
+                            $('#weatherIcon3').attr("src", weatherUrl3);
+                            $('#weatherIcon4').attr("src", weatherUrl4);
+            
+                            //Today
+                            $("#day1").on('click', function(){
+                                $('.weatherHide').show();
+                                $("#temp").empty();
+                                $("#currentWeather").empty();
+                                $("#wind").empty();
+                                $("#sunrise").empty();
+                                $("#sunset").empty();
+                                $("#humidity").empty();
+                                $('#temp').html(result['data']['current']['temp']+" ℃");
+                                var icon = result['data']['current']['weather']['0']['icon'];
+                                $('#currentWeather').append("<img id='weatherIcon' alt='weather icon' src=''></img>" + result['data']['current']['weather']['0']['description']);
+                                var weatherUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+                                $('#weatherIcon').attr("src", weatherUrl);
+                                $('#wind').html(result['data']['current']['wind_speed'] + ' meter/sec ' + direction(result['data']['current']['wind_deg']));
+                                var sunrise = moment(result['data']['current']['sunrise']*1000).format("HH:mm");
+                                $('#sunrise').html(sunrise);
+                                var sunset = moment(result['data']['current']['sunset']*1000).format("HH:mm");
+                                $('#sunset').html(sunset);
+                                $('#humidity').html(result['data']['current']['humidity'] + ' %');
+            
+                                $('#hour1').empty();
+                                $('#hour2').empty();
+                                $('#hour3').empty();
+                                $('#hour4').empty();
+                                // $('#hourWeather1').html('<img id="weatherIcon1" alt="weather icon" src=""></img>');
+                                // $('#hourWeather2').html('<img id="weatherIcon2" alt="weather icon" src=""></img>');
+                                // $('#hourWeather3').html('<img id="weatherIcon3" alt="weather icon" src=""></img>');
+                                // $('#hourWeather4').html('<img id="weatherIcon4" alt="weather icon" src=""></img>');
+                                var time1 = moment(result['data']['hourly']['3']['dt']*1000).format("HH:mm");
+                                var time2 = moment(result['data']['hourly']['6']['dt']*1000).format("HH:mm");
+                                var time3 = moment(result['data']['hourly']['9']['dt']*1000).format("HH:mm");
+                                var time4 = moment(result['data']['hourly']['12']['dt']*1000).format("HH:mm");
+                                var temp1 = result['data']['hourly']['3']['temp'];
+                                var temp2 = result['data']['hourly']['6']['temp'];
+                                var temp3 = result['data']['hourly']['9']['temp'];
+                                var temp4 = result['data']['hourly']['12']['temp'];
+                                $('#hour1').append(result['data']['hourly']['3']['weather']['0']['description'] + " and " + temp1 + " ℃ at " + time1);
+                                $('#hour2').append(result['data']['hourly']['6']['weather']['0']['description'] + " and " + temp2 + " ℃ at " + time2);
+                                $('#hour3').append(result['data']['hourly']['9']['weather']['0']['description'] + " and " + temp3 + " ℃ at " + time3);
+                                $('#hour4').append(result['data']['hourly']['12']['weather']['0']['description'] + " and " + temp4 + " ℃ at " + time4);
+                                var icon1 = result['data']['hourly']['3']['weather']['0']['icon'];
+                                var icon2 = result['data']['hourly']['6']['weather']['0']['icon'];
+                                var icon3 = result['data']['hourly']['9']['weather']['0']['icon'];
+                                var icon4 = result['data']['hourly']['12']['weather']['0']['icon'];
+                                var weatherUrl1 = "http://openweathermap.org/img/wn/" + icon1 + "@2x.png";
+                                var weatherUrl2 = "http://openweathermap.org/img/wn/" + icon2 + "@2x.png";
+                                var weatherUrl3 = "http://openweathermap.org/img/wn/" + icon3 + "@2x.png";
+                                var weatherUrl4 = "http://openweathermap.org/img/wn/" + icon4 + "@2x.png";
+                                $('#weatherIcon1').attr("src", weatherUrl1);
+                                $('#weatherIcon2').attr("src", weatherUrl2);
+                                $('#weatherIcon3').attr("src", weatherUrl3);
+                                $('#weatherIcon4').attr("src", weatherUrl4);
+                            });
+                        
+                        
+                            //Tomorrow
+                            $("#day2").on('click', function(){
+                                $("#currentWeather").empty();
+                                $('.weatherHide').hide();
+                                $('#temp').html("Max: " + result['data']['daily'][1]['temp']['max'] +" ℃ \n" + "Min: "  + result['data']['daily'][1]['temp']['min'] + " ℃");
+                                var icon = result['data']['daily'][1]['weather']['0']['icon'];
+                                $('#currentWeather').append("<img id='weatherIcon' alt='weather icon' src=''></img>" + result['data']['daily'][1]['weather']['0']['description']);
+                                var weatherUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+                                $('#weatherIcon').attr("src", weatherUrl);
+                                $('#wind').html(result['data']['daily'][1]['wind_speed'] + ' meter/sec ' + direction(result['data']['daily'][1]['wind_deg']));
+                                var sunrise = moment(result['data']['daily'][1]['sunrise']*1000).format("HH:mm");
+                                $('#sunrise').html(sunrise);
+                                var sunset = moment(result['data']['daily'][1]['sunset']*1000).format("HH:mm");
+                                $('#sunset').html(sunset);
+                                $('#humidity').html(result['data']['daily'][1]['humidity'] + ' %');
+                            });
+            
+                            //Third Day
+                            $("#day3").on('click', function(){
+                                $("#currentWeather").empty();
+                                $('.weatherHide').hide();
+                                $('#temp').html("Max: " + result['data']['daily'][2]['temp']['max'] +" ℃ \n" + "Min: "  + result['data']['daily'][2]['temp']['min'] + " ℃");
+                                var icon = result['data']['daily'][2]['weather']['0']['icon'];
+                                $('#currentWeather').append("<img id='weatherIcon' alt='weather icon' src=''></img>" + result['data']['daily'][2]['weather']['0']['description']);
+                                var weatherUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+                                $('#weatherIcon').attr("src", weatherUrl);
+                                $('#wind').html(result['data']['daily'][2]['wind_speed'] + ' meter/sec ' + direction(result['data']['daily'][2]['wind_deg']));
+                                var sunrise = moment(result['data']['daily'][2]['sunrise']*1000).format("HH:mm");
+                                $('#sunrise').html(sunrise);
+                                var sunset = moment(result['data']['daily'][2]['sunset']*1000).format("HH:mm");
+                                $('#sunset').html(sunset);
+                                $('#humidity').html(result['data']['daily'][2]['humidity'] + ' %');
+                            });
+            
+                            //Fourth Day
+                            $("#day4").on('click', function(){
+                                $("#currentWeather").empty();
+                                $('.weatherHide').hide();
+                                $('#temp').html("Max: " + result['data']['daily'][3]['temp']['max'] +" ℃ \n" + "Min: "  + result['data']['daily'][3]['temp']['min'] + " ℃");
+                                var icon = result['data']['daily'][3]['weather']['0']['icon'];
+                                $('#currentWeather').append("<img id='weatherIcon' alt='weather icon' src=''></img>" + result['data']['daily'][3]['weather']['0']['description']);
+                                var weatherUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+                                $('#weatherIcon').attr("src", weatherUrl);
+                                $('#wind').html(result['data']['daily'][3]['wind_speed'] + ' meter/sec ' + direction(result['data']['daily'][3]['wind_deg']));
+                                var sunrise = moment(result['data']['daily'][3]['sunrise']*1000).format("HH:mm");
+                                $('#sunrise').html(sunrise);
+                                var sunset = moment(result['data']['daily'][3]['sunset']*1000).format("HH:mm");
+                                $('#sunset').html(sunset);
+                                $('#humidity').html(result['data']['daily'][3]['humidity'] + ' %');
+                            });                
+                            
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        alert("There has been an error!")
+                    }
+                });
+            
+            }
+        
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.warn(jqXHR.responseText);
+        }
+    }); 
+});
 
 //Exchange
 $("#exchangeBtn").on('click', function(){
