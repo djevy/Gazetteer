@@ -172,7 +172,7 @@ for (var i = 0; i <= currencies.length; i++) {
 //Fill countries-
 $.getJSON("php/allCountries.json", function(data) {
     //console.log(data);
-    for (var i = 0; i <= data.length; i++) {
+    for (var i = 0; i < data.length; i++) {
         if(data[i]['alpha-2'] != 'undefined'){
             $('#selectOption').append("<option value=" + data[i]['alpha-2'] + ">" + data[i]['name'] + "</option>");
         }
@@ -248,39 +248,14 @@ $(window).on('load', function(){
         var cities = data.features.filter(function(value){
             return value.properties.isoa2 == $('#selectOption').val();
         });
-        for(var i = 0; i<=cities.length; i++){
+        for(var i = 0; i<cities.length; i++){
                 var title = cities[i]['properties']['name'];
                 var pop = cities[i]['properties']['pop_min'];
+                L.geoJson(cities[i]['geometry']).bindPopup("<h1>" + title + "</h1> </br>" + "Population: " + pop + "</br>").addTo(mymap);
 
-                L.geoJson(cities[i]['geometry']).bindPopup("<h1>" + title + "</h1> </br>" + "Population: " +pop).addTo(mymap);
+                $("#cityImages")
         }
     });
-
-    // $.ajax({
-    //     url: "php/GeoDBCities.php",
-    //     type: 'POST',
-    //     dataType: 'json',
-    //     data: {
-    //         countryId: 'GB',
-    //     },
-    //     success: function(result) {
-
-    //         console.log(result);
-
-    //         if (result.status.name == "ok") {
-    //             // const {data:{query:}} = result;
-    //             // $("#wiki").html(result['data']['query']['pages'][0]['extract']);
-    //             // for (var i = 0; i <= data.length; i++) {
-    //             //     $('#selectOption').append("<option value=" + data[i.toString()]['alpha-2'] + ">" + data[i]['name'] + "</option>");
-    //             // }
-                
-    //         }
-        
-    //     },
-    //     error: function(jqXHR, textStatus, errorThrown) {
-    //         alert("There has been an error: "+ jqXHR+  textStatus);
-    //     }
-    // }); 
 
     //Country Info:
     //getCountryInfo-
@@ -580,6 +555,34 @@ $(window).on('load', function(){
             // your error code
         }
     });
+
+    //Location Images:
+    $.ajax({
+        url: "php/locationImages.php",
+        type: 'POST',
+        dataType: 'json',
+        data: {
+        query: $('#selectOption option:selected').text(),
+        },
+        success: function(result) {
+
+            console.log(result);
+            
+            if (result.status.name == "ok") {
+                for(var i = 0; i<result['data']['results'].length; i++){
+                    $("#countryImages").append("<p style='color:white' id='description" + i +"'class='countryDescription'>")
+                    $("#countryImages").append("<img src='' alt='' id='image" + i +"'class='countryImages'><br><br>")
+                    $("#image" + i).attr('src', result['data']['results'][i]['urls']['regular']);
+                    $("#image" + i).attr('alt', result['data']['results'][i]['alt_description']);
+                    $("#description" + i).append(result['data']['results'][i]['alt_description'] + " -");
+                }
+            }
+        
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.warn("There has been an error " + errorThrown);
+        }
+    });
 });
 
 
@@ -592,10 +595,9 @@ $("#selectOption").change(function(){
         var cities = data.features.filter(function(value){
             return value.properties.isoa2 == $('#selectOption').val();
         });
-        for(var i = 0; i<=cities.length; i++){
+        for(var i = 0; i<cities.length; i++){
             var title = cities[i]['properties']['name'];
             var pop = cities[i]['properties']['pop_min'];
-
             L.geoJson(cities[i]['geometry']).bindPopup("<h1>" + title + "</h1> </br>" + "Population: " +pop).addTo(mymap);
          }
     });
@@ -942,6 +944,36 @@ $("#selectOption").change(function(){
         },
         error: function(jqXHR, textStatus, errorThrown) {
             // your error code
+        }
+    });
+
+    //Location Images:
+    $.ajax({
+        url: "php/locationImages.php",
+        type: 'POST',
+        dataType: 'json',
+        data: {
+        query: $('#selectOption option:selected').text(),
+        },
+        success: function(result) {
+
+            console.log(result);
+            $("#countryImages").empty();
+            
+            if (result.status.name == "ok") {
+                for(var i = 0; i<result['data']['results'].length; i++){
+                    
+                    $("#countryImages").append("<p style='color:white' id='description" + i +"'class='countryDescription'>")
+                    $("#countryImages").append("<img src='' alt='' id='image" + i +"'class='countryImages'><br><br>")
+                    $("#image" + i).attr('src', result['data']['results'][i]['urls']['regular']);
+                    $("#image" + i).attr('alt', result['data']['results'][i]['alt_description']);
+                    $("#description" + i).append(result['data']['results'][i]['alt_description'] + " -");
+                }
+            }
+        
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.warn("There has been an error " + errorThrown);
         }
     });
 });

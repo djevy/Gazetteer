@@ -11071,6 +11071,14 @@ table {
   font-weight: bolder;
 }
 
+.countryImages {
+  width: 250px;
+}
+
+.countryDescription p {
+  color: white;
+}
+
 @media (min-width: 768px) {
   .my-nav {
     height: 25vh;
