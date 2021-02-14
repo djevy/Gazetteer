@@ -171,7 +171,7 @@ for (var i = 0; i <= currencies.length; i++) {
 //API:
 //Fill countries-
 $.getJSON("php/allCountries.json", function(data) {
-    console.log(data);
+    //console.log(data);
     for (var i = 0; i <= data.length; i++) {
         if(data[i]['alpha-2'] != 'undefined'){
             $('#selectOption').append("<option value=" + data[i]['alpha-2'] + ">" + data[i]['name'] + "</option>");
@@ -242,8 +242,9 @@ function direction(i) {
 
 //On page load
 $(window).on('load', function(){
+
+    //World cities
     $.getJSON('php/worldCities.json', function(data) {
-        console.log(data.features);
         var cities = data.features.filter(function(value){
             return value.properties.isoa2 == $('#selectOption').val();
         });
@@ -323,6 +324,7 @@ $(window).on('load', function(){
                 $("#flag").attr("src", result['data']['flag']);
                 $('#currency').html(result['data']['currencies']['0']['name'] + " - " + result['data']['currencies']['0']['symbol']);
                 $('#continent').html(result['data']['region']);
+                $('#language').html(result['data']['languages']['0']['name']);
             }
         
         },
@@ -640,6 +642,7 @@ $("#selectOption").change(function(){
                 $("#flag").attr("src", result['data']['flag']);
                 $('#currency').html(result['data']['currencies']['0']['name'] + " - " + result['data']['currencies']['0']['symbol']);
                 $('#continent').html(result['data']['region']);
+                $('#language').html(result['data']['languages']['0']['name']);
                 
                 //update map view:
                 latlng = [result['data']['latlng']['0'], result['data']['latlng']['1']];
@@ -897,6 +900,8 @@ $("#selectOption").change(function(){
             console.log(result);
             
             if (result.status.name == "ok") {
+                $("#newsCountry").empty();
+                $("#newsCountry").append($('#selectOption option:selected').text());
                 $("#articleTitle").html(result['data']['articles']['0']['title']);
                 $("#articleDescription").html(result['data']['articles']['0']['description']);
                 $("#articleContent").html(result['data']['articles']['0']['content']);
@@ -956,7 +961,8 @@ $("#exchangeBtn").on('click', function(){
             console.log(result);
 
             if (result.status.name == "ok") {
-                $("#exchangeResult").html(result['data']['rates'][$('#to option:selected').text()] * $('#value').val());
+                var conversion = Number(result['data']['rates'][$('#to option:selected').text()] * $('#value').val());
+                $("#exchangeResult").html(conversion.toFixed(2) + " - " + $('#to option:selected').text());
                 $("#exchangeDate").html(result['data']['date']);
             }
         

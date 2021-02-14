@@ -14,7 +14,7 @@
 
 	L.Control.GlobeMiniMap = L.Control.extend({
 		options: {
-			position: 'topright',
+			position: 'bottomright',
 			width: 82,
 			height: 82,
 			land: "#bbb",

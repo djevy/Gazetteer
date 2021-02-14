@@ -13,7 +13,7 @@
 
     <!--Fonts:-->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald&family=Noto+Sans+KR&family=Poppins:wght@100&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css" />
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
@@ -30,7 +30,7 @@
                 <!-- col-md-12 applies to all sizes ≥768px -->
                 <div class="my-col nav-header col-6 col-md-12 pr-0 row align-items-center">
                     <i class="fas fa-map-marked-alt fa-3x my-icon d-inline"></i>
-                    <h1 id="title" class="text-black d-inline pl-1">Gazetteer</h1>
+                    <h1 id="title" class="d-inline pl-1">Gazetteer</h1>
                 </div>
                 <div class="my-col  col-6 col-md-12 p-0 my-3 mx-auto"> 
                     <select name="country" id="selectOption" class="selectOption">
@@ -64,8 +64,9 @@
                     </h5>
                   </div>
                   <!-- Information Panel -->
-                  <div id="collapseOne" class="collapse show row infoPanel" aria-labelledby="headingOne" data-parent="#accordion">                          
-                    <table class="table table-dark table-stripped col-12">
+                  <!-- data-parent="#accordion" to make tabs close when one opens -->
+                  <div id="collapseOne" class="collapse show row infoPanel p-0 m-0" aria-labelledby="headingOne">                          
+                    <table class="table table-dark table-stripped col-12 m-0">
                       <thead>
                         <tr>
                           <th id="countryName"></th>
@@ -93,13 +94,17 @@
                           <td>Currency:</td>
                           <td id="currency"></td>
                         </tr>
+                        <tr>
+                          <td>Language:</td>
+                          <td id="language"></td>
+                        </tr>
                       </tbody>
                     </table>
-                    <div id="wiki" class="bg-primary col-12">
+                    <div id="wiki" class="col-12">
                       <h2>Wiki: <span id="sumTitle"></span> </h2>
                       <blockquote class="blockquote text-left">
                       <p id="summary"></p>
-                      <footer style="text-align: center;" class="blockquote-footer">Sourced from <cite title="Source Title"><a id="wikipediaUrl" style="color: black;"></a></cite></footer>
+                      <footer style="text-align: center;" class="blockquote-footer"><p class="sourced">Sourced from</p> <cite title="Source Title"><a id="wikipediaUrl" style="color: white;"></a></cite></footer>
                       </blockquote>
                     </div>
                   </div>
@@ -114,18 +119,8 @@
                     </h5>
                   </div>
                   <!-- Information Panel -->
-                  <div id="collapseTwo" class="collapse show row infoPanel" aria-labelledby="headingTwo" data-parent="#accordion">
-                    <table class="table table-dark table-striped col-12">
-                      <thead>
-                        <tr>
-                          <th scope="col">City:</th>
-                          <th id="city" scope="col"> 
-                            <select name="city" id="selectCity" class="selectOption">
-                              <option value="GB">London</option>
-                            </select>
-                          </th>
-                        </tr>
-                      </thead>
+                  <div id="collapseTwo" class="collapse show row infoPanel p-0 m-0" aria-labelledby="headingTwo">
+                    <table class="table table-dark table-striped col-12 m-0">
                       <tbody id=weatherBody>
                         <tr>
                           <th>
@@ -197,11 +192,11 @@
                     </h5>
                   </div>
                   <!-- Information Panel -->
-                  <div id="collapseThree" class="collapse show row infoPanel " aria-labelledby="headingThree" data-parent="#accordion">
-                    <table class="table table-dark table-stripped col-12" id="articleTable">
+                  <div id="collapseThree" class="collapse show row infoPanel p-0 m-0" aria-labelledby="headingThree">
+                    <table class="table table-dark table-stripped col-12 m-0" id="articleTable">
                       <thead>
                         <tr >
-                          <th><h3>Latest Headlines</h3></th>
+                          <th><h3>Latest Headlines - <span id="newsCountry">United Kingdom</span></h3></th>
                       </thead>
                       <tbody>
                         <tr >
@@ -223,7 +218,7 @@
                           <td>Published at: <span id="publishedAt"></span></td>
                         </tr>
                         <tr > 
-                          <td>Sourced from: <a id="articleUrl" href="" style="color: black;"></a></td>
+                          <td class="sourced">Sourced from: <a id="articleUrl" href="" style="color: white;"></a></td>
                         </tr>
                       </tbody>
                     </table>
@@ -239,22 +234,22 @@
                       </h5>
                     </div>
                     <!-- Information Panel -->
-                    <div id="collapseFour" class="collapse show row infoPanel" aria-labelledby="headingFour" data-parent="#accordion">
-                      <table class="table table-striped col-12 ">
+                    <div id="collapseFour" class="collapse show row infoPanel p-0 m-0" aria-labelledby="headingFour">
+                      <table class="table table-dark table-striped col-12 m-0">
                         <thead>
                           <tr>
                             <th class="col-6">Amount: </th>
-                            <th class="col-6"><input type="text" id="value" placeholder="0"></th>
+                            <th class="col-6"><input class="exchangeInput" type="text" id="value" placeholder="0"></th>
                           </tr>
                         </thead>
                         <tbody>
                           <tr>
                             <td>From: </td>
-                            <td><select  id="from" class="currencies" class="row"></select></td>
+                            <td><select  id="from" class="exchangeInput" class="row"></select></td>
                           </tr>
                           <tr>
                             <td>To: </td>
-                            <td><select id="to" class="currencies" class="row"></select></td>
+                            <td><select id="to" class="exchangeInput" class="row"></select></td>
                           </tr>
                           <tr>
                             <td><button class="row btn" id="exchangeBtn">Exchange</button></td>
