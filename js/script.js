@@ -12,7 +12,7 @@ var London = [52, -0.09];
 var mymap = L.map('map');
 var tileUrl = 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}{r}.{ext}';
 var tiles = L.tileLayer(tileUrl, { 
-    attribution:'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    attribution:'Map tiles by <a href="https://stamen.com">Stamen Design</a>, <a href="https://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     subdomains: 'abcd',
     minZoom: 2,
     maxZoom: 20,
@@ -351,7 +351,7 @@ $(window).on('load', function(){
                 $('#temp').html(result['data']['current']['temp']+" ℃");
                 var icon = result['data']['current']['weather']['0']['icon'];
                 //$('#currentWeather').append("<img id='weatherIcon' alt='weather icon' src=''></img>" + result['data']['current']['weather']['0']['description']);
-                var weatherUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+                var weatherUrl = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
                 $('#weatherIcon').attr("src", weatherUrl);
                 $('#wind').html(result['data']['current']['wind_speed'] + ' meter/sec ' + direction(result['data']['current']['wind_deg']));
                 var sunrise = moment(result['data']['current']['sunrise']*1000).format("HH:mm");
@@ -376,10 +376,10 @@ $(window).on('load', function(){
                 var icon2 = result['data']['hourly']['6']['weather']['0']['icon'];
                 var icon3 = result['data']['hourly']['9']['weather']['0']['icon'];
                 var icon4 = result['data']['hourly']['12']['weather']['0']['icon'];
-                var weatherUrl1 = "http://openweathermap.org/img/wn/" + icon1 + "@2x.png";
-                var weatherUrl2 = "http://openweathermap.org/img/wn/" + icon2 + "@2x.png";
-                var weatherUrl3 = "http://openweathermap.org/img/wn/" + icon3 + "@2x.png";
-                var weatherUrl4 = "http://openweathermap.org/img/wn/" + icon4 + "@2x.png";
+                var weatherUrl1 = "https://openweathermap.org/img/wn/" + icon1 + "@2x.png";
+                var weatherUrl2 = "https://openweathermap.org/img/wn/" + icon2 + "@2x.png";
+                var weatherUrl3 = "https://openweathermap.org/img/wn/" + icon3 + "@2x.png";
+                var weatherUrl4 = "https://openweathermap.org/img/wn/" + icon4 + "@2x.png";
                 $('#weatherIcon1').attr("src", weatherUrl1);
                 $('#weatherIcon2').attr("src", weatherUrl2);
                 $('#weatherIcon3').attr("src", weatherUrl3);
@@ -398,7 +398,7 @@ $(window).on('load', function(){
                     $('#temp').html(result['data']['current']['temp']+" ℃");
                     var icon = result['data']['current']['weather']['0']['icon'];
                     $('#currentWeather').append("<img id='weatherIcon' alt='weather icon' src=''></img>" + result['data']['current']['weather']['0']['description']);
-                    var weatherUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+                    var weatherUrl = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
                     $('#weatherIcon').attr("src", weatherUrl);
                     $('#wind').html(result['data']['current']['wind_speed'] + ' meter/sec ' + direction(result['data']['current']['wind_deg']));
                     var sunrise = moment(result['data']['current']['sunrise']*1000).format("HH:mm");
@@ -431,10 +431,10 @@ $(window).on('load', function(){
                     var icon2 = result['data']['hourly']['6']['weather']['0']['icon'];
                     var icon3 = result['data']['hourly']['9']['weather']['0']['icon'];
                     var icon4 = result['data']['hourly']['12']['weather']['0']['icon'];
-                    var weatherUrl1 = "http://openweathermap.org/img/wn/" + icon1 + "@2x.png";
-                    var weatherUrl2 = "http://openweathermap.org/img/wn/" + icon2 + "@2x.png";
-                    var weatherUrl3 = "http://openweathermap.org/img/wn/" + icon3 + "@2x.png";
-                    var weatherUrl4 = "http://openweathermap.org/img/wn/" + icon4 + "@2x.png";
+                    var weatherUrl1 = "https://openweathermap.org/img/wn/" + icon1 + "@2x.png";
+                    var weatherUrl2 = "https://openweathermap.org/img/wn/" + icon2 + "@2x.png";
+                    var weatherUrl3 = "https://openweathermap.org/img/wn/" + icon3 + "@2x.png";
+                    var weatherUrl4 = "https://openweathermap.org/img/wn/" + icon4 + "@2x.png";
                     $('#weatherIcon1').attr("src", weatherUrl1);
                     $('#weatherIcon2').attr("src", weatherUrl2);
                     $('#weatherIcon3').attr("src", weatherUrl3);
@@ -449,7 +449,7 @@ $(window).on('load', function(){
                     $('#temp').html("Max: " + result['data']['daily'][1]['temp']['max'] +" ℃ \n" + "Min: "  + result['data']['daily'][1]['temp']['min'] + " ℃");
                     var icon = result['data']['daily'][1]['weather']['0']['icon'];
                     $('#currentWeather').append("<img id='weatherIcon' alt='weather icon' src=''></img>" + result['data']['daily'][1]['weather']['0']['description']);
-                    var weatherUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+                    var weatherUrl = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
                     $('#weatherIcon').attr("src", weatherUrl);
                     $('#wind').html(result['data']['daily'][1]['wind_speed'] + ' meter/sec ' + direction(result['data']['daily'][1]['wind_deg']));
                     var sunrise = moment(result['data']['daily'][1]['sunrise']*1000).format("HH:mm");
@@ -466,7 +466,7 @@ $(window).on('load', function(){
                     $('#temp').html("Max: " + result['data']['daily'][2]['temp']['max'] +" ℃ \n" + "Min: "  + result['data']['daily'][2]['temp']['min'] + " ℃");
                     var icon = result['data']['daily'][2]['weather']['0']['icon'];
                     $('#currentWeather').append("<img id='weatherIcon' alt='weather icon' src=''></img>" + result['data']['daily'][2]['weather']['0']['description']);
-                    var weatherUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+                    var weatherUrl = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
                     $('#weatherIcon').attr("src", weatherUrl);
                     $('#wind').html(result['data']['daily'][2]['wind_speed'] + ' meter/sec ' + direction(result['data']['daily'][2]['wind_deg']));
                     var sunrise = moment(result['data']['daily'][2]['sunrise']*1000).format("HH:mm");
@@ -483,7 +483,7 @@ $(window).on('load', function(){
                     $('#temp').html("Max: " + result['data']['daily'][3]['temp']['max'] +" ℃ \n" + "Min: "  + result['data']['daily'][3]['temp']['min'] + " ℃");
                     var icon = result['data']['daily'][3]['weather']['0']['icon'];
                     $('#currentWeather').append("<img id='weatherIcon' alt='weather icon' src=''></img>" + result['data']['daily'][3]['weather']['0']['description']);
-                    var weatherUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+                    var weatherUrl = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
                     $('#weatherIcon').attr("src", weatherUrl);
                     $('#wind').html(result['data']['daily'][3]['wind_speed'] + ' meter/sec ' + direction(result['data']['daily'][3]['wind_deg']));
                     var sunrise = moment(result['data']['daily'][3]['sunrise']*1000).format("HH:mm");
@@ -709,7 +709,7 @@ $("#selectOption").change(function(){
                 $('#temp').html(result['data']['current']['temp']+" ℃");
                 var icon = result['data']['current']['weather']['0']['icon'];
                 $('#currentWeather').append("<img id='weatherIcon' alt='weather icon' src=''></img>" + result['data']['current']['weather']['0']['description']);
-                var weatherUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+                var weatherUrl = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
                 $('#weatherIcon').attr("src", weatherUrl);
                 $('#wind').html(result['data']['current']['wind_speed'] + ' meter/sec ' + direction(result['data']['current']['wind_deg']));
                 var sunrise = moment(result['data']['current']['sunrise']*1000).format("HH:mm");
@@ -733,10 +733,10 @@ $("#selectOption").change(function(){
                 var icon2 = result['data']['hourly']['6']['weather']['0']['icon'];
                 var icon3 = result['data']['hourly']['9']['weather']['0']['icon'];
                 var icon4 = result['data']['hourly']['12']['weather']['0']['icon'];
-                var weatherUrl1 = "http://openweathermap.org/img/wn/" + icon1 + "@2x.png";
-                var weatherUrl2 = "http://openweathermap.org/img/wn/" + icon2 + "@2x.png";
-                var weatherUrl3 = "http://openweathermap.org/img/wn/" + icon3 + "@2x.png";
-                var weatherUrl4 = "http://openweathermap.org/img/wn/" + icon4 + "@2x.png";
+                var weatherUrl1 = "https://openweathermap.org/img/wn/" + icon1 + "@2x.png";
+                var weatherUrl2 = "https://openweathermap.org/img/wn/" + icon2 + "@2x.png";
+                var weatherUrl3 = "https://openweathermap.org/img/wn/" + icon3 + "@2x.png";
+                var weatherUrl4 = "https://openweathermap.org/img/wn/" + icon4 + "@2x.png";
                 $('#weatherIcon1').attr("src", weatherUrl1);
                 $('#weatherIcon2').attr("src", weatherUrl2);
                 $('#weatherIcon3').attr("src", weatherUrl3);
@@ -766,10 +766,10 @@ $("#selectOption").change(function(){
                 var icon2 = result['data']['hourly']['6']['weather']['0']['icon'];
                 var icon3 = result['data']['hourly']['9']['weather']['0']['icon'];
                 var icon4 = result['data']['hourly']['12']['weather']['0']['icon'];
-                var weatherUrl1 = "http://openweathermap.org/img/wn/" + icon1 + "@2x.png";
-                var weatherUrl2 = "http://openweathermap.org/img/wn/" + icon2 + "@2x.png";
-                var weatherUrl3 = "http://openweathermap.org/img/wn/" + icon3 + "@2x.png";
-                var weatherUrl4 = "http://openweathermap.org/img/wn/" + icon4 + "@2x.png";
+                var weatherUrl1 = "https://openweathermap.org/img/wn/" + icon1 + "@2x.png";
+                var weatherUrl2 = "https://openweathermap.org/img/wn/" + icon2 + "@2x.png";
+                var weatherUrl3 = "https://openweathermap.org/img/wn/" + icon3 + "@2x.png";
+                var weatherUrl4 = "https://openweathermap.org/img/wn/" + icon4 + "@2x.png";
                 $('#weatherIcon1').attr("src", weatherUrl1);
                 $('#weatherIcon2').attr("src", weatherUrl2);
                 $('#weatherIcon3').attr("src", weatherUrl3);
@@ -787,7 +787,7 @@ $("#selectOption").change(function(){
                     $('#temp').html(result['data']['current']['temp']+" ℃");
                     var icon = result['data']['current']['weather']['0']['icon'];
                     $('#currentWeather').append("<img id='weatherIcon' alt='weather icon' src=''></img>" + result['data']['current']['weather']['0']['description']);
-                    var weatherUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+                    var weatherUrl = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
                     $('#weatherIcon').attr("src", weatherUrl);
                     $('#wind').html(result['data']['current']['wind_speed'] + ' meter/sec ' + direction(result['data']['current']['wind_deg']));
                     var sunrise = moment(result['data']['current']['sunrise']*1000).format("HH:mm");
@@ -820,10 +820,10 @@ $("#selectOption").change(function(){
                     var icon2 = result['data']['hourly']['6']['weather']['0']['icon'];
                     var icon3 = result['data']['hourly']['9']['weather']['0']['icon'];
                     var icon4 = result['data']['hourly']['12']['weather']['0']['icon'];
-                    var weatherUrl1 = "http://openweathermap.org/img/wn/" + icon1 + "@2x.png";
-                    var weatherUrl2 = "http://openweathermap.org/img/wn/" + icon2 + "@2x.png";
-                    var weatherUrl3 = "http://openweathermap.org/img/wn/" + icon3 + "@2x.png";
-                    var weatherUrl4 = "http://openweathermap.org/img/wn/" + icon4 + "@2x.png";
+                    var weatherUrl1 = "https://openweathermap.org/img/wn/" + icon1 + "@2x.png";
+                    var weatherUrl2 = "https://openweathermap.org/img/wn/" + icon2 + "@2x.png";
+                    var weatherUrl3 = "https://openweathermap.org/img/wn/" + icon3 + "@2x.png";
+                    var weatherUrl4 = "https://openweathermap.org/img/wn/" + icon4 + "@2x.png";
                     $('#weatherIcon1').attr("src", weatherUrl1);
                     $('#weatherIcon2').attr("src", weatherUrl2);
                     $('#weatherIcon3').attr("src", weatherUrl3);
@@ -838,7 +838,7 @@ $("#selectOption").change(function(){
                     $('#temp').html("Max: " + result['data']['daily'][1]['temp']['max'] +" ℃ \n" + "Min: "  + result['data']['daily'][1]['temp']['min'] + " ℃");
                     var icon = result['data']['daily'][1]['weather']['0']['icon'];
                     $('#currentWeather').append("<img id='weatherIcon' alt='weather icon' src=''></img>" + result['data']['daily'][1]['weather']['0']['description']);
-                    var weatherUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+                    var weatherUrl = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
                     $('#weatherIcon').attr("src", weatherUrl);
                     $('#wind').html(result['data']['daily'][1]['wind_speed'] + ' meter/sec ' + direction(result['data']['daily'][1]['wind_deg']));
                     var sunrise = moment(result['data']['daily'][1]['sunrise']*1000).format("HH:mm");
@@ -855,7 +855,7 @@ $("#selectOption").change(function(){
                     $('#temp').html("Max: " + result['data']['daily'][2]['temp']['max'] +" ℃ \n" + "Min: "  + result['data']['daily'][2]['temp']['min'] + " ℃");
                     var icon = result['data']['daily'][2]['weather']['0']['icon'];
                     $('#currentWeather').append("<img id='weatherIcon' alt='weather icon' src=''></img>" + result['data']['daily'][2]['weather']['0']['description']);
-                    var weatherUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+                    var weatherUrl = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
                     $('#weatherIcon').attr("src", weatherUrl);
                     $('#wind').html(result['data']['daily'][2]['wind_speed'] + ' meter/sec ' + direction(result['data']['daily'][2]['wind_deg']));
                     var sunrise = moment(result['data']['daily'][2]['sunrise']*1000).format("HH:mm");
@@ -872,7 +872,7 @@ $("#selectOption").change(function(){
                     $('#temp').html("Max: " + result['data']['daily'][3]['temp']['max'] +" ℃ \n" + "Min: "  + result['data']['daily'][3]['temp']['min'] + " ℃");
                     var icon = result['data']['daily'][3]['weather']['0']['icon'];
                     $('#currentWeather').append("<img id='weatherIcon' alt='weather icon' src=''></img>" + result['data']['daily'][3]['weather']['0']['description']);
-                    var weatherUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+                    var weatherUrl = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
                     $('#weatherIcon').attr("src", weatherUrl);
                     $('#wind').html(result['data']['daily'][3]['wind_speed'] + ' meter/sec ' + direction(result['data']['daily'][3]['wind_deg']));
                     var sunrise = moment(result['data']['daily'][3]['sunrise']*1000).format("HH:mm");
