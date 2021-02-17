@@ -1,11 +1,11 @@
 //Preloader:
-$(window).on('load', function () {
-    if ($('#preloader').length) {
-    $('#preloader').delay(100).fadeOut('slow', function () {
-        $(this).remove();
+    $(window).on('load', function () {
+        if ($('#preloader').length) {
+        $('#preloader').delay(100).fadeOut('slow', function () {
+            $(this).remove();
+        });
+        }
     });
-    }
-});
 
 //Creating a map:
 var London = [52, -0.09];
@@ -21,63 +21,64 @@ var tiles = L.tileLayer(tileUrl, {
  mymap.addLayer(tiles);
  mymap.setView(London, 4);
 
-var loadMap = function(id) {
 
-    var redIcon = new L.Icon({
-        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41]
-      });
-      
-     //Get location
-     mymap.locate({setView: true}).on('locationfound', function(e){
-         var locationMarker = L.marker([e.latitude, e.longitude], {icon: redIcon}).bindPopup('You are here!');
-         var circle =L.circle([e.latitude, e.longitude], e.accuracy/2, {
-             weight: 1,
-             color: 'red',
-             fillColor: '#cacaca',
-             fillOpacity: 0.2
-         });
-         //var marker = L.marker([51.6, -0.09]).addTo(mymap);
-         mymap.addLayer(locationMarker);
-         mymap.addLayer(circle);
-     }). on('locationerror', function(e) {
-         console.log(e);
-         alert("Location access denied.");
-     });
-     //Apply border:
-     $(window).on('load',function(){
-        countryName = $("#selectOption").val();
-        applyCountryBorder(mymap, countryName);
-     });
+    var loadMap = function(id) {
 
-     $("#selectOption").change(function(){
-        countryName = $("#selectOption").val();
-        applyCountryBorder(mymap, countryName);
-     });
-};
+        var redIcon = new L.Icon({
+            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+        });
+        
+        //Get location
+        mymap.locate({setView: true}).on('locationfound', function(e){
+            var locationMarker = L.marker([e.latitude, e.longitude], {icon: redIcon}).bindPopup('You are here!');
+            var circle =L.circle([e.latitude, e.longitude], e.accuracy/2, {
+                weight: 1,
+                color: 'red',
+                fillColor: '#cacaca',
+                fillOpacity: 0.2
+            });
+            //var marker = L.marker([51.6, -0.09]).addTo(mymap);
+            mymap.addLayer(locationMarker);
+            mymap.addLayer(circle);
+        }). on('locationerror', function(e) {
+            console.log(e);
+            alert("Location access denied.");
+        });
+        //Apply border:
+        $(window).on('load',function(){
+            countryCode = $("#selectOption").val();
+            applyCountryBorder(mymap, countryCode);
+        });
 
-var miniMap = new L.Control.GlobeMiniMap({     
-    land:'#03ac13',
-    water:'#0195d0',
-    marker:'#000',
-    topojsonSrc: '../data/world.json'
-  }).addTo(mymap);
+        $("#selectOption").change(function(){
+            countryCode = $("#selectOption").val();
+            applyCountryBorder(mymap, countryCode);
+        });
+    };
+
+    var miniMap = new L.Control.GlobeMiniMap({     
+        land:'#03ac13',
+        water:'#0195d0',
+        marker:'#000',
+        topojsonSrc: '../data/world.json'
+    }).addTo(mymap);
 
 loadMap('mymap');
 
 
-function applyCountryBorder(mymap, countryname) {
+function applyCountryBorder(countrycode) {
     jQuery
       .ajax({
         type: "GET",
         dataType: "json",
         url:
           "https://nominatim.openstreetmap.org/search?country=" +
-          countryname +
+          countrycode +
           "&polygon_geojson=1&format=json"
       })
       .then(function(data) {
@@ -88,39 +89,43 @@ function applyCountryBorder(mymap, countryname) {
           opacity: 1
         }).addTo(map);*/
         
+
+        //Add global scope
         var borderLayer = L.geoJSON(data[0].geojson, {
           color: "#03ac13",
           weight: 3,
           opacity: 0.7,
           fillOpacity: 0.0 
-        }).addTo(mymap);
+        })
         borderLayer.addTo(mymap);
+
+        //map.fitBounds(borderLayer.getBounds());
       });
 };
 
 //Page navigation
-var totalNumOfPages = $('#accordion .card').length;
+    var totalNumOfPages = $('#accordion .card').length;
 
-$(".pagination").append("<li class='current-page page-item active'><a class='page-link'href='javascript:void(0)'>1</a></li>")
-for(var i=2; i<=totalNumOfPages; i++){
-    $(".pagination").append("<li class='current-page page-item'><a class='page-link'href='javascript:void(0)'>" + i + "</a></li>")
-}
-$(".pagination").append("<li id='next-page' class='page-item'> <a class='page-link' href='javascript:void(0)' aria-label='Next'> <span aria-hidden='true'>&raquo;</span> <span class='sr-only'>Next</span></a></li>");
-
-$(".pagination li.current-page").on("click", function(){
-    if($(this).hasClass("active")){
-        return false;
-    } else {
-        var currentPage = $(this).index();
-        $(".pagination li").removeClass("active");
-        $(this).addClass("active");
-        $("#accordion .card").hide();
-
-        for(var i=1; i<=totalNumOfPages; i++){
-            $("#page" + currentPage + "").show();
-        }
+    $(".pagination").append("<li class='current-page page-item active'><a class='page-link'href='javascript:void(0)'>1</a></li>")
+    for(var i=2; i<=totalNumOfPages; i++){
+        $(".pagination").append("<li class='current-page page-item'><a class='page-link'href='javascript:void(0)'>" + i + "</a></li>")
     }
-});
+    $(".pagination").append("<li id='next-page' class='page-item'> <a class='page-link' href='javascript:void(0)' aria-label='Next'> <span aria-hidden='true'>&raquo;</span> <span class='sr-only'>Next</span></a></li>");
+
+    $(".pagination li.current-page").on("click", function(){
+        if($(this).hasClass("active")){
+            return false;
+        } else {
+            var currentPage = $(this).index();
+            $(".pagination li").removeClass("active");
+            $(this).addClass("active");
+            $("#accordion .card").hide();
+
+            for(var i=1; i<=totalNumOfPages; i++){
+                $("#page" + currentPage + "").show();
+            }
+        }
+    });
 
 //Next Button
 $("#next-page").on("click", function() {
@@ -168,15 +173,25 @@ for (var i = 0; i <= currencies.length; i++) {
     $('#from').append('<option value="' + currencies[i] + '">' + currencies[i] + '</option>');
     $('#to').append('<option value="' + currencies[i] + '">' + currencies[i] + '</option>');
 }
+
 //API:
 //Fill countries-
-$.getJSON("php/allCountries.json", function(data) {
-    //console.log(data);
-    for (var i = 0; i < data.length; i++) {
-        if(data[i]['alpha-2'] != 'undefined'){
-            $('#selectOption').append("<option value=" + data[i]['alpha-2'] + ">" + data[i]['name'] + "</option>");
+$.ajax({
+    url: "php/countryNames.php",
+    type: 'GET',
+    dataType: 'json',
+
+    success: function(result) {
+
+        console.log(result);
+
+        if (result.status.name == "ok") {
+            for (var i = 0; i < result.data.length; i++) {
+                $('#selectOption').append("<option value=" + result['data'][i]['code'] + ">" + result['data'][i]['name'] + "</option>");
+            }
         }
-    }
+    
+    },
 });
 
 
