@@ -8,18 +8,19 @@
     });
 
 //Creating a map:
-var London = [52, -0.09];
-var mymap = L.map('map');
-var tileUrl = 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}{r}.{ext}';
-var tiles = L.tileLayer(tileUrl, { 
-    attribution:'Map tiles by <a href="https://stamen.com">Stamen Design</a>, <a href="https://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    subdomains: 'abcd',
-    minZoom: 2,
-    maxZoom: 20,
-    ext: 'png'
- });
- mymap.addLayer(tiles);
- mymap.setView(London, 4);
+    var London = [52, -0.09];
+    var mymap = L.map('map');
+    var tileUrl = 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}{r}.{ext}';
+    var tiles = L.tileLayer(tileUrl, { 
+        attribution:'Map tiles by <a href="https://stamen.com">Stamen Design</a>, <a href="https://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        subdomains: 'abcd',
+        minZoom: 2,
+        maxZoom: 20,
+        ext: 'png'
+    });
+
+mymap.addLayer(tiles);
+mymap.setView(London, 4);
 
 
     var loadMap = function(id) {
@@ -68,39 +69,42 @@ var tiles = L.tileLayer(tileUrl, {
 loadMap('mymap');
 
 //On select country apply border
-$("#selectOption").change(function(){
-    $.ajax({
-        url: "php/countryBorders.php",
-        type: "POST",
-        dataType: "json",
-        data: {
-            code: $("#selectOption option:selected").val(),
-        },
+    $("#selectOption").change(function(){
+        $.ajax({
+            url: "php/countryBorders.php",
+            type: "POST",
+            dataType: "json",
+            data: {
+                code: $("#selectOption option:selected").val(),
+            },
 
-        success: function(result) {
+            success: function(result) {
 
-            console.log(result);
-    
-            if (result.status.name == "ok") {
-                console.log(result.data);
-                var bounds = result.data;
-                var borderStyle =  {
-                    color: "#03ac13",
-                    weight: 3,
-                    opacity: 0.7,
-                    fillOpacity: 0.0 
-                };
-                L.geoJSON(bounds, borderStyle).addTo(mymap);
-                // mymap.flyToBounds(bounds,fitBounds());
-                
-                mymap.fitBounds(layer.getBounds());
-            }
+                console.log(result);
         
-        },
-    });    
-});
-
-//map.fitBounds(borderLayer.getBounds());
+                if (result.status.name == "ok") {
+                    console.log(result.data);
+                    var bounds = result.data;
+                    var borderStyle =  {
+                        color: "#03ac13",
+                        weight: 3,
+                        opacity: 0.7,
+                        fillOpacity: 0.0 
+                    };
+                    var border = L.geoJSON(bounds, borderStyle).addTo(mymap);
+                    
+                    mymap.fitBounds(border.getBounds(), {
+                        padding: [10, 10],
+                        animate: true,
+                        duration: 5,
+                    });
+                };
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.warn(errorThrown);
+            }
+        });    
+    });
 
 //Page navigation
     var totalNumOfPages = $('#accordion .card').length;
@@ -127,131 +131,131 @@ $("#selectOption").change(function(){
     });
 
 //Next Button
-$("#next-page").on("click", function() {
-    var currentPage = $(".pagination li.active").index();
-    if(currentPage === totalNumOfPages){
-        return false;
-    } else {
-        currentPage++;
-        $(".pagination li").removeClass("active");
-        $("#accordion .card").hide();
-        
-        for(var i=1; i<=totalNumOfPages; i++){
-            $("#page" + currentPage).show();
+    $("#next-page").on("click", function() {
+        var currentPage = $(".pagination li.active").index();
+        if(currentPage === totalNumOfPages){
+            return false;
+        } else {
+            currentPage++;
+            $(".pagination li").removeClass("active");
+            $("#accordion .card").hide();
+            
+            for(var i=1; i<=totalNumOfPages; i++){
+                $("#page" + currentPage).show();
+            }
+            
+            $(".pagination li.current-page:eq(" + (currentPage -1)+")").addClass("active");
+            
         }
-        
-        $(".pagination li.current-page:eq(" + (currentPage -1)+")").addClass("active");
-        
-    }
-})
+    })
 
 //Previous Button
-$("#previous-page").on("click", function() {
-    var currentPage = $(".pagination li.active").index();
-    if(currentPage === 1){
-        return false;
-    } else {
-        currentPage--;
-        $(".pagination li").removeClass("active");
-        $("#accordion .card").hide();
-        
-        for(var i=1; i<=totalNumOfPages; i++){
-            $("#page" + currentPage).show();
+    $("#previous-page").on("click", function() {
+        var currentPage = $(".pagination li.active").index();
+        if(currentPage === 1){
+            return false;
+        } else {
+            currentPage--;
+            $(".pagination li").removeClass("active");
+            $("#accordion .card").hide();
+            
+            for(var i=1; i<=totalNumOfPages; i++){
+                $("#page" + currentPage).show();
+            }
+            
+            $(".pagination li.current-page:eq(" + (currentPage -1)+")").addClass("active");
+            
         }
-        
-        $(".pagination li.current-page:eq(" + (currentPage -1)+")").addClass("active");
-        
-    }
-})
+    })
 
 //Exchange
-var currencies = ["AUD","BGN","BRL","CAD","CHF","CNY","CZK","DKK","EUR","GBP","HRK","HUF","IDR","ILS","INR","ISK","JPY","KRW","MXN","MYR","NOK","NZD","PHP","PLN","RON","RUB","SEK","SGD","THB","TRY","USD","ZAR"];
+    var currencies = ["AUD","BGN","BRL","CAD","CHF","CNY","CZK","DKK","EUR","GBP","HRK","HUF","IDR","ILS","INR","ISK","JPY","KRW","MXN","MYR","NOK","NZD","PHP","PLN","RON","RUB","SEK","SGD","THB","TRY","USD","ZAR"];
 //Populate currencies -
-$('#select').empty();
-for (var i = 0; i <= currencies.length; i++) {
-    $('#from').append('<option value="' + currencies[i] + '">' + currencies[i] + '</option>');
-    $('#to').append('<option value="' + currencies[i] + '">' + currencies[i] + '</option>');
-}
+    $('#select').empty();
+    for (var i = 0; i <= currencies.length; i++) {
+        $('#from').append('<option value="' + currencies[i] + '">' + currencies[i] + '</option>');
+        $('#to').append('<option value="' + currencies[i] + '">' + currencies[i] + '</option>');
+    }
 
 //API:
 //Fill countries-
-$.ajax({
-    url: "php/countryNames.php",
-    type: 'GET',
-    dataType: 'json',
+    $.ajax({
+        url: "php/countryNames.php",
+        type: 'GET',
+        dataType: 'json',
 
-    success: function(result) {
+        success: function(result) {
 
-        console.log(result);
+            //console.log(result);
 
-        if (result.status.name == "ok") {
-            for (var i = 0; i < result.data.length; i++) {
-                $('#selectOption').append("<option value=" + result['data'][i]['code'] + ">" + result['data'][i]['name'] + "</option>");
+            if (result.status.name == "ok") {
+                for (var i = 0; i < result.data.length; i++) {
+                    $('#selectOption').append("<option value=" + result['data'][i]['code'] + ">" + result['data'][i]['name'] + "</option>");
+                }
             }
-        }
-    
-    },
-});
+        
+        },
+    });
 
 
 //AJAX FUNCTIONS:
 
 //Millseconds to Time
-function msToTime(duration) {
-    var milliseconds = parseInt((duration % 1000) / 100),
-      seconds = Math.floor((duration / 1000) % 60),
-      minutes = Math.floor((duration / (1000 * 60)) % 60),
-      hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
-  
-    hours = (hours < 10) ? "0" + hours : hours;
-    minutes = (minutes < 10) ? "0" + minutes : minutes;
-    seconds = (seconds < 10) ? "0" + seconds : seconds;
-  
-    return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
-}
-
- //Days
-var thirdDay = moment().add(2, 'days').format('dddd');  
-var fourthDay = moment().add(3, 'days').format('dddd');   ;
-$("#day3").html(thirdDay);
-$("#day4").html(fourthDay);
-
-  //Direction:
-function direction(i) {
-    if(i >= 349 && i <= 11){
-            return +i + "°: N";
-    } else if (i >= 12 && i <= 33) {
-            return +i + "°: NNE";
-    } else if (i >= 34 && i <= 56) {
-            return +i + "°: NE";
-    } else if (i >= 57 && i <= 78) {
-            return +i + "°: ENE";
-    } else if (i >= 79 && i <= 101) {
-            return +i + "°: E";
-    } else if (i >= 102 && i <= 123) {
-            return +i + "°: ESE";
-    } else if (i >= 124 && i <= 146) {
-            return +i + "°: SE";
-    } else if (i >= 147 && i <= 168) {
-            return +i + "°: SSE";
-    } else if (i >= 169 && i <= 191) {
-            return +i + "°: S";
-    } else if (i >= 192 && i <= 213) {
-            return +i + "°: SSW";
-    } else if (i >= 214 && i <= 236) {
-            return +i + "°: SW";
-    } else if (i >= 237 && i <= 258) {
-            return +i + "°: WSW";
-    } else if (i >= 259 && i <= 281) {
-            return +i + "°: W";
-    } else if (i >= 282 && i <= 303) {
-            return +i + "°: WNW";
-    } else if (i >= 304 && i <= 326) {
-            return +i + "°: NW";
-    } else if (i >= 327 && i <= 348) {
-            return +i + "°: NNW";
+    function msToTime(duration) {
+        var milliseconds = parseInt((duration % 1000) / 100),
+        seconds = Math.floor((duration / 1000) % 60),
+        minutes = Math.floor((duration / (1000 * 60)) % 60),
+        hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+    
+        hours = (hours < 10) ? "0" + hours : hours;
+        minutes = (minutes < 10) ? "0" + minutes : minutes;
+        seconds = (seconds < 10) ? "0" + seconds : seconds;
+    
+        return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
     }
-};
+
+//Days:
+    var thirdDay = moment().add(2, 'days').format('dddd');  
+    var fourthDay = moment().add(3, 'days').format('dddd');   ;
+    $("#day3").html(thirdDay);
+    $("#day4").html(fourthDay);
+
+//Direction:
+    function direction(i) {
+        if(i >= 349 && i <= 11){
+                return +i + "°: N";
+        } else if (i >= 12 && i <= 33) {
+                return +i + "°: NNE";
+        } else if (i >= 34 && i <= 56) {
+                return +i + "°: NE";
+        } else if (i >= 57 && i <= 78) {
+                return +i + "°: ENE";
+        } else if (i >= 79 && i <= 101) {
+                return +i + "°: E";
+        } else if (i >= 102 && i <= 123) {
+                return +i + "°: ESE";
+        } else if (i >= 124 && i <= 146) {
+                return +i + "°: SE";
+        } else if (i >= 147 && i <= 168) {
+                return +i + "°: SSE";
+        } else if (i >= 169 && i <= 191) {
+                return +i + "°: S";
+        } else if (i >= 192 && i <= 213) {
+                return +i + "°: SSW";
+        } else if (i >= 214 && i <= 236) {
+                return +i + "°: SW";
+        } else if (i >= 237 && i <= 258) {
+                return +i + "°: WSW";
+        } else if (i >= 259 && i <= 281) {
+                return +i + "°: W";
+        } else if (i >= 282 && i <= 303) {
+                return +i + "°: WNW";
+        } else if (i >= 304 && i <= 326) {
+                return +i + "°: NW";
+        } else if (i >= 327 && i <= 348) {
+                return +i + "°: NNW";
+        }
+    };
 
 
 //On document ready:
@@ -661,7 +665,7 @@ function direction(i) {
                     //update map view:
                     latlng = [result['data']['latlng']['0'], result['data']['latlng']['1']];
                     console.log(latlng);
-                    mymap.flyTo(latlng, 5);
+                    //mymap.flyTo(latlng, 5);
                 }
             
             },
