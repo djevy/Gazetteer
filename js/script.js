@@ -19,10 +19,6 @@
         maxZoom: 20,
         ext: 'png'
     });
-    mymap.addLayer(tiles);
-
-    mymap.setView(London, 4);
-
     var redIcon = new L.Icon({
         iconUrl: 'squat-marker-red.svg',
         shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -31,7 +27,6 @@
         popupAnchor: [1, -34],
         shadowSize: [41, 41]
     })
-
     var PinIcon = L.Icon.extend({
         options: {
             shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -41,13 +36,20 @@
             popupAnchor:  [1, -34]
         }
     });
-
     var greenIcon = new PinIcon({iconUrl: 'squat-marker-green.svg'});
-
+    
+    mymap.addLayer(tiles);
+    mymap.setView(London, 4);
 
 //Get location
-var latlng = [];
-var userLocation = [];
+    var latlng = [];
+    var userLocation = [];
+    var miniMap = new L.Control.GlobeMiniMap({     
+        land:'#03ac13',
+        water:'#0195d0',
+        marker:'#000',
+        topojsonSrc: '../data/world.json'
+    }).addTo(mymap);
 
     mymap.locate({setView: false}).on('locationfound', function(e){
 
@@ -89,12 +91,7 @@ var userLocation = [];
         alert("Location access denied.");
     });
 
-    var miniMap = new L.Control.GlobeMiniMap({     
-        land:'#03ac13',
-        water:'#0195d0',
-        marker:'#000',
-        topojsonSrc: '../data/world.json'
-    }).addTo(mymap);
+
 
 
 
@@ -186,48 +183,9 @@ var userLocation = [];
 
 
 
-
-//On select country apply border
-    $("#selectOption").change(function(){
-        $.ajax({
-            url: "php/countryBorders.php",
-            type: "POST",
-            dataType: "json",
-            data: {
-                code: $("#selectOption option:selected").val(),
-            },
-
-            success: function(result) {
-
-                console.log(result);
-        
-                if (result.status.name == "ok") {
-                    var bounds = result.data;
-                    var borderStyle =  {
-                        color: "#03ac13",
-                        weight: 3,
-                        opacity: 0.7,
-                        fillOpacity: 0.0 
-                    };
-                    var border = L.geoJSON(bounds, borderStyle).addTo(mymap);
-                    
-                    mymap.fitBounds(border.getBounds(), {
-                        padding: [10, 10],
-                        animate: true,
-                        duration: 5,
-                    });
-                };
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.warn(errorThrown);
-            }
-        });    
-    });
-
-
-
 //Exchange
     var currencies = ["AUD","BGN","BRL","CAD","CHF","CNY","CZK","DKK","EUR","GBP","HRK","HUF","IDR","ILS","INR","ISK","JPY","KRW","MXN","MYR","NOK","NZD","PHP","PLN","RON","RUB","SEK","SGD","THB","TRY","USD","ZAR"];
+    
 //Populate currencies -
     $('#select').empty();
     for (var i = 0; i <= currencies.length; i++) {
@@ -235,30 +193,6 @@ var userLocation = [];
         $('#to').append('<option value="' + currencies[i] + '">' + currencies[i] + '</option>');
     }
 
-
-
-//API:
-//Fill countries-
-    $.ajax({
-        url: "php/countryNames.php",
-        type: 'GET',
-        dataType: 'json',
-
-        success: function(result) {
-
-            //console.log(result);
-
-            if (result.status.name == "ok") {
-                for (var i = 0; i < result.data.length; i++) {
-                    $('#selectOption').append("<option value=" + result['data'][i]['code'] + ">" + result['data'][i]['name'] + "</option>");
-                }
-            }
-        
-        },
-    });
-
-
-//AJAX FUNCTIONS:
 
 //Millseconds to Time
     function msToTime(duration) {
@@ -319,6 +253,25 @@ var userLocation = [];
         }
     };
 
+
+//Fill countries-
+$.ajax({
+    url: "php/countryNames.php",
+    type: 'GET',
+    dataType: 'json',
+
+    success: function(result) {
+
+        //console.log(result);
+
+        if (result.status.name == "ok") {
+            for (var i = 0; i < result.data.length; i++) {
+                $('#selectOption').append("<option value=" + result['data'][i]['code'] + ">" + result['data'][i]['name'] + "</option>");
+            }
+        }
+    
+    },
+});
 
 
 //On document ready:
@@ -496,6 +449,40 @@ var userLocation = [];
 
 //Select country
     $("#selectOption").change(function(){
+        //Apply border
+        $.ajax({
+            url: "php/countryBorders.php",
+            type: "POST",
+            dataType: "json",
+            data: {
+                code: $("#selectOption option:selected").val(),
+            },
+
+            success: function(result) {
+
+                console.log(result);
+        
+                if (result.status.name == "ok") {
+                    var bounds = result.data;
+                    var borderStyle =  {
+                        color: "#03ac13",
+                        weight: 3,
+                        opacity: 0.7,
+                        fillOpacity: 0.0 
+                    };
+                    var border = L.geoJSON(bounds, borderStyle).addTo(mymap);
+                    
+                    mymap.fitBounds(border.getBounds(), {
+                        padding: [10, 10],
+                        animate: true,
+                        duration: 5,
+                    });
+                };
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.warn(errorThrown);
+            }
+        });    
 
         //Country City Markers-
         $.ajax({
@@ -521,7 +508,6 @@ var userLocation = [];
             }
         }); 
 
-        //Country Info:
         //getCountryInfo-
         $.ajax({
             url: "php/getCountryInfo.php",
