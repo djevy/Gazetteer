@@ -18,46 +18,65 @@
         maxZoom: 20,
         ext: 'png'
     });
+    mymap.addLayer(tiles);
 
-mymap.addLayer(tiles);
-mymap.setView(London, 4);
+    mymap.setView(London, 4);
 
+    var redIcon = new L.Icon({
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
 
-    var loadMap = function(id) {
+//Get location
+var latlng = [];
+var userLocation = [];
+    mymap.locate({setView: false}).on('locationfound', function(e){
 
-        var redIcon = new L.Icon({
-            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-            iconSize: [25, 41],
-            iconAnchor: [12, 41],
-            popupAnchor: [1, -34],
-            shadowSize: [41, 41]
+        userLocation = [e.latitude, e.longitude]
+        var locationMarker = L.marker(userLocation, {icon: redIcon}).bindPopup('You are here!');
+        var circle =L.circle([e.latitude, e.longitude], e.accuracy/2, {
+            weight: 1,
+            color: 'red',
+            fillColor: '#cacaca',
+            fillOpacity: 0.2
         });
-        
-        //Get location
-        mymap.locate({setView: false}).on('locationfound', function(e){
-            var locationMarker = L.marker([e.latitude, e.longitude], {icon: redIcon}).bindPopup('You are here!');
-            var circle =L.circle([e.latitude, e.longitude], e.accuracy/2, {
-                weight: 1,
-                color: 'red',
-                fillColor: '#cacaca',
-                fillOpacity: 0.2
-            });
-            //var marker = L.marker([51.6, -0.09]).addTo(mymap);
-            mymap.addLayer(locationMarker);
-            mymap.addLayer(circle);
-        }). on('locationerror', function(e) {
-            console.log(e);
-            alert("Location access denied.");
-        });
-        //Apply border:
-        $(document).ready(function(){
-            countryCode = $("#selectOption").val();
-            //applyCountryBorder(countryCode);
-        });
+        //var marker = L.marker([51.6, -0.09]).addTo(mymap);
+        mymap.addLayer(locationMarker);
+        mymap.addLayer(circle);
 
-        
-    };
+        //change selectOption:
+        $.ajax({
+            url: "php/getCountryCode.php",
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                lat: e.latitude,
+                lng: e.longitude,
+            },
+            success: function(result) {
+
+                console.log(result);
+
+                if (result.status.name == "ok") {
+                    // $('#selectOption').prepend("<option value=" + result['data']['countryCode'] + ">" + result['data']['countryName'] + "</option>");
+                    // $("#selectOption option:selected") 
+                    // $("#selectOption option:selected").text(result['data']['countryName']);
+                    $("#selectOption").val(result['data']['countryCode']).change();
+                    // $("#selectOption").text(result['data']['countryName']).change();
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.warn(jqXHR.responseText + "   " + errorThrown);
+            }
+        }); 
+    }). on('locationerror', function(e) {
+        console.log(e);
+        alert("Location access denied.");
+    });
 
     var miniMap = new L.Control.GlobeMiniMap({     
         land:'#03ac13',
@@ -66,7 +85,97 @@ mymap.setView(London, 4);
         topojsonSrc: '../data/world.json'
     }).addTo(mymap);
 
-loadMap('mymap');
+//Easy Buttons:
+    //Info-
+    infoButton = L.easyButton({
+        id: 'info',
+        position: 'bottomright',
+        type: 'animate',
+        leafletClasses: true,
+        states:[{
+          stateName: 'show-info',
+          onClick: function(button, map){
+            $("#infoModalScrollable").modal();
+          },
+          title: 'show country information',
+          icon: "fa-info"
+        }]
+      })
+    mymap.addControl(infoButton);
+    
+    // Weather-
+    weatherButton = L.easyButton({
+        id: 'weather',
+        position: 'bottomright',
+        type: 'animate',
+        leafletClasses: true,
+        states:[{
+          stateName: 'show-weather',
+          onClick: function(button, map){
+            $("#weatherModalScrollable").modal();
+          },
+          title: 'show the weather',
+          icon: "fa-sun"
+        }]
+      })
+    mymap.addControl(weatherButton);
+
+    //News-
+    newsButton = L.easyButton({
+        id: 'news',
+        position: 'bottomright',
+        type: 'animate',
+        leafletClasses: true,
+        states:[{
+          stateName: 'show-news',
+          onClick: function(button, map){
+            $("#newsModalScrollable").modal();
+          },
+          title: 'show country news',
+          icon: "fa-newspaper"
+        }]
+      });
+     mymap.addControl(newsButton);
+
+     //Exchange-
+     exchangeButton = L.easyButton({
+        id: 'exchange',
+        position: 'bottomright',
+        type: 'animate',
+        leafletClasses: true,
+        states:[{
+          stateName: 'show-exchange',
+          onClick: function(button, map){
+            $("#exchangeModalScrollable").modal();
+          },
+          title: 'show exchange rates',
+          icon: "fa-money-bill"
+        }]
+      });
+     mymap.addControl(exchangeButton);
+
+     //Images-
+     imagesButton = L.easyButton({
+        id: 'images',
+        position: 'bottomright',
+        type: 'animate',
+        leafletClasses: true,
+        states:[{
+          stateName: 'show-images',
+          onClick: function(button, map){
+            $("#imagesModalScrollable").modal();
+          },
+          title: 'show country images',
+          icon: "fa-camera"
+        }]
+      });
+     mymap.addControl(imagesButton);
+
+
+
+
+
+
 
 //On select country apply border
     $("#selectOption").change(function(){
@@ -83,7 +192,6 @@ loadMap('mymap');
                 console.log(result);
         
                 if (result.status.name == "ok") {
-                    console.log(result.data);
                     var bounds = result.data;
                     var borderStyle =  {
                         color: "#03ac13",
@@ -261,6 +369,8 @@ loadMap('mymap');
 //On document ready:
     $(document).ready(function(){
 
+        //loadMap('mymap');
+        
         //World cities
         $.getJSON('php/worldCities.json', function(data) {
             var cities = data.features.filter(function(value){
@@ -300,54 +410,54 @@ loadMap('mymap');
         }); 
 
         //restCountry-
-        $.ajax({
-            url: "php/restCountry.php",
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                country: $('#selectOption').val(),
-            },
-            success: function(result) {
+        // $.ajax({
+        //     url: "php/restCountry.php",
+        //     type: 'POST',
+        //     dataType: 'json',
+        //     data: {
+        //         country: $('#selectOption').val(),
+        //     },
+        //     success: function(result) {
 
-                console.log(result);
+        //         console.log(result);
 
-                if (result.status.name == "ok") {
-                    $("#flag").attr("src", result['data']['flag']);
-                    $('#currency').html(result['data']['currencies']['0']['name'] + " - " + result['data']['currencies']['0']['symbol']);
-                    $('#continent').html(result['data']['region']);
-                    $('#language').html(result['data']['languages']['0']['name']);
-                }
+        //         if (result.status.name == "ok") {
+        //             $("#flag").attr("src", result['data']['flag']);
+        //             $('#currency').html(result['data']['currencies']['0']['name'] + " - " + result['data']['currencies']['0']['symbol']);
+        //             $('#continent').html(result['data']['region']);
+        //             $('#language').html(result['data']['languages']['0']['name']);
+        //         }
             
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                // your error code
-            }
-        }); 
+        //     },
+        //     error: function(jqXHR, textStatus, errorThrown) {
+        //         // your error code
+        //     }
+        // }); 
 
         //wikiApi-
-        $.ajax({
-            url: "php/wikiApi.php",
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                country: $('#selectOption option:selected').text(),
-            },
-            success: function(result) {            
-                console.log(result);
+        // $.ajax({
+        //     url: "php/wikiApi.php",
+        //     type: 'POST',
+        //     dataType: 'json',
+        //     data: {
+        //         country: $('#selectOption option:selected').text(),
+        //     },
+        //     success: function(result) {            
+        //         console.log(result);
 
-                if (result.status.name == "ok") {
-                    $("#sumTitle").empty();
-                    $("#sumTitle").append(result['data']['0']['title']);
-                    $("#summary").html(result['data']['0']['summary']);
-                    $("#wikipediaUrl").attr('href', result['data']['0']['wikipediaUrl']);
-                    $("#wikipediaUrl").html(result['data']['0']['wikipediaUrl']);                
-                }
+        //         if (result.status.name == "ok") {
+        //             $("#sumTitle").empty();
+        //             $("#sumTitle").append(result['data']['0']['title']);
+        //             $("#summary").html(result['data']['0']['summary']);
+        //             $("#wikipediaUrl").attr('href', result['data']['0']['wikipediaUrl']);
+        //             $("#wikipediaUrl").html(result['data']['0']['wikipediaUrl']);                
+        //         }
             
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                // your error code
-            }
-        }); 
+        //     },
+        //     error: function(jqXHR, textStatus, errorThrown) {
+        //         // your error code
+        //     }
+        // }); 
 
         //Weather:
         $.ajax({
@@ -355,8 +465,8 @@ loadMap('mymap');
             type: 'POST',
             dataType: 'json',
             data: {
-                lat: 51.6,
-                lon: -0.09
+                lat: userLocation[0],
+                lon: userLocation[1]
             },
             success: function(result) {
                 console.log(result);
@@ -512,93 +622,95 @@ loadMap('mymap');
                 }
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                alert("There has been an error!")
+                alert(jqXHR + " There has been an error! " + errorThrown)
             }
         });
 
         //News:
-        $.ajax({
-            url: "php/newsApi.php",
-            type: 'POST',
-            dataType: 'json',
-            data: {
-            country: $('#selectOption option:selected').val(),
-            },
-            success: function(result) {
+        // $.ajax({
+        //     url: "php/newsApi.php",
+        //     type: 'POST',
+        //     dataType: 'json',
+        //     data: {
+        //     country: $('#selectOption option:selected').val(),
+        //     },
+        //     success: function(result) {
 
-                console.log(result);
+        //         console.log(result);
                 
-                if (result.status.name == "ok") {
-                    $("#articleTitle").html(result['data']['articles']['0']['title']);
-                    $("#articleDescription").html(result['data']['articles']['0']['description']);
-                    $("#articleContent").html(result['data']['articles']['0']['content']);
-                    $("#articleImg").attr("src", result['data']['articles']['0']['urlToImage']);
-                    $("#articleAuthor").html(result['data']['articles']['0']['author']);
-                    $("#publishedAt").html(result['data']['articles']['0']['publishedAt']);
-                    $("#articleUrl").html(result['data']['articles']['0']['url']);
-                    $("#articleUrl").attr("href", result['data']['articles']['0']['url']);
-                }
-                var i = 0;
-                $("#nextArticle").on('click', function() {
-                    i++;
-                    if (result.status.name == "ok") {
-                        $("#articleTitle").html(result['data']['articles'][i]['title']);
-                        $("#articleDescription").html(result['data']['articles'][i]['description']);
-                        $("#articleContent").html(result['data']['articles'][i]['content']);
-                        $("#articleImg").attr("src", result['data']['articles'][i]['urlToImage']);
-                        $("#articleAuthor").html(result['data']['articles'][i]['author']);
-                        $("#publishedAt").html(result['data']['articles'][i]['publishedAt']);
-                        $("#articleUrl").html(result['data']['articles'][i]['url']);
-                        $("#articleUrl").attr("href", result['data']['articles'][i]['url']);
-                    }
-                });
-                $("#previousArticle").on('click', function() {
-                    i--;
-                    if (result.status.name == "ok") {
-                        $("#articleTitle").html(result['data']['articles'][i]['title']);
-                        $("#articleDescription").html(result['data']['articles'][i]['description']);
-                        $("#articleContent").html(result['data']['articles'][i]['content']);
-                        $("#articleImg").attr("src", result['data']['articles'][i]['urlToImage']);
-                        $("#articleAuthor").html(result['data']['articles'][i]['author']);
-                        $("#publishedAt").html(result['data']['articles'][i]['publishedAt']);
-                        $("#articleUrl").html(result['data']['articles'][i]['url']);
-                        $("#articleUrl").attr("href", result['data']['articles'][i]['url']);
-                    }
-                });
+        //         if (result.status.name == "ok") {
+        //             $("#articleTitle").html(result['data']['articles']['0']['title']);
+        //             $("#articleDescription").html(result['data']['articles']['0']['description']);
+        //             $("#articleContent").html(result['data']['articles']['0']['content']);
+        //             $("#articleImg").attr("src", result['data']['articles']['0']['urlToImage']);
+        //             $("#articleAuthor").html(result['data']['articles']['0']['author']);
+        //             $("#publishedAt").html(result['data']['articles']['0']['publishedAt']);
+        //             $("#articleUrl").html(result['data']['articles']['0']['url']);
+        //             $("#articleUrl").attr("href", result['data']['articles']['0']['url']);
+        //         }
+        //         var i = 0;
+        //         $("#nextArticle").on('click', function() {
+        //             i++;
+        //             if (result.status.name == "ok") {
+        //                 $("#articleTitle").html(result['data']['articles'][i]['title']);
+        //                 $("#articleDescription").html(result['data']['articles'][i]['description']);
+        //                 $("#articleContent").html(result['data']['articles'][i]['content']);
+        //                 $("#articleImg").attr("src", result['data']['articles'][i]['urlToImage']);
+        //                 $("#articleAuthor").html(result['data']['articles'][i]['author']);
+        //                 $("#publishedAt").html(result['data']['articles'][i]['publishedAt']);
+        //                 $("#articleUrl").html(result['data']['articles'][i]['url']);
+        //                 $("#articleUrl").attr("href", result['data']['articles'][i]['url']);
+        //             }
+        //         });
+        //         $("#previousArticle").on('click', function() {
+        //             i--;
+        //             if (result.status.name == "ok") {
+        //                 $("#articleTitle").html(result['data']['articles'][i]['title']);
+        //                 $("#articleDescription").html(result['data']['articles'][i]['description']);
+        //                 $("#articleContent").html(result['data']['articles'][i]['content']);
+        //                 $("#articleImg").attr("src", result['data']['articles'][i]['urlToImage']);
+        //                 $("#articleAuthor").html(result['data']['articles'][i]['author']);
+        //                 $("#publishedAt").html(result['data']['articles'][i]['publishedAt']);
+        //                 $("#articleUrl").html(result['data']['articles'][i]['url']);
+        //                 $("#articleUrl").attr("href", result['data']['articles'][i]['url']);
+        //             }
+        //         });
             
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                // your error code
-            }
-        });
+        //     },
+        //     error: function(jqXHR, textStatus, errorThrown) {
+        //         console.warn(jqXHR + " and " + errorThrown)
+        //     }
+        // });
 
         //Location Images:
-        $.ajax({
-            url: "php/locationImages.php",
-            type: 'POST',
-            dataType: 'json',
-            data: {
-            query: $('#selectOption option:selected').text(),
-            },
-            success: function(result) {
+        // $.ajax({
+        //     url: "php/locationImages.php",
+        //     type: 'POST',
+        //     dataType: 'json',
+        //     data: {
+        //     query: $('#selectOption option:selected').text(),
+        //     },
+        //     success: function(result) {
 
-                console.log(result);
+        //         console.log(result);
+        //         $("#countryImages").empty();
                 
-                if (result.status.name == "ok") {
-                    for(var i = 0; i<result['data']['results'].length; i++){
-                        $("#countryImages").append("<p style='color:white' id='description" + i +"'class='countryDescription'>")
-                        $("#countryImages").append("<img src='' alt='' id='image" + i +"'class='countryImages'><br><br>")
-                        $("#image" + i).attr('src', result['data']['results'][i]['urls']['regular']);
-                        $("#image" + i).attr('alt', result['data']['results'][i]['alt_description']);
-                        $("#description" + i).append(result['data']['results'][i]['alt_description'] + " -");
-                    }
-                }
+        //         if (result.status.name == "ok") {
+        //             for(var i = 0; i<result['data']['results'].length; i++){
+                        
+        //                 $("#countryImages").append("<p style='color:white' id='description" + i +"'class='countryDescription'>")
+        //                 $("#countryImages").append("<img src='' alt='' id='image" + i +"'class='countryImages'><br><br>")
+        //                 $("#image" + i).attr('src', result['data']['results'][i]['urls']['regular']);
+        //                 $("#image" + i).attr('alt', result['data']['results'][i]['alt_description']);
+        //                 $("#description" + i).append(result['data']['results'][i]['alt_description'] + " -");
+        //             }
+        //         }
             
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.warn("There has been an error " + errorThrown);
-            }
-        });
+        //     },
+        //     error: function(jqXHR, textStatus, errorThrown) {
+        //         console.warn("There has been an error " + errorThrown);
+        //     }
+        // });
     });
 
 
@@ -698,7 +810,7 @@ loadMap('mymap');
                 // your error code
             }
         }); 
-
+        console.log(window.latlng[0]);
         //Weather:
         $.ajax({
             url: "php/openWeather.php",
@@ -711,7 +823,6 @@ loadMap('mymap');
             success: function(result) {
                 console.log(result);
                 if (result.status.name == "ok") {
-                    // $('#city').html(result['data']['countryName']);
 
                     //Onload:
                     $('.weatherHide').show();
@@ -901,7 +1012,7 @@ loadMap('mymap');
                 }
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                alert("There has been an error!")
+                //console.warn("There has been an error! " + jqXHR.responseText + " " + errorThrown);
             }
         });
 

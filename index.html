@@ -19,300 +19,317 @@
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <!--Leaflet.js css--> <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-    crossorigin=""/> 
+    crossorigin=""/>
+    <link rel="stylesheet" href="node_modules\leaflet-easybutton\src\easy-button.css">
     <link rel="stylesheet" href="dist/style.css">
 </head>
 <body>
+
     <div>
-        <!--Header Secrion-->
-        <nav class="my-nav navbar navbar-default col-12 col-md-5 col-lg-4 p-2 bg-primary">
-            <div id="header" class="my-row row align-items-center container-fluid">
-                <!-- col-md-12 applies to all sizes ≥768px -->
-                <div class="my-col nav-header col-6 col-md-12 pr-0 row align-items-center">
-                    <i class="fas fa-map-marked-alt fa-3x my-icon d-inline"></i>
-                    <h1 id="title" class="d-inline pl-1">Gazetteer</h1>
-                </div>
-                <div class="my-col  col-6 col-md-12 p-0 my-3 mx-auto"> 
-                    <select name="country" id="selectOption" class="selectOption">
-                    </select>
-                </div>
-            </div>
-        </nav>
-    </div>
-
-        <!--Map Section-->
-        <div id="map">
-
-        </div>
-
-
-        <!--Panel Section-->
-        <div class="row my-panel">
-          <div  class="col-10 col-md-5 col-lg-4">
-
-            <!-- To show an element only on a given interval of screen sizes you can combine one .d-*-none class with a .d-*-* class, for example .d-none .d-md-block .d-xl-none will hide the element for all screen sizes except on medium and large devices. -->
-
-            <div id="accordion">
-                <!-- Info -->
-                <div class="card" id="page1">
-                  <div class="card-header" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    <h5 class="mb-0">
-                      <button class="btn btn-link">
-                        Info
-                      </button>
-                    </h5>
-                  </div>
-                  <!-- Information Panel -->
-                  <!-- data-parent="#accordion" to make tabs close when one opens -->
-                  <div id="collapseOne" class="collapse show row infoPanel p-0 m-0" aria-labelledby="headingOne">                          
-                    <table class="table table-dark table-stripped col-12 m-0">
-                      <thead>
-                        <tr>
-                          <th id="countryName"></th>
-                          <th><img id="flag" alt="Country flag"></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>Continent:</td>
-                          <td id="continent"></td>
-                        </tr>
-                        <tr>
-                          <td>Capital City:</td>
-                          <td id="capital"></td>
-                        </tr>
-                        <tr>
-                          <td>Area:</td>
-                          <td id="area"></td>
-                        </tr>
-                        <tr>
-                          <td>Population:</td>
-                          <td id="population"></td>
-                        </tr>
-                        <tr>
-                          <td>Currency:</td>
-                          <td id="currency"></td>
-                        </tr>
-                        <tr>
-                          <td>Language:</td>
-                          <td id="language"></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <div id="wiki" class="col-12">
-                      <h2>Wiki: <span id="sumTitle"></span> </h2>
-                      <blockquote class="blockquote text-left">
-                      <p id="summary"></p>
-                      <footer style="text-align: center;" class="blockquote-footer"><p class="sourced">Sourced from</p> <cite title="Source Title"><a id="wikipediaUrl" style="color: white;"></a></cite></footer>
-                      </blockquote>
-                    </div>
-                  </div>
-                </div>
-                <!-- Weather -->
-                <div class="card noMobile" style="display: none;" id="page2">
-                  <div class="card-header collapsed" id="headingTwo" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    <h5 class="mb-0 " >
-                      <button class="btn btn-link">
-                        Weather
-                      </button>
-                    </h5>
-                  </div>
-                  <!-- Information Panel -->
-                  <div id="collapseTwo" class="collapse show row infoPanel p-0 m-0" aria-labelledby="headingTwo">
-                    <table class="table table-dark table-striped col-12 m-0">
-                      <tbody id=weatherBody>
-                        <tr>
-                          <th>
-                          <nav id="dayNav" class=".justify-content-center">
-                            <a class="nav-link" id="day1" href="javascript:void(0)">Today</a>
-                            <a class="nav-link" id="day2" href="javascript:void(0)">Tomorrow</a>
-                          </nav>
-                          </th> 
-                          <th>
-                          <nav>
-                            <a class="nav-link" id="day3" href="javascript:void(0)"></a>
-                            <a class="nav-link" id="day4" href="javascript:void(0)"></a>
-                          </nav>
-                          </th>
-                        </tr>
-                        <tr>
-                          <td>Temperature:</td>
-                          <td id="temp"></td>                                      
-                        </tr>
-                        <tr>
-                          <td id="weatherCell" class=".align-middle">Current Weather:</td>
-                          <td id="currentWeather"> <img id="weatherIcon" alt="weather icon" src=""></td> 
-                        </tr>
-                        <tr>
-                          <td>Wind Speed and Direction:</td> 
-                          <td id="wind"></td>
-                        </tr>
-                        <tr>
-                          <td>Sunrise:</td>
-                          <td id="sunrise"></td>
-                        </tr>
-                        <tr>
-                          <td>Sunset:</td>
-                          <td id="sunset"></td>
-                        </tr>
-                        <tr>
-                          <td>Humidity:</td>
-                          <td id="humidity"></td>
-                        </tr>
-                        <tr class="weatherHide">
-                          <td colspan="2">Every 3 hours:</td>
-                        </tr>
-                        <tr class="weatherHide">
-                          <td id='hour1'></td>
-                          <td id="hourWeather1"> <img id="weatherIcon1" alt="weather icon" src=""></td>
-                        </tr>
-                        <tr class="weatherHide">
-                          <td id='hour2'></td>
-                          <td id="hourWeather2"> <img id="weatherIcon2" alt="weather icon" src=""></td> </tr>
-                        <tr class="weatherHide">
-                          <td id='hour3'></td>
-                          <td id="hourWeather3"> <img id="weatherIcon3" alt="weather icon" src=""></td>
-                        </tr>
-                        <tr class="weatherHide">
-                          <td id='hour4'></td>
-                          <td id="hourWeather4"> <img id="weatherIcon4" alt="weather icon" src=""></td>
-                        </tr>                               
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <!-- News -->
-                <div class="card noMobile" style="display: none;" id="page3">
-                  <div class="card-header collapsed" id="headingThree" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                    <h5 class="mb-0">
-                      <button class="btn btn-link">
-                        News
-                      </button>
-                    </h5>
-                  </div>
-                  <!-- Information Panel -->
-                  <div id="collapseThree" class="collapse show row infoPanel p-0 m-0" aria-labelledby="headingThree">
-                    <table class="table table-dark table-stripped col-12 m-0" id="articleTable">
-                      <thead>
-                        <tr >
-                          <th><h3>Latest Headlines - <span id="newsCountry"></span></h3></th>
-                      </thead>
-                      <tbody>
-                        <tr >
-                          <td><button class="articleBtn" id="previousArticle">Previous Story</button><button class="articleBtn" id="nextArticle">Next Story</button></td>
-                        </tr>
-                        <tr >
-                          <th id="articleTitle"></th>
-                        </tr>
-                        <tr >
-                          <td id="articleDescription"></td>
-                        </tr>
-                        <tr>
-                          <td id="contentCell"><div  id="articleContent" style="float: left;"></div><img src="" alt="Article Thumbnail" id="articleImg"></img></td>
-                        </tr>
-                        <tr >
-                          <td>Author: <span id="articleAuthor"></span></td>
-                        </tr>
-                        <tr >
-                          <td>Published at: <span id="publishedAt"></span></td>
-                        </tr>
-                        <tr > 
-                          <td class="sourced">Sourced from: <a id="articleUrl" href="" style="color: white;"></a></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <!-- Exchange -->
-                <div class="card noMobile" style="display: none;" id="page4">
-                    <div class="card-header collapsed" id="headingFour" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                      <h5 class="mb-0">
-                        <button class="btn btn-link">
-                          Exchange
-                        </button>
-                      </h5>
-                    </div>
-                    <!-- Information Panel -->
-                    <div id="collapseFour" class="collapse show row infoPanel p-0 m-0" aria-labelledby="headingFour">
-                      <table class="table table-dark table-striped col-12 m-0">
-                        <thead>
-                          <tr>
-                            <th class="col-6">Amount: </th>
-                            <th class="col-6"><input class="exchangeInput" type="text" id="value" placeholder="0"></th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>From: </td>
-                            <td><select  id="from" class="exchangeInput" class="row"></select></td>
-                          </tr>
-                          <tr>
-                            <td>To: </td>
-                            <td><select id="to" class="exchangeInput" class="row"></select></td>
-                          </tr>
-                          <tr>
-                            <td><button class="row btn" id="exchangeBtn">Exchange</button></td>
-                            <td><h5 class="row" id="exchangeResult"></h5></td>
-                          </tr>
-                        </tbody>
-                        <tfoot>
-                          <tr>
-                            <td>As of: </td>
-                            <td id="exchangeDate"></td>
-                          </tr>
-                        </tfoot>
-                      </table>
-                    </div>
-                  </div>
-                <!-- Images -->
-                <div class="card noMobile" style="display: none;" id="page5">
-                  <div class="card-header collapsed" id="headingFive" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                    <h5 class="mb-0">
-                      <button class="btn btn-link">
-                        Images
-                      </button>
-                    </h5>
-                  </div>
-                  <!-- Information Panel -->
-                  <div id="collapseFive" class="collapse show row infoPanel p-0 m-0" aria-labelledby="headingFive">
-                    <div id="countryImages" class="col-12">
-                      
-                    </div>
-                  </div>
-                </div>
+      <!--Header Secrion-->
+      <nav class="my-nav navbar navbar-default col-12 p-2 bg-primary">
+          <div id="header" class="my-row row align-items-center container-fluid">
+              <!-- col-md-12 applies to all sizes ≥768px -->
+              <div class="my-col nav-header col-6  pr-0 row align-items-center">
+                  <i class="fas fa-map-marked-alt fa-3x my-icon d-inline"></i>
+                  <h1 id="title" class="d-inline pl-1">Gazetteer</h1>
+              </div>
+              <div class="my-col  col-6 p-0 my-3 mx-auto"> 
+                  <select name="country" id="selectOption" class="selectOption">
+                  </select>
               </div>
           </div>
-        </div>
-        <!-- Page Navigation -->
-        <div id="pageNav" class="col-12">
-            <nav aria-label="Page navigation" >
-                <ul class="pagination">
-                <li class="page-item">
-                    <a id="previous-page" class="page-link" href="javascript:void(0)" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                    <span class="sr-only">Previous</span>
-                    </a>
-                </li>
-                </ul>
-            </nav>
-        </div>
+      </nav>
+    </div>
 
-        <!--Preloader, needs work-->
-        <div id="preloader"> </div>
+    <!-- Modals -->
+    <!-- Info -->
+    <div class="modal fade" id="infoModalScrollable" tabindex="-1" role="dialog" aria-labelledby="infoModalScrollableTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="infoModalScrollableTitle">Info</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="page1">
+            <div class="row info-panel p-0 m-0" aria-labelledby="headingOne">                          
+              <table class="table table-dark table-stripped col-12 m-0">
+                <thead>
+                  <tr>
+                    <th id="countryName"></th>
+                    <th><img id="flag" alt="Country flag"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Continent:</td>
+                    <td id="continent"></td>
+                  </tr>
+                  <tr>
+                    <td>Capital City:</td>
+                    <td id="capital"></td>
+                  </tr>
+                  <tr>
+                    <td>Area:</td>
+                    <td id="area"></td>
+                  </tr>
+                  <tr>
+                    <td>Population:</td>
+                    <td id="population"></td>
+                  </tr>
+                  <tr>
+                    <td>Currency:</td>
+                    <td id="currency"></td>
+                  </tr>
+                  <tr>
+                    <td>Language:</td>
+                    <td id="language"></td>
+                  </tr>
+                </tbody>
+              </table>
+              <div id="wiki" class="col-12" style="background-color:black;">
+                <h2>Wiki: <span id="sumTitle"></span> </h2>
+                <blockquote class="blockquote text-left">
+                <p id="summary"></p>
+                <footer style="text-align: center;" class="blockquote-footer"><p class="sourced">Sourced from</p> <cite title="Source Title"><a id="wikipediaUrl" style="color: white;"></a></cite></footer>
+                </blockquote>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
+    <!-- Weather -->
+    <div class="modal fade" id="weatherModalScrollable" tabindex="-1" role="dialog" aria-labelledby="weatherModalScrollableTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="weatherModalScrollableTitle">Weather</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="page2">
+            <div class="row infoPanel p-0 m-0" aria-labelledby="headingTwo">
+              <table class="table table-dark table-striped col-12 m-0">
+                <tbody id=weatherBody>
+                  <tr>
+                    <th>
+                    <nav id="dayNav" class=".justify-content-center">
+                      <a class="nav-link" id="day1" href="javascript:void(0)">Today</a>
+                      <a class="nav-link" id="day2" href="javascript:void(0)">Tomorrow</a>
+                    </nav>
+                    </th> 
+                    <th>
+                    <nav>
+                      <a class="nav-link" id="day3" href="javascript:void(0)"></a>
+                      <a class="nav-link" id="day4" href="javascript:void(0)"></a>
+                    </nav>
+                    </th>
+                  </tr>
+                  <tr>
+                    <td>Temperature:</td>
+                    <td id="temp"></td>                                      
+                  </tr>
+                  <tr>
+                    <td id="weatherCell" class=".align-middle">Current Weather:</td>
+                    <td id="currentWeather"> <img id="weatherIcon" alt="weather icon" src=""></td> 
+                  </tr>
+                  <tr>
+                    <td>Wind Speed and Direction:</td> 
+                    <td id="wind"></td>
+                  </tr>
+                  <tr>
+                    <td>Sunrise:</td>
+                    <td id="sunrise"></td>
+                  </tr>
+                  <tr>
+                    <td>Sunset:</td>
+                    <td id="sunset"></td>
+                  </tr>
+                  <tr>
+                    <td>Humidity:</td>
+                    <td id="humidity"></td>
+                  </tr>
+                  <tr class="weatherHide">
+                    <td colspan="2">Every 3 hours:</td>
+                  </tr>
+                  <tr class="weatherHide">
+                    <td id='hour1'></td>
+                    <td id="hourWeather1"> <img id="weatherIcon1" alt="weather icon" src=""></td>
+                  </tr>
+                  <tr class="weatherHide">
+                    <td id='hour2'></td>
+                    <td id="hourWeather2"> <img id="weatherIcon2" alt="weather icon" src=""></td> </tr>
+                  <tr class="weatherHide">
+                    <td id='hour3'></td>
+                    <td id="hourWeather3"> <img id="weatherIcon3" alt="weather icon" src=""></td>
+                  </tr>
+                  <tr class="weatherHide">
+                    <td id='hour4'></td>
+                    <td id="hourWeather4"> <img id="weatherIcon4" alt="weather icon" src=""></td>
+                  </tr>                               
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- News -->
+    <div class="modal fade" id="newsModalScrollable" tabindex="-1" role="dialog" aria-labelledby="newsModalScrollableTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="newsModalScrollableTitle">News</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="page3">
+            <div class="row infoPanel p-0 m-0" aria-labelledby="headingThree">
+              <table class="table table-dark table-stripped col-12 m-0" id="articleTable">
+                <thead>
+                  <tr >
+                    <th><h3>Latest Headlines - <span id="newsCountry"></span></h3></th>
+                </thead>
+                <tbody>
+                  <tr >
+                    <td><button class="articleBtn" id="previousArticle">Previous Story</button><button class="articleBtn" id="nextArticle">Next Story</button></td>
+                  </tr>
+                  <tr >
+                    <th id="articleTitle"></th>
+                  </tr>
+                  <tr >
+                    <td id="articleDescription"></td>
+                  </tr>
+                  <tr>
+                    <td id="contentCell"><div  id="articleContent" style="float: left;"></div><img src="" alt="Article Thumbnail" id="articleImg"></img></td>
+                  </tr>
+                  <tr >
+                    <td>Author: <span id="articleAuthor"></span></td>
+                  </tr>
+                  <tr >
+                    <td>Published at: <span id="publishedAt"></span></td>
+                  </tr>
+                  <tr > 
+                    <td class="sourced">Sourced from: <a id="articleUrl" href="" style="color: white;"></a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exchange -->
+    <div class="modal fade" id="exchangeModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exchangeModalScrollableTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="exchangeModalScrollableTitle">Exchange</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="page4">
+            <div class="row infoPanel p-0 m-0" aria-labelledby="headingFour">
+              <table class="table table-dark table-striped col-12 m-0">
+                <thead>
+                  <tr>
+                    <th class="col-6">Amount: </th>
+                    <th class="col-6"><input class="exchangeInput" type="text" id="value" placeholder="0"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>From: </td>
+                    <td><select  id="from" class="exchangeInput" class="row"></select></td>
+                  </tr>
+                  <tr>
+                    <td>To: </td>
+                    <td><select id="to" class="exchangeInput" class="row"></select></td>
+                  </tr>
+                  <tr>
+                    <td><button class="row btn" id="exchangeBtn">Exchange</button></td>
+                    <td><h5 class="row" id="exchangeResult"></h5></td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td>As of: </td>
+                    <td id="exchangeDate"></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Images -->
+    <div class="modal fade" id="imagesModalScrollable" tabindex="-1" role="dialog" aria-labelledby="imagesModalScrollableTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="imagesModalScrollableTitle">Images</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="page5"> 
+            <div class="row infoPanel p-0 m-0" aria-labelledby="headingFive">
+              <div id="countryImages" class="col-12">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  <!--Map Section-->
+  <div id="map">
+
+  </div>
   
-    <script src="node_modules/moment/moment.js"></script>
-    <script src="node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="https://kit.fontawesome.com/2ee2e70f6f.js" crossorigin="anonymous"></script>
-    <!--Leaflet.js javaScript--> <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-    crossorigin=""></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.19/topojson.min.js"></script>
-    <script src="js/Control.GlobeMiniMap.js"></script>
-    <script src="js/script.js"></script>
+  <!--Preloader, needs work-->
+  <div id="preloader"> </div>
 
+  <!-- Scripts -->
+  <script src="node_modules/moment/moment.js"></script>
+  <script src="node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="https://kit.fontawesome.com/2ee2e70f6f.js" crossorigin="anonymous"></script>
+  <!--Leaflet.js javaScript--> <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+  crossorigin=""></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.19/topojson.min.js"></script>
+  <script src="node_modules\leaflet-easybutton\src\easy-button.js"></script>
+  <script src="js/Control.GlobeMiniMap.js"></script>
+  <script src="js/script.js"></script>
 
 </body>
 </html>
