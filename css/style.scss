@@ -63,6 +63,7 @@ body{
 #header{
     margin: auto;
     color: black;
+    height: 15vh;
 }
 #title{
     font-family: 'Oswald', sans-serif;
@@ -75,10 +76,6 @@ body{
     border: solid black;
     margin:auto;
     text-align: center;
-}
-#goBtn{
-    width: 40px; 
-    border-radius: 5px;
 }
 .my-icon{
     color: black;
@@ -224,15 +221,62 @@ table
 }
 
 
+//Modals
+.modal {
+    max-width: 80%;
+    max-height: 95%;
+    height: fit-content;
+    width: fit-content;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: grey;
+    padding: 3px;
+    border-radius: 10px;
+    margin: 0;
+}
+
+.modal-dialog{
+    margin: 0;
+}
+.modal-content{
+    background-color: black;
+    margin: 0;
+}
+.modal-header {
+    text-align: center;
+    padding: 0;
+    color: white;
+    margin: auto;
+}
+.modal-title{
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+
+//Leaflet Zoom Buttons
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out {
+    font-size: 35px;
+}
+
+//Leaflet Easy Buttons
+#infoLeaf, #weatherLeaf, #newsLeaf, #exchangeLeaf, #imagesLeaf {
+    height: 30px; /* easyButton's height default */
+    width: 30px;  /*  easyButton's width default */
+    font-size: 18px;
+  }
+.leaflet-bar button:hover {
+    background-color: lightgrey;
+}
+
 // Media Queries:
 //576px
 // @include media-breakpoint-up(sm) { ... }
 //768px
 @include media-breakpoint-up(md) { 
     //Header
-    .my-nav{
-        height: 25vh;
-    }
     #title{
         font-size: 3em;
     }
@@ -248,13 +292,6 @@ table
         display: block;
     }
 
-    //Map:
-    #map { 
-        top:0;
-        right: 0;
-        height: 100%;
-        width: 58.33333333%;
-    }
 
 
     //Panels
@@ -276,9 +313,5 @@ table
 
 
 //992px
- @include media-breakpoint-up(lg) {
-    #map {
-        width: 66.666666666667% !important;
-    }
-}
+//  @include media-breakpoint-up(lg) { ... }
 // @include media-breakpoint-up(xl) { ... }

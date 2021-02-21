@@ -7,6 +7,7 @@
         }
     });
 
+
 //Creating a map:
     var London = [52, -0.09];
     var mymap = L.map('map');
@@ -23,17 +24,31 @@
     mymap.setView(London, 4);
 
     var redIcon = new L.Icon({
-        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+        iconUrl: 'squat-marker-red.svg',
         shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
         iconSize: [25, 41],
         iconAnchor: [12, 41],
         popupAnchor: [1, -34],
         shadowSize: [41, 41]
+    })
+
+    var PinIcon = L.Icon.extend({
+        options: {
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+            iconSize:     [25, 41],
+            shadowSize:   [41, 41],
+            iconAnchor:   [12, 41],
+            popupAnchor:  [1, -34]
+        }
     });
+
+    var greenIcon = new PinIcon({iconUrl: 'squat-marker-green.svg'});
+
 
 //Get location
 var latlng = [];
 var userLocation = [];
+
     mymap.locate({setView: false}).on('locationfound', function(e){
 
         userLocation = [e.latitude, e.longitude]
@@ -62,11 +77,7 @@ var userLocation = [];
                 console.log(result);
 
                 if (result.status.name == "ok") {
-                    // $('#selectOption').prepend("<option value=" + result['data']['countryCode'] + ">" + result['data']['countryName'] + "</option>");
-                    // $("#selectOption option:selected") 
-                    // $("#selectOption option:selected").text(result['data']['countryName']);
                     $("#selectOption").val(result['data']['countryCode']).change();
-                    // $("#selectOption").text(result['data']['countryName']).change();
                 }
             },
             error: function(jqXHR, textStatus, errorThrown) {
@@ -85,11 +96,13 @@ var userLocation = [];
         topojsonSrc: '../data/world.json'
     }).addTo(mymap);
 
+
+
 //Easy Buttons:
     //Info-
     infoButton = L.easyButton({
-        id: 'info',
-        position: 'bottomright',
+        id: 'infoLeaf',
+        position: 'topleft',
         type: 'animate',
         leafletClasses: true,
         states:[{
@@ -105,8 +118,8 @@ var userLocation = [];
     
     // Weather-
     weatherButton = L.easyButton({
-        id: 'weather',
-        position: 'bottomright',
+        id: 'weatherLeaf',
+        position: 'topleft',
         type: 'animate',
         leafletClasses: true,
         states:[{
@@ -115,15 +128,15 @@ var userLocation = [];
             $("#weatherModalScrollable").modal();
           },
           title: 'show the weather',
-          icon: "fa-sun"
+          icon: "fa-cloud-sun "
         }]
       })
     mymap.addControl(weatherButton);
 
     //News-
     newsButton = L.easyButton({
-        id: 'news',
-        position: 'bottomright',
+        id: 'newsLeaf',
+        position: 'topleft',
         type: 'animate',
         leafletClasses: true,
         states:[{
@@ -139,8 +152,8 @@ var userLocation = [];
 
      //Exchange-
      exchangeButton = L.easyButton({
-        id: 'exchange',
-        position: 'bottomright',
+        id: 'exchangeLeaf',
+        position: 'topleft',
         type: 'animate',
         leafletClasses: true,
         states:[{
@@ -149,15 +162,15 @@ var userLocation = [];
             $("#exchangeModalScrollable").modal();
           },
           title: 'show exchange rates',
-          icon: "fa-money-bill"
+          icon: "fa-dollar"
         }]
       });
      mymap.addControl(exchangeButton);
 
      //Images-
      imagesButton = L.easyButton({
-        id: 'images',
-        position: 'bottomright',
+        id: 'imagesLeaf',
+        position: 'topleft',
         type: 'animate',
         leafletClasses: true,
         states:[{
@@ -170,9 +183,6 @@ var userLocation = [];
         }]
       });
      mymap.addControl(imagesButton);
-
-
-
 
 
 
@@ -214,67 +224,7 @@ var userLocation = [];
         });    
     });
 
-//Page navigation
-    var totalNumOfPages = $('#accordion .card').length;
 
-    $(".pagination").append("<li class='current-page page-item active'><a class='page-link'href='javascript:void(0)'>1</a></li>")
-    for(var i=2; i<=totalNumOfPages; i++){
-        $(".pagination").append("<li class='current-page page-item'><a class='page-link'href='javascript:void(0)'>" + i + "</a></li>")
-    }
-    $(".pagination").append("<li id='next-page' class='page-item'> <a class='page-link' href='javascript:void(0)' aria-label='Next'> <span aria-hidden='true'>&raquo;</span> <span class='sr-only'>Next</span></a></li>");
-
-    $(".pagination li.current-page").on("click", function(){
-        if($(this).hasClass("active")){
-            return false;
-        } else {
-            var currentPage = $(this).index();
-            $(".pagination li").removeClass("active");
-            $(this).addClass("active");
-            $("#accordion .card").hide();
-
-            for(var i=1; i<=totalNumOfPages; i++){
-                $("#page" + currentPage + "").show();
-            }
-        }
-    });
-
-//Next Button
-    $("#next-page").on("click", function() {
-        var currentPage = $(".pagination li.active").index();
-        if(currentPage === totalNumOfPages){
-            return false;
-        } else {
-            currentPage++;
-            $(".pagination li").removeClass("active");
-            $("#accordion .card").hide();
-            
-            for(var i=1; i<=totalNumOfPages; i++){
-                $("#page" + currentPage).show();
-            }
-            
-            $(".pagination li.current-page:eq(" + (currentPage -1)+")").addClass("active");
-            
-        }
-    })
-
-//Previous Button
-    $("#previous-page").on("click", function() {
-        var currentPage = $(".pagination li.active").index();
-        if(currentPage === 1){
-            return false;
-        } else {
-            currentPage--;
-            $(".pagination li").removeClass("active");
-            $("#accordion .card").hide();
-            
-            for(var i=1; i<=totalNumOfPages; i++){
-                $("#page" + currentPage).show();
-            }
-            
-            $(".pagination li.current-page:eq(" + (currentPage -1)+")").addClass("active");
-            
-        }
-    })
 
 //Exchange
     var currencies = ["AUD","BGN","BRL","CAD","CHF","CNY","CZK","DKK","EUR","GBP","HRK","HUF","IDR","ILS","INR","ISK","JPY","KRW","MXN","MYR","NOK","NZD","PHP","PLN","RON","RUB","SEK","SGD","THB","TRY","USD","ZAR"];
@@ -284,6 +234,8 @@ var userLocation = [];
         $('#from').append('<option value="' + currencies[i] + '">' + currencies[i] + '</option>');
         $('#to').append('<option value="' + currencies[i] + '">' + currencies[i] + '</option>');
     }
+
+
 
 //API:
 //Fill countries-
@@ -322,11 +274,13 @@ var userLocation = [];
         return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
     }
 
+
 //Days:
     var thirdDay = moment().add(2, 'days').format('dddd');  
     var fourthDay = moment().add(3, 'days').format('dddd');   ;
     $("#day3").html(thirdDay);
     $("#day4").html(fourthDay);
+
 
 //Direction:
     function direction(i) {
@@ -366,99 +320,9 @@ var userLocation = [];
     };
 
 
+
 //On document ready:
     $(document).ready(function(){
-
-        //loadMap('mymap');
-        
-        //World cities
-        $.getJSON('php/worldCities.json', function(data) {
-            var cities = data.features.filter(function(value){
-                return value.properties.isoa2 == $('#selectOption').val();
-            });
-            for(var i = 0; i<cities.length; i++){
-                    var title = cities[i]['properties']['name'];
-                    var pop = cities[i]['properties']['pop_min'];
-                    L.geoJson(cities[i]['geometry']).bindPopup("<h1>" + title + "</h1> </br>" + "Population: " + pop + "</br>").addTo(mymap);
-            }
-        });
-
-        //Country Info:
-        //getCountryInfo-
-        $.ajax({
-            url: "php/getCountryInfo.php",
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                country: $('#selectOption option:selected').val(),
-            },
-            success: function(result) {
-
-                console.log(result);
-
-                if (result.status.name == "ok") {
-                    $("#countryName").html(result['data'][0]['countryName']);
-                    $('#capital').html(result['data'][0]['capital']);
-                    $('#area').html(result['data'][0]['areaInSqKm'] + " km<sup>2</sup>");
-                    $('#population').html(result['data'][0]['population']);
-                }
-            
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                // your error code
-            }
-        }); 
-
-        //restCountry-
-        // $.ajax({
-        //     url: "php/restCountry.php",
-        //     type: 'POST',
-        //     dataType: 'json',
-        //     data: {
-        //         country: $('#selectOption').val(),
-        //     },
-        //     success: function(result) {
-
-        //         console.log(result);
-
-        //         if (result.status.name == "ok") {
-        //             $("#flag").attr("src", result['data']['flag']);
-        //             $('#currency').html(result['data']['currencies']['0']['name'] + " - " + result['data']['currencies']['0']['symbol']);
-        //             $('#continent').html(result['data']['region']);
-        //             $('#language').html(result['data']['languages']['0']['name']);
-        //         }
-            
-        //     },
-        //     error: function(jqXHR, textStatus, errorThrown) {
-        //         // your error code
-        //     }
-        // }); 
-
-        //wikiApi-
-        // $.ajax({
-        //     url: "php/wikiApi.php",
-        //     type: 'POST',
-        //     dataType: 'json',
-        //     data: {
-        //         country: $('#selectOption option:selected').text(),
-        //     },
-        //     success: function(result) {            
-        //         console.log(result);
-
-        //         if (result.status.name == "ok") {
-        //             $("#sumTitle").empty();
-        //             $("#sumTitle").append(result['data']['0']['title']);
-        //             $("#summary").html(result['data']['0']['summary']);
-        //             $("#wikipediaUrl").attr('href', result['data']['0']['wikipediaUrl']);
-        //             $("#wikipediaUrl").html(result['data']['0']['wikipediaUrl']);                
-        //         }
-            
-        //     },
-        //     error: function(jqXHR, textStatus, errorThrown) {
-        //         // your error code
-        //     }
-        // }); 
-
         //Weather:
         $.ajax({
             url: "php/openWeather.php",
@@ -479,7 +343,8 @@ var userLocation = [];
                     //$('#currentWeather').append("<img id='weatherIcon' alt='weather icon' src=''></img>" + result['data']['current']['weather']['0']['description']);
                     var weatherUrl = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
                     $('#weatherIcon').attr("src", weatherUrl);
-                    $('#wind').html(result['data']['current']['wind_speed'] + ' meter/sec ' + direction(result['data']['current']['wind_deg']));
+                    var calculated = Math.round(result['data']['current']['wind_speed'] * 3600 / 1610.3*1000)/1000;
+                    $('#wind').html(calculated + ' mph ' + direction(result['data']['current']['wind_deg']));
                     var sunrise = moment(result['data']['current']['sunrise']*1000).format("HH:mm");
                     $('#sunrise').html(sunrise);
                     var sunset = moment(result['data']['current']['sunset']*1000).format("HH:mm");
@@ -526,8 +391,8 @@ var userLocation = [];
                         $('#currentWeather').append("<img id='weatherIcon' alt='weather icon' src=''></img>" + result['data']['current']['weather']['0']['description']);
                         var weatherUrl = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
                         $('#weatherIcon').attr("src", weatherUrl);
-                        $('#wind').html(result['data']['current']['wind_speed'] + ' meter/sec ' + direction(result['data']['current']['wind_deg']));
-                        var sunrise = moment(result['data']['current']['sunrise']*1000).format("HH:mm");
+                        var calculated = Math.round(result['data']['current']['wind_speed'] * 3600 / 1610.3*1000)/1000;
+                        $('#wind').html(calculated + ' mph ' + direction(result['data']['current']['wind_deg']));                        var sunrise = moment(result['data']['current']['sunrise']*1000).format("HH:mm");
                         $('#sunrise').html(sunrise);
                         var sunset = moment(result['data']['current']['sunset']*1000).format("HH:mm");
                         $('#sunset').html(sunset);
@@ -577,8 +442,8 @@ var userLocation = [];
                         $('#currentWeather').append("<img id='weatherIcon' alt='weather icon' src=''></img>" + result['data']['daily'][1]['weather']['0']['description']);
                         var weatherUrl = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
                         $('#weatherIcon').attr("src", weatherUrl);
-                        $('#wind').html(result['data']['daily'][1]['wind_speed'] + ' meter/sec ' + direction(result['data']['daily'][1]['wind_deg']));
-                        var sunrise = moment(result['data']['daily'][1]['sunrise']*1000).format("HH:mm");
+                        var calculated = Math.round(result['data']['daily'][1]['wind_speed'] * 3600 / 1610.3*1000)/1000;
+                        $('#wind').html(calculated + ' mph ' + direction(result['data']['daily'][1]['wind_deg']));
                         $('#sunrise').html(sunrise);
                         var sunset = moment(result['data']['daily'][1]['sunset']*1000).format("HH:mm");
                         $('#sunset').html(sunset);
@@ -594,8 +459,8 @@ var userLocation = [];
                         $('#currentWeather').append("<img id='weatherIcon' alt='weather icon' src=''></img>" + result['data']['daily'][2]['weather']['0']['description']);
                         var weatherUrl = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
                         $('#weatherIcon').attr("src", weatherUrl);
-                        $('#wind').html(result['data']['daily'][2]['wind_speed'] + ' meter/sec ' + direction(result['data']['daily'][2]['wind_deg']));
-                        var sunrise = moment(result['data']['daily'][2]['sunrise']*1000).format("HH:mm");
+                        var calculated = Math.round(result['data']['daily'][2]['wind_speed'] * 3600 / 1610.3*1000)/1000;
+                        $('#wind').html(calculated + ' mph ' + direction(result['data']['daily'][2]['wind_deg']));
                         $('#sunrise').html(sunrise);
                         var sunset = moment(result['data']['daily'][2]['sunset']*1000).format("HH:mm");
                         $('#sunset').html(sunset);
@@ -611,8 +476,8 @@ var userLocation = [];
                         $('#currentWeather').append("<img id='weatherIcon' alt='weather icon' src=''></img>" + result['data']['daily'][3]['weather']['0']['description']);
                         var weatherUrl = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
                         $('#weatherIcon').attr("src", weatherUrl);
-                        $('#wind').html(result['data']['daily'][3]['wind_speed'] + ' meter/sec ' + direction(result['data']['daily'][3]['wind_deg']));
-                        var sunrise = moment(result['data']['daily'][3]['sunrise']*1000).format("HH:mm");
+                        var calculated = Math.round(result['data']['daily'][3]['wind_speed'] * 3600 / 1610.3*1000)/1000;
+                        $('#wind').html(calculated + ' mph ' + direction(result['data']['daily'][3]['wind_deg']));
                         $('#sunrise').html(sunrise);
                         var sunset = moment(result['data']['daily'][3]['sunset']*1000).format("HH:mm");
                         $('#sunset').html(sunset);
@@ -626,91 +491,6 @@ var userLocation = [];
             }
         });
 
-        //News:
-        // $.ajax({
-        //     url: "php/newsApi.php",
-        //     type: 'POST',
-        //     dataType: 'json',
-        //     data: {
-        //     country: $('#selectOption option:selected').val(),
-        //     },
-        //     success: function(result) {
-
-        //         console.log(result);
-                
-        //         if (result.status.name == "ok") {
-        //             $("#articleTitle").html(result['data']['articles']['0']['title']);
-        //             $("#articleDescription").html(result['data']['articles']['0']['description']);
-        //             $("#articleContent").html(result['data']['articles']['0']['content']);
-        //             $("#articleImg").attr("src", result['data']['articles']['0']['urlToImage']);
-        //             $("#articleAuthor").html(result['data']['articles']['0']['author']);
-        //             $("#publishedAt").html(result['data']['articles']['0']['publishedAt']);
-        //             $("#articleUrl").html(result['data']['articles']['0']['url']);
-        //             $("#articleUrl").attr("href", result['data']['articles']['0']['url']);
-        //         }
-        //         var i = 0;
-        //         $("#nextArticle").on('click', function() {
-        //             i++;
-        //             if (result.status.name == "ok") {
-        //                 $("#articleTitle").html(result['data']['articles'][i]['title']);
-        //                 $("#articleDescription").html(result['data']['articles'][i]['description']);
-        //                 $("#articleContent").html(result['data']['articles'][i]['content']);
-        //                 $("#articleImg").attr("src", result['data']['articles'][i]['urlToImage']);
-        //                 $("#articleAuthor").html(result['data']['articles'][i]['author']);
-        //                 $("#publishedAt").html(result['data']['articles'][i]['publishedAt']);
-        //                 $("#articleUrl").html(result['data']['articles'][i]['url']);
-        //                 $("#articleUrl").attr("href", result['data']['articles'][i]['url']);
-        //             }
-        //         });
-        //         $("#previousArticle").on('click', function() {
-        //             i--;
-        //             if (result.status.name == "ok") {
-        //                 $("#articleTitle").html(result['data']['articles'][i]['title']);
-        //                 $("#articleDescription").html(result['data']['articles'][i]['description']);
-        //                 $("#articleContent").html(result['data']['articles'][i]['content']);
-        //                 $("#articleImg").attr("src", result['data']['articles'][i]['urlToImage']);
-        //                 $("#articleAuthor").html(result['data']['articles'][i]['author']);
-        //                 $("#publishedAt").html(result['data']['articles'][i]['publishedAt']);
-        //                 $("#articleUrl").html(result['data']['articles'][i]['url']);
-        //                 $("#articleUrl").attr("href", result['data']['articles'][i]['url']);
-        //             }
-        //         });
-            
-        //     },
-        //     error: function(jqXHR, textStatus, errorThrown) {
-        //         console.warn(jqXHR + " and " + errorThrown)
-        //     }
-        // });
-
-        //Location Images:
-        // $.ajax({
-        //     url: "php/locationImages.php",
-        //     type: 'POST',
-        //     dataType: 'json',
-        //     data: {
-        //     query: $('#selectOption option:selected').text(),
-        //     },
-        //     success: function(result) {
-
-        //         console.log(result);
-        //         $("#countryImages").empty();
-                
-        //         if (result.status.name == "ok") {
-        //             for(var i = 0; i<result['data']['results'].length; i++){
-                        
-        //                 $("#countryImages").append("<p style='color:white' id='description" + i +"'class='countryDescription'>")
-        //                 $("#countryImages").append("<img src='' alt='' id='image" + i +"'class='countryImages'><br><br>")
-        //                 $("#image" + i).attr('src', result['data']['results'][i]['urls']['regular']);
-        //                 $("#image" + i).attr('alt', result['data']['results'][i]['alt_description']);
-        //                 $("#description" + i).append(result['data']['results'][i]['alt_description'] + " -");
-        //             }
-        //         }
-            
-        //     },
-        //     error: function(jqXHR, textStatus, errorThrown) {
-        //         console.warn("There has been an error " + errorThrown);
-        //     }
-        // });
     });
 
 
@@ -718,17 +498,28 @@ var userLocation = [];
     $("#selectOption").change(function(){
 
         //Country City Markers-
-        $.getJSON('php/worldCities.json', function(data) {
+        $.ajax({
+            url: "php/geoDBCities.php",
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                country: $('#selectOption option:selected').val(),
+            },
+            success: function(result) {
+
+                console.log(result);
+
+                if (result.status.name == "ok") {
+                    result['data']['data'].forEach(element => {
+                        L.marker([element.latitude, element.longitude], {icon: greenIcon}).addTo(mymap).bindPopup("<h1>" + element.name + "</h1> </br>");
+                    });
+                }
             
-            var cities = data.features.filter(function(value){
-                return value.properties.isoa2 == $('#selectOption').val();
-            });
-            for(var i = 0; i<cities.length; i++){
-                var title = cities[i]['properties']['name'];
-                var pop = cities[i]['properties']['pop_min'];
-                L.geoJson(cities[i]['geometry']).bindPopup("<h1>" + title + "</h1> </br>" + "Population: " +pop).addTo(mymap);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.warn(jqXHR.responseText);
             }
-        });
+        }); 
 
         //Country Info:
         //getCountryInfo-
@@ -810,7 +601,7 @@ var userLocation = [];
                 // your error code
             }
         }); 
-        console.log(window.latlng[0]);
+
         //Weather:
         $.ajax({
             url: "php/openWeather.php",
@@ -838,7 +629,8 @@ var userLocation = [];
                     $('#currentWeather').append("<img id='weatherIcon' alt='weather icon' src=''></img>" + result['data']['current']['weather']['0']['description']);
                     var weatherUrl = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
                     $('#weatherIcon').attr("src", weatherUrl);
-                    $('#wind').html(result['data']['current']['wind_speed'] + ' meter/sec ' + direction(result['data']['current']['wind_deg']));
+                    var calculated = Math.round(result['data']['current']['wind_speed'] * 3600 / 1610.3*1000)/1000;
+                    $('#wind').html(calculated + ' mph ' + direction(result['data']['current']['wind_deg']));
                     var sunrise = moment(result['data']['current']['sunrise']*1000).format("HH:mm");
                     $('#sunrise').html(sunrise);
                     var sunset = moment(result['data']['current']['sunset']*1000).format("HH:mm");
@@ -916,7 +708,8 @@ var userLocation = [];
                         $('#currentWeather').append("<img id='weatherIcon' alt='weather icon' src=''></img>" + result['data']['current']['weather']['0']['description']);
                         var weatherUrl = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
                         $('#weatherIcon').attr("src", weatherUrl);
-                        $('#wind').html(result['data']['current']['wind_speed'] + ' meter/sec ' + direction(result['data']['current']['wind_deg']));
+                        var calculated = Math.round(result['data']['current']['wind_speed'] * 3600 / 1610.3*1000)/1000;
+                        $('#wind').html(calculated + ' mph ' + direction(result['data']['current']['wind_deg']));
                         var sunrise = moment(result['data']['current']['sunrise']*1000).format("HH:mm");
                         $('#sunrise').html(sunrise);
                         var sunset = moment(result['data']['current']['sunset']*1000).format("HH:mm");
@@ -967,7 +760,8 @@ var userLocation = [];
                         $('#currentWeather').append("<img id='weatherIcon' alt='weather icon' src=''></img>" + result['data']['daily'][1]['weather']['0']['description']);
                         var weatherUrl = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
                         $('#weatherIcon').attr("src", weatherUrl);
-                        $('#wind').html(result['data']['daily'][1]['wind_speed'] + ' meter/sec ' + direction(result['data']['daily'][1]['wind_deg']));
+                        var calculated = Math.round(result['data']['daily'][1]['wind_speed'] * 3600 / 1610.3*1000)/1000;
+                        $('#wind').html(calculated + ' mph ' + direction(result['data']['daily'][1]['wind_deg']));
                         var sunrise = moment(result['data']['daily'][1]['sunrise']*1000).format("HH:mm");
                         $('#sunrise').html(sunrise);
                         var sunset = moment(result['data']['daily'][1]['sunset']*1000).format("HH:mm");
@@ -984,8 +778,8 @@ var userLocation = [];
                         $('#currentWeather').append("<img id='weatherIcon' alt='weather icon' src=''></img>" + result['data']['daily'][2]['weather']['0']['description']);
                         var weatherUrl = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
                         $('#weatherIcon').attr("src", weatherUrl);
-                        $('#wind').html(result['data']['daily'][2]['wind_speed'] + ' meter/sec ' + direction(result['data']['daily'][2]['wind_deg']));
-                        var sunrise = moment(result['data']['daily'][2]['sunrise']*1000).format("HH:mm");
+                        var calculated = Math.round(result['data']['daily'][2]['wind_speed'] * 3600 / 1610.3*1000)/1000;
+                        $('#wind').html(calculated + ' mph ' + direction(result['data']['daily'][2]['wind_deg']));
                         $('#sunrise').html(sunrise);
                         var sunset = moment(result['data']['daily'][2]['sunset']*1000).format("HH:mm");
                         $('#sunset').html(sunset);
@@ -1001,8 +795,8 @@ var userLocation = [];
                         $('#currentWeather').append("<img id='weatherIcon' alt='weather icon' src=''></img>" + result['data']['daily'][3]['weather']['0']['description']);
                         var weatherUrl = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
                         $('#weatherIcon').attr("src", weatherUrl);
-                        $('#wind').html(result['data']['daily'][3]['wind_speed'] + ' meter/sec ' + direction(result['data']['daily'][3]['wind_deg']));
-                        var sunrise = moment(result['data']['daily'][3]['sunrise']*1000).format("HH:mm");
+                        var calculated = Math.round(result['data']['daily'][3]['wind_speed'] * 3600 / 1610.3*1000)/1000;
+                        $('#wind').html(calculated + ' mph ' + direction(result['data']['daily'][3]['wind_deg']));
                         $('#sunrise').html(sunrise);
                         var sunset = moment(result['data']['daily'][3]['sunset']*1000).format("HH:mm");
                         $('#sunset').html(sunset);
