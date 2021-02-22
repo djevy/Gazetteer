@@ -77,7 +77,7 @@
                 lon: userLocation[1]
             },
             success: function(result) {
-                console.log(result);
+                //console.log(result);
                 if (result.status.name == "ok") {
                     // $('#city').html(result['data']['countryName']);
 
@@ -247,7 +247,7 @@
             },
             success: function(result) {
 
-                console.log(result);
+                // console.log(result);
 
                 if (result.status.name == "ok") {
                     $("#selectOption").val(result['data']['countryCode']).change();
@@ -365,7 +365,7 @@
             $('#to').append('<option value="' + currencies[i] + '">' + currencies[i] + '</option>');
         }
 
-        
+
 
 //Millseconds to Time
     function msToTime(duration) {
@@ -459,7 +459,7 @@ $.ajax({
 
             success: function(result) {
 
-                console.log(result);
+                // console.log(result);
         
                 if (result.status.name == "ok") {
                     var bounds = result.data;
@@ -493,7 +493,7 @@ $.ajax({
             },
             success: function(result) {
 
-                console.log(result);
+                // console.log(result);
 
                 if (result.status.name == "ok") {
                     result['data']['data'].forEach(element => {
@@ -517,7 +517,7 @@ $.ajax({
             },
             success: function(result) {
 
-                console.log(result);
+                // console.log(result);
 
                 if (result.status.name == "ok") {
                     $("#countryName").html(result['data'][0]['countryName']);
@@ -542,7 +542,7 @@ $.ajax({
             },
             success: function(result) {
 
-                console.log(result);
+                //console.log(result);
 
                 if (result.status.name == "ok") {
                     $("#flag").attr("src", result['data']['flag']);
@@ -552,7 +552,7 @@ $.ajax({
                     
                     //update map view:
                     latlng = [result['data']['latlng']['0'], result['data']['latlng']['1']];
-                    console.log(latlng);
+                    //console.log(latlng);
                     //mymap.flyTo(latlng, 5);
                 }
             
@@ -571,7 +571,7 @@ $.ajax({
                 country: $('#selectOption option:selected').text(),
             },
             success: function(result) {            
-                console.log(result);
+                // console.log(result);
 
                 if (result.status.name == "ok") {
                     $("#sumTitle").empty();
@@ -805,7 +805,7 @@ $.ajax({
             },
             success: function(result) {
 
-                console.log(result);
+                // console.log(result);
                 
                 if (result.status.name == "ok") {
                     $("#newsCountry").empty();
@@ -863,7 +863,7 @@ $.ajax({
             },
             success: function(result) {
 
-                console.log(result);
+                // console.log(result);
                 $("#countryImages").empty();
                 
                 if (result.status.name == "ok") {

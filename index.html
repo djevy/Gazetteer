@@ -30,11 +30,11 @@
       <nav class="my-nav navbar navbar-default col-12 p-2 bg-primary">
           <div id="header" class="my-row row align-items-center container-fluid">
               <!-- col-md-12 applies to all sizes ≥768px -->
-              <div class="my-col nav-header col-6  pr-0 row align-items-center">
+              <div class="my-col nav-header col-7  pr-0 row align-items-center">
                   <i class="fas fa-map-marked-alt fa-3x my-icon d-inline"></i>
                   <h1 id="title" class="d-inline pl-1">Gazetteer</h1>
               </div>
-              <div class="my-col  col-6 p-0 my-3 mx-auto"> 
+              <div class="my-col  col-5 p-0 my-3 mx-auto"> 
                   <select name="country" id="selectOption" class="selectOption">
                   </select>
               </div>
@@ -47,8 +47,10 @@
     <div class="modal fade" id="infoModalScrollable" tabindex="-1" role="dialog" aria-labelledby="infoModalScrollableTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title" id="infoModalScrollableTitle" data-dismiss="modal">Info</h4>
+          <div class="modal-header row">
+            <h4 class="modal-title col-8" id="infoModalScrollableTitle" data-dismiss="modal">Info  </h4>
+            <i class="fas fa-window-close col-4" data-dismiss="modal"></i>
+
           </div>
           <div class="modal-body" id="page1">
             <div class="row info-panel" aria-labelledby="headingOne">                          
@@ -96,7 +98,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary mp-0" data-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
@@ -107,7 +109,8 @@
       <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title" id="weatherModalScrollableTitle" data-dismiss="modal">Weather</h4>
+            <h4 class="modal-title col-8" id="weatherModalScrollableTitle" data-dismiss="modal">Weather</h4>
+            <i class="fas fa-window-close col-4" data-dismiss="modal"></i>
           </div>
           <div class="modal-body" id="page2">
             <div class="row infoPanel p-0 m-0" aria-labelledby="headingTwo">
@@ -185,7 +188,8 @@
       <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title" id="newsModalScrollableTit data-dismiss="modal"le">News</h4>
+            <h4 class="modal-title col-8" id="newsModalScrollableTitle" data-dismiss="modal">News</h4>
+            <i class="fas fa-window-close col-4" data-dismiss="modal"></i>
           </div>
           <div class="modal-body" id="page3">
             <div class="row infoPanel p-0 m-0" aria-labelledby="headingThree">
@@ -232,7 +236,8 @@
       <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title" id="exchangeModalScrollableTitle" data-dismiss="modal"> Exchange</h4>
+            <h4 class="modal-title col-8" id="exchangeModalScrollableTitle" data-dismiss="modal"> Exchange</h4>
+            <i class="fas fa-window-close col-4" data-dismiss="modal"></i>
           </div>
           <div class="modal-body" id="page4">
             <div class="row infoPanel p-0 m-0" aria-labelledby="headingFour">
@@ -278,7 +283,8 @@
       <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title" id="imagesModalScrollableTitle" data-dismiss="modal">Images</h4>
+            <h4 class="modal-title col-8" id="imagesModalScrollableTitle" data-dismiss="modal">Images</h4>
+            <i class="fas fa-window-close col-4" data-dismiss="modal"></i>
           </div>
           <div class="modal-body" id="page5"> 
             <div class="row infoPanel p-0 m-0" aria-labelledby="headingFive">

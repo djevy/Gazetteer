@@ -76,6 +76,7 @@ body{
     border: solid black;
     margin:auto;
     text-align: center;
+    float:right
 }
 .my-icon{
     color: black;
@@ -136,7 +137,7 @@ button{
     margin:0;
     padding:0;
     width:100%;
-    max-height: 58vh !important;
+    max-height: 100vh !important;
     overflow-y: scroll !important;
     text-align: center;
     background-color: black;
@@ -175,6 +176,7 @@ table
     margin: 0;
     table-layout:fixed;
     width:100%;
+    max-height: 100%;
 }
 #weatherCell{
     padding: 0.75rem;
@@ -224,8 +226,8 @@ table
 //Modals
 .modal {
     max-width: 80%;
-    max-height: 95%;
-    height: fit-content;
+    max-height: 90%;
+    height: 100%;
     width: fit-content;
     position: fixed;
     top: 50%;
@@ -236,19 +238,27 @@ table
     border-radius: 10px;
     margin: 0;
 }
-
 .modal-dialog{
     margin: 0;
+    height: 100%;
+    max-height: 90vh;
 }
 .modal-content{
     background-color: black;
     margin: 0;
+    height: 100%;
 }
-.modal-header {
+.modal-header h4 {
     text-align: center;
     padding: 0;
     color: white;
-    margin: auto;
+}
+.modal-header i {
+    font-size: 30px;
+    align-self: center;
+    text-align: right;
+    padding-right: 30px;
+    color: white;
 }
 .modal-title{
     font-family: 'Noto Sans KR', sans-serif;
@@ -300,9 +310,7 @@ table
         justify-content: start;
         align-items: unset;
     }
-    .infoPanel{
-        max-height: 70vh;
-    }
+
 
     #pageNav{
         top: 93%;
