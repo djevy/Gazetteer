@@ -597,7 +597,7 @@ $.ajax({
                 lon: window.latlng[1]
             },
             success: function(result) {
-                console.log(result);
+                // console.log(result);
                 if (result.status.name == "ok") {
 
                     //Onload:
@@ -896,7 +896,7 @@ $.ajax({
             },
             success: function(result) {
 
-                console.log(result);
+                // console.log(result);
 
                 if (result.status.name == "ok") {
                     var conversion = Number(result['data']['rates'][$('#to option:selected').text()] * $('#value').val());
