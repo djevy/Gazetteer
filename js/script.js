@@ -61,221 +61,12 @@
             fillColor: '#cacaca',
             fillOpacity: 0.2
         });
-        //var marker = L.marker([51.6, -0.09]).addTo(mymap);
+
+
         mymap.addLayer(locationMarker);
         mymap.addLayer(circle);
 
-        //change selectOption:
-        $.ajax({
-            url: "php/getCountryCode.php",
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                lat: e.latitude,
-                lng: e.longitude,
-            },
-            success: function(result) {
 
-                console.log(result);
-
-                if (result.status.name == "ok") {
-                    $("#selectOption").val(result['data']['countryCode']).change();
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.warn(jqXHR.responseText + "   " + errorThrown);
-            }
-        }); 
-    }). on('locationerror', function(e) {
-        console.log(e);
-        alert("Location access denied.");
-    });
-
-
-
-
-
-//Easy Buttons:
-    //Info-
-    infoButton = L.easyButton({
-        id: 'infoLeaf',
-        position: 'topleft',
-        type: 'animate',
-        leafletClasses: true,
-        states:[{
-          stateName: 'show-info',
-          onClick: function(button, map){
-            $("#infoModalScrollable").modal();
-          },
-          title: 'show country information',
-          icon: "fa-info"
-        }]
-      })
-    mymap.addControl(infoButton);
-    
-    // Weather-
-    weatherButton = L.easyButton({
-        id: 'weatherLeaf',
-        position: 'topleft',
-        type: 'animate',
-        leafletClasses: true,
-        states:[{
-          stateName: 'show-weather',
-          onClick: function(button, map){
-            $("#weatherModalScrollable").modal();
-          },
-          title: 'show the weather',
-          icon: "fa-cloud-sun "
-        }]
-      })
-    mymap.addControl(weatherButton);
-
-    //News-
-    newsButton = L.easyButton({
-        id: 'newsLeaf',
-        position: 'topleft',
-        type: 'animate',
-        leafletClasses: true,
-        states:[{
-          stateName: 'show-news',
-          onClick: function(button, map){
-            $("#newsModalScrollable").modal();
-          },
-          title: 'show country news',
-          icon: "fa-newspaper"
-        }]
-      });
-     mymap.addControl(newsButton);
-
-     //Exchange-
-     exchangeButton = L.easyButton({
-        id: 'exchangeLeaf',
-        position: 'topleft',
-        type: 'animate',
-        leafletClasses: true,
-        states:[{
-          stateName: 'show-exchange',
-          onClick: function(button, map){
-            $("#exchangeModalScrollable").modal();
-          },
-          title: 'show exchange rates',
-          icon: "fa-dollar"
-        }]
-      });
-     mymap.addControl(exchangeButton);
-
-     //Images-
-     imagesButton = L.easyButton({
-        id: 'imagesLeaf',
-        position: 'topleft',
-        type: 'animate',
-        leafletClasses: true,
-        states:[{
-          stateName: 'show-images',
-          onClick: function(button, map){
-            $("#imagesModalScrollable").modal();
-          },
-          title: 'show country images',
-          icon: "fa-camera"
-        }]
-      });
-     mymap.addControl(imagesButton);
-
-
-
-//Exchange
-    var currencies = ["AUD","BGN","BRL","CAD","CHF","CNY","CZK","DKK","EUR","GBP","HRK","HUF","IDR","ILS","INR","ISK","JPY","KRW","MXN","MYR","NOK","NZD","PHP","PLN","RON","RUB","SEK","SGD","THB","TRY","USD","ZAR"];
-    
-//Populate currencies -
-    $('#select').empty();
-    for (var i = 0; i <= currencies.length; i++) {
-        $('#from').append('<option value="' + currencies[i] + '">' + currencies[i] + '</option>');
-        $('#to').append('<option value="' + currencies[i] + '">' + currencies[i] + '</option>');
-    }
-
-
-//Millseconds to Time
-    function msToTime(duration) {
-        var milliseconds = parseInt((duration % 1000) / 100),
-        seconds = Math.floor((duration / 1000) % 60),
-        minutes = Math.floor((duration / (1000 * 60)) % 60),
-        hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
-    
-        hours = (hours < 10) ? "0" + hours : hours;
-        minutes = (minutes < 10) ? "0" + minutes : minutes;
-        seconds = (seconds < 10) ? "0" + seconds : seconds;
-    
-        return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
-    }
-
-
-//Days:
-    var thirdDay = moment().add(2, 'days').format('dddd');  
-    var fourthDay = moment().add(3, 'days').format('dddd');   ;
-    $("#day3").html(thirdDay);
-    $("#day4").html(fourthDay);
-
-
-//Direction:
-    function direction(i) {
-        if(i >= 349 && i <= 11){
-                return +i + "°: N";
-        } else if (i >= 12 && i <= 33) {
-                return +i + "°: NNE";
-        } else if (i >= 34 && i <= 56) {
-                return +i + "°: NE";
-        } else if (i >= 57 && i <= 78) {
-                return +i + "°: ENE";
-        } else if (i >= 79 && i <= 101) {
-                return +i + "°: E";
-        } else if (i >= 102 && i <= 123) {
-                return +i + "°: ESE";
-        } else if (i >= 124 && i <= 146) {
-                return +i + "°: SE";
-        } else if (i >= 147 && i <= 168) {
-                return +i + "°: SSE";
-        } else if (i >= 169 && i <= 191) {
-                return +i + "°: S";
-        } else if (i >= 192 && i <= 213) {
-                return +i + "°: SSW";
-        } else if (i >= 214 && i <= 236) {
-                return +i + "°: SW";
-        } else if (i >= 237 && i <= 258) {
-                return +i + "°: WSW";
-        } else if (i >= 259 && i <= 281) {
-                return +i + "°: W";
-        } else if (i >= 282 && i <= 303) {
-                return +i + "°: WNW";
-        } else if (i >= 304 && i <= 326) {
-                return +i + "°: NW";
-        } else if (i >= 327 && i <= 348) {
-                return +i + "°: NNW";
-        }
-    };
-
-
-//Fill countries-
-$.ajax({
-    url: "php/countryNames.php",
-    type: 'GET',
-    dataType: 'json',
-
-    success: function(result) {
-
-        //console.log(result);
-
-        if (result.status.name == "ok") {
-            for (var i = 0; i < result.data.length; i++) {
-                $('#selectOption').append("<option value=" + result['data'][i]['code'] + ">" + result['data'][i]['name'] + "</option>");
-            }
-        }
-    
-    },
-});
-
-
-//On document ready:
-    $(document).ready(function(){
         //Weather:
         $.ajax({
             url: "php/openWeather.php",
@@ -444,8 +235,216 @@ $.ajax({
             }
         });
 
+
+        //change selectOption to users location:
+        $.ajax({
+            url: "php/getCountryCode.php",
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                lat: e.latitude,
+                lng: e.longitude,
+            },
+            success: function(result) {
+
+                console.log(result);
+
+                if (result.status.name == "ok") {
+                    $("#selectOption").val(result['data']['countryCode']).change();
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.warn(jqXHR.responseText + "   " + errorThrown);
+            }
+        }); 
+
+    }). on('locationerror', function(e) {
+        console.log(e);
+        alert("Location access denied.");
     });
 
+
+
+
+
+//Easy Buttons:
+    //Info-
+    infoButton = L.easyButton({
+        id: 'infoLeaf',
+        position: 'topleft',
+        type: 'animate',
+        leafletClasses: true,
+        states:[{
+          stateName: 'show-info',
+          onClick: function(button, map){
+            $("#infoModalScrollable").modal();
+          },
+          title: 'show country information',
+          icon: "fa-info"
+        }]
+      })
+    mymap.addControl(infoButton);
+    
+    // Weather-
+    weatherButton = L.easyButton({
+        id: 'weatherLeaf',
+        position: 'topleft',
+        type: 'animate',
+        leafletClasses: true,
+        states:[{
+          stateName: 'show-weather',
+          onClick: function(button, map){
+            $("#weatherModalScrollable").modal();
+          },
+          title: 'show the weather',
+          icon: "fa-cloud-sun "
+        }]
+      })
+    mymap.addControl(weatherButton);
+
+    //News-
+    newsButton = L.easyButton({
+        id: 'newsLeaf',
+        position: 'topleft',
+        type: 'animate',
+        leafletClasses: true,
+        states:[{
+          stateName: 'show-news',
+          onClick: function(button, map){
+            $("#newsModalScrollable").modal();
+          },
+          title: 'show country news',
+          icon: "fa-newspaper"
+        }]
+      });
+     mymap.addControl(newsButton);
+
+     //Exchange-
+     exchangeButton = L.easyButton({
+        id: 'exchangeLeaf',
+        position: 'topleft',
+        type: 'animate',
+        leafletClasses: true,
+        states:[{
+          stateName: 'show-exchange',
+          onClick: function(button, map){
+            $("#exchangeModalScrollable").modal();
+          },
+          title: 'show exchange rates',
+          icon: "fa-dollar"
+        }]
+      });
+     mymap.addControl(exchangeButton);
+
+     //Images-
+     imagesButton = L.easyButton({
+        id: 'imagesLeaf',
+        position: 'topleft',
+        type: 'animate',
+        leafletClasses: true,
+        states:[{
+          stateName: 'show-images',
+          onClick: function(button, map){
+            $("#imagesModalScrollable").modal();
+          },
+          title: 'show country images',
+          icon: "fa-camera"
+        }]
+      });
+     mymap.addControl(imagesButton);
+
+
+
+//Exchange
+    var currencies = ["AUD","BGN","BRL","CAD","CHF","CNY","CZK","DKK","EUR","GBP","HRK","HUF","IDR","ILS","INR","ISK","JPY","KRW","MXN","MYR","NOK","NZD","PHP","PLN","RON","RUB","SEK","SGD","THB","TRY","USD","ZAR"];
+    
+    //Populate currencies -
+        $('#select').empty();
+        for (var i = 0; i <= currencies.length; i++) {
+            $('#from').append('<option value="' + currencies[i] + '">' + currencies[i] + '</option>');
+            $('#to').append('<option value="' + currencies[i] + '">' + currencies[i] + '</option>');
+        }
+
+        
+
+//Millseconds to Time
+    function msToTime(duration) {
+        var milliseconds = parseInt((duration % 1000) / 100),
+        seconds = Math.floor((duration / 1000) % 60),
+        minutes = Math.floor((duration / (1000 * 60)) % 60),
+        hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+    
+        hours = (hours < 10) ? "0" + hours : hours;
+        minutes = (minutes < 10) ? "0" + minutes : minutes;
+        seconds = (seconds < 10) ? "0" + seconds : seconds;
+    
+        return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
+    }
+
+
+//Days:
+    var thirdDay = moment().add(2, 'days').format('dddd');  
+    var fourthDay = moment().add(3, 'days').format('dddd');   ;
+    $("#day3").html(thirdDay);
+    $("#day4").html(fourthDay);
+
+
+//Direction:
+    function direction(i) {
+        if(i >= 349 && i <= 11){
+                return +i + "°: N";
+        } else if (i >= 12 && i <= 33) {
+                return +i + "°: NNE";
+        } else if (i >= 34 && i <= 56) {
+                return +i + "°: NE";
+        } else if (i >= 57 && i <= 78) {
+                return +i + "°: ENE";
+        } else if (i >= 79 && i <= 101) {
+                return +i + "°: E";
+        } else if (i >= 102 && i <= 123) {
+                return +i + "°: ESE";
+        } else if (i >= 124 && i <= 146) {
+                return +i + "°: SE";
+        } else if (i >= 147 && i <= 168) {
+                return +i + "°: SSE";
+        } else if (i >= 169 && i <= 191) {
+                return +i + "°: S";
+        } else if (i >= 192 && i <= 213) {
+                return +i + "°: SSW";
+        } else if (i >= 214 && i <= 236) {
+                return +i + "°: SW";
+        } else if (i >= 237 && i <= 258) {
+                return +i + "°: WSW";
+        } else if (i >= 259 && i <= 281) {
+                return +i + "°: W";
+        } else if (i >= 282 && i <= 303) {
+                return +i + "°: WNW";
+        } else if (i >= 304 && i <= 326) {
+                return +i + "°: NW";
+        } else if (i >= 327 && i <= 348) {
+                return +i + "°: NNW";
+        }
+    };
+
+
+//Fill countries-
+$.ajax({
+    url: "php/countryNames.php",
+    type: 'GET',
+    dataType: 'json',
+
+    success: function(result) {
+
+        //console.log(result);
+
+        if (result.status.name == "ok") {
+            for (var i = 0; i < result.data.length; i++) {
+                $('#selectOption').append("<option value=" + result['data'][i]['code'] + ">" + result['data'][i]['name'] + "</option>");
+            }
+        }
+    
+    },
+});
 
 //Select country
     $("#selectOption").change(function(){
