@@ -254,7 +254,7 @@
                 }
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                console.warn(jqXHR.responseText + "   " + errorThrown);
+                // console.warn(jqXHR.responseText + "   " + errorThrown);
             }
         }); 
 
@@ -479,7 +479,7 @@ $.ajax({
                 };
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                console.warn(errorThrown);
+                // console.warn(errorThrown);
             }
         });    
 
@@ -503,7 +503,7 @@ $.ajax({
             
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                console.warn(jqXHR.responseText);
+                // console.warn(jqXHR.responseText);
             }
         }); 
 
@@ -791,7 +791,7 @@ $.ajax({
                 }
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                //console.warn("There has been an error! " + jqXHR.responseText + " " + errorThrown);
+                // console.warn("There has been an error! " + jqXHR.responseText + " " + errorThrown);
             }
         });
 
@@ -805,9 +805,9 @@ $.ajax({
             },
             success: function(result) {
 
-                // console.log(result);
+                //  console.log(result);
                 
-                if (result.status.name == "ok") {
+                if (result.status.name == "ok" && result['data']['articles']['0'] !== undefined) {
                     $("#newsCountry").empty();
                     $("#newsCountry").append($('#selectOption option:selected').text());
                     $("#articleTitle").html(result['data']['articles']['0']['title']);
@@ -821,8 +821,9 @@ $.ajax({
                 }
                 var i = 0;
                 $("#nextArticle").on('click', function() {
-                    i++;
-                    if (result.status.name == "ok") {
+                    if (result.status.name == "ok" && result['data']['articles'][i] !== undefined && i<(result['data']['articles'].length-1)) {
+                        i++
+                        // console.log(i)
                         $("#articleTitle").html(result['data']['articles'][i]['title']);
                         $("#articleDescription").html(result['data']['articles'][i]['description']);
                         $("#articleContent").html(result['data']['articles'][i]['content']);
@@ -833,9 +834,11 @@ $.ajax({
                         $("#articleUrl").attr("href", result['data']['articles'][i]['url']);
                     }
                 });
+                
                 $("#previousArticle").on('click', function() {
-                    i--;
-                    if (result.status.name == "ok") {
+                    if (result.status.name == "ok" && result['data']['articles'][i] !== undefined && i>0) {
+                        i--;
+                        // console.log(i)
                         $("#articleTitle").html(result['data']['articles'][i]['title']);
                         $("#articleDescription").html(result['data']['articles'][i]['description']);
                         $("#articleContent").html(result['data']['articles'][i]['content']);
@@ -879,7 +882,7 @@ $.ajax({
             
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                console.warn("There has been an error " + errorThrown);
+                // console.warn("There has been an error " + errorThrown);
             }
         });
     });
