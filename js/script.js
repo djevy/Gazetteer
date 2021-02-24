@@ -78,23 +78,33 @@
             },
             success: function(result) {
                 //console.log(result);
-                if (result.status.name == "ok") {
-                    // $('#city').html(result['data']['countryName']);
+                if (result.status.name == "ok" && result['data']['current'] != undefined) {
 
                     //Onload:
+                    $('.weatherHide').show();
+                    
+                    $("#temp").empty();
+                    $("#currentWeather").empty();
+                    $("#wind").empty();
+                    $("#sunrise").empty();
+                    $("#sunset").empty();
+                    $("#humidity").empty();
                     $('#temp').html(result['data']['current']['temp']+" ℃");
                     var icon = result['data']['current']['weather']['0']['icon'];
-                    //$('#currentWeather').append("<img id='weatherIcon' alt='weather icon' src=''></img>" + result['data']['current']['weather']['0']['description']);
+                    $('#currentWeather').append("<img id='weatherIcon' alt='weather icon' src=''></img>" + result['data']['current']['weather']['0']['description']);
                     var weatherUrl = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
                     $('#weatherIcon').attr("src", weatherUrl);
                     var calculated = Math.round(result['data']['current']['wind_speed'] * 3600 / 1610.3*1000)/1000;
-                    $('#wind').html(calculated + ' mph ' + direction(result['data']['current']['wind_deg']));
-                    var sunrise = moment(result['data']['current']['sunrise']*1000).format("HH:mm");
+                    $('#wind').html(calculated + ' mph ' + direction(result['data']['current']['wind_deg']));                        var sunrise = moment(result['data']['current']['sunrise']*1000).format("HH:mm");
                     $('#sunrise').html(sunrise);
                     var sunset = moment(result['data']['current']['sunset']*1000).format("HH:mm");
                     $('#sunset').html(sunset);
                     $('#humidity').html(result['data']['current']['humidity'] + ' %');
-                    
+
+                    $('#hour1').empty();
+                    $('#hour2').empty();
+                    $('#hour3').empty();
+                    $('#hour4').empty();
                     var time1 = moment(result['data']['hourly']['3']['dt']*1000).format("HH:mm");
                     var time2 = moment(result['data']['hourly']['6']['dt']*1000).format("HH:mm");
                     var time3 = moment(result['data']['hourly']['9']['dt']*1000).format("HH:mm");
@@ -119,6 +129,7 @@
                     $('#weatherIcon2').attr("src", weatherUrl2);
                     $('#weatherIcon3').attr("src", weatherUrl3);
                     $('#weatherIcon4').attr("src", weatherUrl4);
+                    
 
                     //Today
                     $("#day1").on('click', function(){
@@ -598,7 +609,7 @@ $.ajax({
             },
             success: function(result) {
                 // console.log(result);
-                if (result.status.name == "ok") {
+                if (result.status.name == "ok" && result['data']['current'] != undefined) {
 
                     //Onload:
                     $('.weatherHide').show();
