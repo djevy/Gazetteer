@@ -136,9 +136,9 @@ button{
 .infoPanel{
     margin:0;
     padding:0;
+    max-width: 100%;
     width:100%;
     max-height: 100vh !important;
-    overflow-y: scroll !important;
     text-align: center;
     background-color: black;
     font-family: 'Poppins', sans-serif;
@@ -149,10 +149,21 @@ button{
 #wiki p {
     font-size: 0.8em;
 }
+#sourcedCell{
+    width: 80%;
+    word-break: break-all;
+}
 .sourced{
     color:#03ac13;
     font-family: 'Noto Sans KR', sans-serif;
     font-size: 1em;
+    width: 80%;
+}
+.sourced a{
+    white-space: normal;
+    width: 90% !important; 
+    overflow: hidden !important;
+    text-overflow: ellipsis; 
 }
 #contentCell{
     text-align: left;   
@@ -170,13 +181,6 @@ button{
 }
 #flag{
     width: 15vh;
-}
-table 
-{
-    margin: 0;
-    table-layout:fixed;
-    width:100%;
-    max-height: 100%;
 }
 #weatherCell{
     padding: 0.75rem;
@@ -247,21 +251,38 @@ table
     background-color: black;
     margin: 0;
     height: 100%;
+    max-height: 100vh;
+    max-width: 100%;
+    width: 100%;
+    overflow-x: hidden;
+}
+table {
+    margin: 0;
+    table-layout:fixed;
+    max-width: 100%;
+    width:100%;
+    max-height: 100%;
 }
 .modal-header h4 {
-    text-align: center;
-    padding: 0;
+    text-align: left;
+    padding-left: 30px;
     color: white;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: bold;
+    height: 30px;
+    line-height: 25px;
 }
 .modal-header i {
     font-size: 30px;
-    align-self: center;
-    text-align: right;
-    padding-right: 30px;
+    text-align: left;
     color: white;
 }
-.modal-title{
-    font-family: 'Noto Sans KR', sans-serif;
+.modal-header i:hover {
+    color: dimgray;
+}
+.modalClose {
+   height: 30px;
+   line-height: 15px;
 }
 
 
@@ -294,7 +315,7 @@ table
         align-self: center;
     }
     #countrySelect{
-        width:75%;
+        width:100%;
     }
 
     //Buttons:
