@@ -826,9 +826,10 @@ $.ajax({
                     $("#articleContent").html(result['data']['articles']['0']['content']);
                     $("#articleImg").attr("src", result['data']['articles']['0']['urlToImage']);
                     $("#articleAuthor").html(result['data']['articles']['0']['author']);
-                    $("#publishedAt").html(result['data']['articles']['0']['publishedAt']);
-                    $("#articleUrl").html(result['data']['articles']['0']['url']);
-                    $("#articleUrl").attr("href", result['data']['articles']['0']['url']);
+                    var date = result['data']['articles']['0']['publishedAt'];
+                    $("#publishedAt").html(moment(date).format('DD-MM-YYYY'));
+                    $("#articleUrl").html('https://' + result['data']['articles']['0']['url']);
+                    $("#articleUrl").attr("href",'https://' +  result['data']['articles']['0']['url']);
                 }
                 var i = 0;
                 $("#nextArticle").on('click', function() {
@@ -840,9 +841,10 @@ $.ajax({
                         $("#articleContent").html(result['data']['articles'][i]['content']);
                         $("#articleImg").attr("src", result['data']['articles'][i]['urlToImage']);
                         $("#articleAuthor").html(result['data']['articles'][i]['author']);
-                        $("#publishedAt").html(result['data']['articles'][i]['publishedAt']);
-                        $("#articleUrl").html(result['data']['articles'][i]['url']);
-                        $("#articleUrl").attr("href", result['data']['articles'][i]['url']);
+                        var date = result['data']['articles'][i]['publishedAt'];
+                        $("#publishedAt").html(moment(date).format('DD-MM-YYYY'));
+                        $("#articleUrl").html('https://' + result['data']['articles'][i]['url']);
+                        $("#articleUrl").attr("href",'https://' +  result['data']['articles'][i]['url']);
                     }
                 });
                 
@@ -855,9 +857,10 @@ $.ajax({
                         $("#articleContent").html(result['data']['articles'][i]['content']);
                         $("#articleImg").attr("src", result['data']['articles'][i]['urlToImage']);
                         $("#articleAuthor").html(result['data']['articles'][i]['author']);
-                        $("#publishedAt").html(result['data']['articles'][i]['publishedAt']);
-                        $("#articleUrl").html(result['data']['articles'][i]['url']);
-                        $("#articleUrl").attr("href", result['data']['articles'][i]['url']);
+                        var date = result['data']['articles'][i]['publishedAt'];
+                        $("#publishedAt").html(moment(date).format('DD-MM-YYYY'));
+                        $("#articleUrl").html('https://' + result['data']['articles'][i]['url']);
+                        $("#articleUrl").attr("href", 'https://' + result['data']['articles'][i]['url']);
                     }
                 });
             
@@ -915,7 +918,8 @@ $.ajax({
                 if (result.status.name == "ok") {
                     var conversion = Number(result['data']['rates'][$('#to option:selected').text()] * $('#value').val());
                     $("#exchangeResult").html(conversion.toFixed(2) + " - " + $('#to option:selected').text());
-                    $("#exchangeDate").html(result['data']['date']);
+                    var date = result['data']['date'];
+                    $("#exchangeDate").html(moment(date).format('DD-MM-YYYY'));
                 }
             
             },
